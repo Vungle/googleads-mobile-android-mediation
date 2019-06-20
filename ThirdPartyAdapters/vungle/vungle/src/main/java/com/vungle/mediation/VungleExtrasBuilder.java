@@ -12,10 +12,11 @@ import com.vungle.warren.AdConfig;
  */
 public final class VungleExtrasBuilder {
 
-    static final String EXTRA_USER_ID = "userId";
+    public static final String EXTRA_USER_ID = "userId";
     private static final String EXTRA_SOUND_ENABLED = "soundEnabled";
     private static final String EXTRA_FLEXVIEW_CLOSE_TIME = "flexViewCloseTimeInSec";
     private static final String EXTRA_ORDINAL_VIEW_COUNT = "ordinalViewCount";
+    private static final String EXTRA_AUTO_ROTATE_ENABLED = "autoRotateEnabled";
     static final String EXTRA_ALL_PLACEMENTS = "allPlacements";
     static final String EXTRA_PLAY_PLACEMENT = "playPlacement";
 
@@ -50,16 +51,22 @@ public final class VungleExtrasBuilder {
         return this;
     }
 
+    public VungleExtrasBuilder setAutoRotateEnabled(boolean enabled) {
+        mBundle.putBoolean(EXTRA_AUTO_ROTATE_ENABLED, enabled);
+        return this;
+    }
+
     public Bundle build() {
         return mBundle;
     }
 
-    static AdConfig adConfigWithNetworkExtras(Bundle networkExtras) {
+    public static AdConfig adConfigWithNetworkExtras(Bundle networkExtras) {
         AdConfig adConfig = new AdConfig();
         if (networkExtras != null) {
             adConfig.setMuted(!networkExtras.getBoolean(EXTRA_SOUND_ENABLED, true));
             adConfig.setFlexViewCloseTime(networkExtras.getInt(EXTRA_FLEXVIEW_CLOSE_TIME, 0));
             adConfig.setOrdinal(networkExtras.getInt(EXTRA_ORDINAL_VIEW_COUNT, 0));
+            adConfig.setAutoRotate(networkExtras.getBoolean(EXTRA_AUTO_ROTATE_ENABLED, false));
         }
         return adConfig;
     }
