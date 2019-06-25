@@ -1,8 +1,7 @@
 package com.vungle.mediation;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
 import android.util.Log;
@@ -11,11 +10,9 @@ import com.vungle.warren.AdConfig;
 import com.vungle.warren.LoadAdCallback;
 import com.vungle.warren.PlayAdCallback;
 import com.vungle.warren.Vungle;
-import com.vungle.warren.VungleNativeAd;
+import com.vungle.warren.VungleBanner;
 import com.vungle.warren.error.VungleException;
 
-import java.util.HashSet;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -29,7 +26,7 @@ public class VungleManager {
 
     private static VungleManager sInstance;
 
-    private ConcurrentHashMap<String, Pair<String, VungleNativeAd>> activeBannerAds;
+    private ConcurrentHashMap<String, Pair<String, VungleBanner>> activeBannerAds;
 
     public static synchronized VungleManager getInstance() {
         if (sInstance == null) {
@@ -63,8 +60,8 @@ public class VungleManager {
         return placement;
     }
 
-    void loadAd(String adapterId, String placement, @Nullable final VungleListener listener) {
-        Vungle.loadAd(placement, new LoadAdCallback() {
+    void loadAd(String adapterId, String placement, @Nullable AdConfig adConfig, @Nullable final VungleListener listener) {
+        Vungle.loadAd(placement, adConfig, new LoadAdCallback() {
             @Override
             public void onAdLoad(String id) {
                 if (listener != null) {
@@ -130,14 +127,14 @@ public class VungleManager {
                 Vungle.getValidPlacements().contains(placementId);
     }
 
-    public VungleNativeAd getVungleNativeAd(String adapterId, String placement, AdConfig adConfig, VungleListener vungleListener) {
+    public VungleBanner getVungleBanner(String adapterId, String placement, @NonNull AdConfig adConfig, VungleListener vungleListener) {
         Log.d(TAG, "getVungleNativeAd");
         //Since we VungleInterstitialAdapter#onDestroy() does not called by AdMob SDK,
         // we have to take care of removal of listener
         cleanUpBanner(placement);
         //Fetch new ad
 
-        VungleNativeAd bannerAd = Vungle.getNativeAd(placement, adConfig, playAdCallback(vungleListener));
+        VungleBanner bannerAd = Vungle.getBanner(placement, adConfig.getAdSize(), playAdCallback(vungleListener));
         if (bannerAd != null) {
             activeBannerAds.put(placement, new Pair<>(adapterId, bannerAd));
         }
@@ -148,7 +145,7 @@ public class VungleManager {
     public void removeActiveBanner(String placementId, String adapterId) {
         if (placementId == null)
             return;
-        Pair<String, VungleNativeAd> pair = activeBannerAds.get(placementId);
+        Pair<String, VungleBanner> pair = activeBannerAds.get(placementId);
         if (pair != null && adapterId != null && adapterId.equals(pair.first)) {
             activeBannerAds.remove(placementId, pair);
         }
@@ -161,16 +158,16 @@ public class VungleManager {
      */
     public void cleanUpBanner(String placementId) {
         Log.d(TAG, "cleanUpBanner");
-        Pair<String, VungleNativeAd> pair = activeBannerAds.get(placementId);
+        Pair<String, VungleBanner> pair = activeBannerAds.get(placementId);
         if (pair != null) {
             String adapterId = pair.first; //TODO why not all elements, if somehow we end up with more than one
             removeListeners(adapterId);
             //Remove ad
-            VungleNativeAd vungleNativeAd = pair.second;
+            VungleBanner vungleNativeAd = pair.second;
             if (vungleNativeAd != null) {
                 //We should do Report ad
                 Log.d(TAG, "cleanUpBanner # finishDisplayingAd");
-                vungleNativeAd.finishDisplayingAd();
+                vungleNativeAd.finishBanner();
                 removeActiveBanner(placementId, adapterId);
             }
         }
