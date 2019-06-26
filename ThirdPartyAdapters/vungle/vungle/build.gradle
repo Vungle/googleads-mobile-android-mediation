@@ -36,10 +36,16 @@ android {
     }
 }
 
+def sdkSrcDependency = hasProperty("SdkSrcDependency") ? "$SdkSrcDependency".toBoolean() : false
+
 dependencies {
 
-//    implementation 'vungle-android-beta:publisher-sdk-android:6.4.10'
-    implementation 'com.vungle:publisher-sdk-android'
+    if (sdkSrcDependency) {
+        // compile adapter using project
+        implementation 'com.vungle:publisher-sdk-android'
+    } else {
+        implementation 'vungle-android-beta:publisher-sdk-android:6.4.10'
+    }
 
     implementation 'com.google.android.gms:play-services-ads:17.2.0'
 }
@@ -47,7 +53,7 @@ dependencies {
 /**
  * Jar task to make a sources jar.
  */
-task sourcesJar (type: Jar) {
+task sourcesJar(type: Jar) {
     classifier = 'sources'
     from android.sourceSets.main.java.srcDirs
 }
