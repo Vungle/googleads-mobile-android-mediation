@@ -53,10 +53,6 @@ public class VungleManager {
             }
             placement = serverParameters.getString(PLAYING_PLACEMENT);
         }
-        if (placement == null) {
-            Log.e(TAG, "placementID not provided from serverParameters. Please check your AdMob dashboard settings." +
-                    "load and play functionality will not work");
-        }
         return placement;
     }
 

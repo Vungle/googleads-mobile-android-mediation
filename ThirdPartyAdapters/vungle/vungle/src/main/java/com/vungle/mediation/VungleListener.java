@@ -2,7 +2,7 @@ package com.vungle.mediation;
 
 /**
  * A listener class used to send Vungle events from {@link VungleManager} to
- * {@link VungleInterstitialAdapter} and {@link VungleAdapter}.
+ * {@link VungleInterstitialAdapter}.
  */
 abstract class VungleListener {
     void onAdEnd(String placement, boolean wasSuccessfulView, boolean wasCallToActionClicked) {}
