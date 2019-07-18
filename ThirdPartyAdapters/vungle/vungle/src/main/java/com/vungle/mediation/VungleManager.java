@@ -53,6 +53,10 @@ public class VungleManager {
             }
             placement = serverParameters.getString(PLAYING_PLACEMENT);
         }
+        if (placement == null) {
+            Log.e(TAG, "placementID not provided from serverParameters. Please check your AdMob dashboard settings." +
+                    "load and play functionality will not work");
+        }
         return placement;
     }
 
@@ -163,7 +167,7 @@ public class VungleManager {
             if (vungleNativeAd != null) {
                 //We should do Report ad
                 Log.d(TAG, "cleanUpBanner # finishDisplayingAd");
-                vungleNativeAd.finishBanner();
+                vungleNativeAd.destroyAd();
                 removeActiveBanner(placementId, adapterId);
             }
         }

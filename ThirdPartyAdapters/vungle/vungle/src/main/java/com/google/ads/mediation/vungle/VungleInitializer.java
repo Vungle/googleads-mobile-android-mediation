@@ -21,7 +21,6 @@ public class VungleInitializer implements InitCallback {
     private boolean mIsInitializing = false;
     private ConcurrentHashMap<String, VungleInitializationListener> mInitListeners;
 
-
     private Handler mHandler = new Handler(Looper.getMainLooper());
 
     public static VungleInitializer getInstance() {

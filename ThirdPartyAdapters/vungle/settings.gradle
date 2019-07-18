@@ -1,13 +1,14 @@
-rootProject.name = 'vungle'
-
 include ':vungle'
 
-// For Vungle SDK configure
-def sdkSrcDependency = hasProperty("SdkSrcDependency") ? "$SdkSrcDependency".toBoolean() : false
-if (file('../../../vungle-android-sdk').exists() && sdkSrcDependency) {
-    includeBuild('../../../vungle-android-sdk') {
-        dependencySubstitution {
-            substitute module('com.vungle:publisher-sdk-android') with project(':publisher-sdk-android')
-        }
-    }
+// For Vungle SDK dependency configure
+//If gradle graph reached here means that this adapter will be build separately without host QA testApp gradle context.
+//Although in most cases we don't need to care about the following configuration but it can help us build out adapter
+//aar based on our sdk's feature branch easily and quickly.
+def dependOnVungleSdkProject = hasProperty("SdkSrcDependency") ? "$SdkSrcDependency".toBoolean() : false
+gradle.ext.dependOnVungleSdkProject = dependOnVungleSdkProject
+def vungleSdkProjectDir = '../../../vungle-android-sdk'
+if (file(vungleSdkProjectDir).exists() && dependOnVungleSdkProject) {
+    include ':vungle-android-sdk'
+    project(':vungle-android-sdk').projectDir = new File(settingsDir, vungleSdkProjectDir)
+    include ':vungle-android-sdk:publisher-sdk-android'
 }
