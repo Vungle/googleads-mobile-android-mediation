@@ -74,9 +74,11 @@ public class VungleInitializer implements InitCallback {
         });
 
         VungleSettings vungleSettings = VungleNetworkSettings.getVungleSettings();
-        VungleSettings settings = (vungleSettings != null) ? vungleSettings : new VungleSettings.Builder().build();
-        Vungle.init(appId, context.getApplicationContext(), VungleInitializer.this, settings);
-        getInstance().mInitListeners.put(adapterId, listener);
+        if (vungleSettings == null) {
+            vungleSettings = new VungleSettings.Builder().build();
+        }
+        Vungle.init(appId, context.getApplicationContext(), VungleInitializer.this, vungleSettings);
+        mInitListeners.put(adapterId, listener);
     }
 
     @Override

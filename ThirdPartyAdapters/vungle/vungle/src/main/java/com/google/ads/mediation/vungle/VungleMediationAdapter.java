@@ -154,8 +154,8 @@ public class VungleMediationAdapter extends Adapter
 
         if (mPlacementsInUse.containsKey(mPlacement) &&
                 mPlacementsInUse.get(mPlacement).get() != null){
-            String logMessage = "Only a maximum of one ad can be loaded per placement  CRAP";
-            Log.w(TAG + System.identityHashCode(mediationAdLoadCallback), logMessage);
+            String logMessage = "Only a maximum of one ad can be loaded per placement.";
+            Log.w(TAG, logMessage);
             mediationAdLoadCallback.onFailure(logMessage);
             return;
         }
@@ -181,8 +181,6 @@ public class VungleMediationAdapter extends Adapter
             if (Vungle.canPlayAd(mPlacement)) {
                 mMediationRewardedAdCallback =
                         mMediationAdLoadCallback.onSuccess(VungleMediationAdapter.this);
-                Log.w(TAG + System.identityHashCode(mediationAdLoadCallback), "mMediationAdLoadCallback.onSuccess CRAP");
-
             } else {
                 Vungle.loadAd(mPlacement, VungleMediationAdapter.this);
             }
@@ -209,7 +207,6 @@ public class VungleMediationAdapter extends Adapter
                 if (mMediationAdLoadCallback != null) {
                     mMediationRewardedAdCallback =
                             mMediationAdLoadCallback.onSuccess(VungleMediationAdapter.this);
-                    Log.w(TAG + System.identityHashCode(mMediationAdLoadCallback), "onInitializeSuccess: mMediationAdLoadCallback.onSuccess  CRAP");
                 }
             } else {
                 Vungle.loadAd(mPlacement, VungleMediationAdapter.this);
