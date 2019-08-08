@@ -197,7 +197,6 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
                                 MediationAdRequest mediationAdRequest,
                                 Bundle mediationExtras) {
         Log.d(TAG, "requestBannerAd");
-        Context mContext = context;
         pendingRequestBanner.set(true);
         mMediationBannerListener = mediationBannerListener;
         AdapterParametersParser.Config config;
@@ -224,7 +223,7 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
             mAdapterId = BANNER + String.valueOf(sCounter);
             sCounter++;
             //workaround for missing onPause/onResume/onDestroy
-            adLayout = new RelativeLayout(mContext) {
+            adLayout = new RelativeLayout(context) {
                 @Override
                 protected void onWindowVisibilityChanged(int visibility) {
                     super.onWindowVisibilityChanged(visibility);
