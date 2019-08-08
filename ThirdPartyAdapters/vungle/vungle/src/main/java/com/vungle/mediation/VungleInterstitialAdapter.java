@@ -39,7 +39,6 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
 
     //banner
     private static final String BANNER = "banner";
-    private Context mContext;
     private volatile RelativeLayout adLayout;
     private VungleBanner vungleBannerAd;
     private AtomicBoolean pendingRequestBanner = new AtomicBoolean(false);
@@ -198,7 +197,7 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
                                 MediationAdRequest mediationAdRequest,
                                 Bundle mediationExtras) {
         Log.d(TAG, "requestBannerAd");
-        mContext = context;
+        Context mContext = context;
         pendingRequestBanner.set(true);
         mMediationBannerListener = mediationBannerListener;
         AdapterParametersParser.Config config;
