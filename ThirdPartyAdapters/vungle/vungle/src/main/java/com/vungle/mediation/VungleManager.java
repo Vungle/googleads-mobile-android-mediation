@@ -1,9 +1,7 @@
 package com.vungle.mediation;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.vungle.warren.AdConfig;
@@ -27,7 +25,7 @@ public class VungleManager {
 
     private static VungleManager sInstance;
 
-    private ConcurrentHashMap<String, Pair<String, VungleBanner>> activeBannerAds;
+    private ConcurrentHashMap<String, VungleBanner> activeBannerAds;
 
     public static synchronized VungleManager getInstance() {
         if (sInstance == null) {
@@ -145,28 +143,23 @@ public class VungleManager {
                 Vungle.getValidPlacements().contains(placementId);
     }
 
-    VungleBanner getVungleBanner(String adapterId, String placement, @NonNull AdConfig.AdSize adSize, VungleListener vungleListener) {
-        Log.d(TAG, "getVungleNativeAd");
-        //Since we VungleInterstitialAdapter#onDestroy() does not called by AdMob SDK,
-        // we have to take care of removal of listener
+    VungleBanner getVungleBanner(String placement, AdConfig.AdSize adSize, VungleListener vungleListener) {
+        Log.d(TAG, "getVungleBanner");
         cleanUpBanner(placement);
-        //Fetch new ad
 
         VungleBanner bannerAd = Banners.getBanner(placement, adSize, playAdCallback(vungleListener));
         if (bannerAd != null) {
-            activeBannerAds.put(placement, new Pair<>(adapterId, bannerAd));
+            activeBannerAds.put(placement, bannerAd);
         }
 
         return bannerAd;
     }
 
-    void removeActiveBanner(String placementId, String adapterId) {
-        if (placementId == null)
+    void removeActiveBanner(String placementId) {
+        if (placementId == null) {
             return;
-        Pair<String, VungleBanner> pair = activeBannerAds.get(placementId);
-        if (pair != null && adapterId != null && adapterId.equals(pair.first)) {
-            activeBannerAds.remove(placementId, pair);
         }
+        activeBannerAds.remove(placementId);
     }
 
     /**
@@ -176,17 +169,13 @@ public class VungleManager {
      */
     void cleanUpBanner(String placementId) {
         Log.d(TAG, "cleanUpBanner");
-        Pair<String, VungleBanner> pair = activeBannerAds.get(placementId);
-        if (pair != null) {
-            String adapterId = pair.first;
+        VungleBanner vungleBanner = activeBannerAds.get(placementId);
+        if (vungleBanner != null) {
             //Remove ad
-            VungleBanner vungleNativeAd = pair.second;
-            if (vungleNativeAd != null) {
-                //We should do Report ad
-                Log.d(TAG, "cleanUpBanner # finishDisplayingAd");
-                vungleNativeAd.destroyAd();
-                removeActiveBanner(placementId, adapterId);
-            }
+            //We should do Report ad
+            Log.d(TAG, "cleanUpBanner # destroyAd");
+            vungleBanner.destroyAd();
+            removeActiveBanner(placementId);
         }
     }
 }

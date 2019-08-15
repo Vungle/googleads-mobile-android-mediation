@@ -32,13 +32,9 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
     private MediationInterstitialListener mMediationInterstitialListener;
     private VungleManager mVungleManager;
     private AdConfig mAdConfig;
-    private static final String INTERSTITIAL = "interstitial";
-    private static int sCounter = 0;
-    private String mAdapterId;
     private String mPlacementForPlay;
 
     //banner
-    private static final String BANNER = "banner";
     private volatile RelativeLayout adLayout;
     private VungleBanner vungleBannerAd;
     private AtomicBoolean pendingRequestBanner = new AtomicBoolean(false);
@@ -80,10 +76,8 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
         }
 
         mAdConfig = VungleExtrasBuilder.adConfigWithNetworkExtras(mediationExtras);
-        mAdapterId = INTERSTITIAL + String.valueOf(sCounter);
-        sCounter++;
         VungleInitializer.getInstance().initialize(config.getAppId(),
-                context.getApplicationContext(), mAdapterId, new VungleInitializer.VungleInitializationListener() {
+                context.getApplicationContext(), new VungleInitializer.VungleInitializationListener() {
                     @Override
                     public void onInitializeSuccess() {
                         loadAd();
@@ -139,7 +133,6 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
                             // Only the call to action button is clickable for Vungle ads. So the
                             // wasCallToActionClicked can be used for tracking clicks.
                             mMediationInterstitialListener.onAdClicked(VungleInterstitialAdapter.this);
-                            mMediationInterstitialListener.onAdLeftApplication(VungleInterstitialAdapter.this);
                         }
                         mMediationInterstitialListener.onAdClosed(VungleInterstitialAdapter.this);
                     }
@@ -168,7 +161,7 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
         pendingRequestBanner.set(false);
         if (vungleBannerAd != null) {
             vungleBannerAd.destroyAd();
-            mVungleManager.removeActiveBanner(mPlacementForPlay, mAdapterId);
+            mVungleManager.removeActiveBanner(mPlacementForPlay);
         }
         vungleBannerAd = null;
         adLayout = null;
@@ -220,8 +213,6 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
         boolean isBannerSizeValid = mAdSize != AdConfig.AdSize.VUNGLE_DEFAULT;
         if (isPlacementValid && isBannerSizeValid) {
             mAdConfig = VungleExtrasBuilder.adConfigWithNetworkExtras(mediationExtras);
-            mAdapterId = BANNER + String.valueOf(sCounter);
-            sCounter++;
             //workaround for missing onPause/onResume/onDestroy
             adLayout = new RelativeLayout(context) {
                 @Override
@@ -232,7 +223,7 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
                 }
             };
             VungleInitializer.getInstance().initialize(config.getAppId(),
-                    context.getApplicationContext(), mAdapterId, new VungleInitializer.VungleInitializationListener() {
+                    context.getApplicationContext(), new VungleInitializer.VungleInitializationListener() {
                         @Override
                         public void onInitializeSuccess() {
                             loadBanner();
@@ -299,7 +290,7 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
             return;
 
         mVungleManager.cleanUpBanner(mPlacementForPlay);
-        vungleBannerAd = mVungleManager.getVungleBanner(mAdapterId, mPlacementForPlay, mAdSize, new VungleListener() {
+        vungleBannerAd = mVungleManager.getVungleBanner(mPlacementForPlay, mAdSize, new VungleListener() {
             @Override
             void onAdEnd(String placement, boolean wasSuccessfulView, boolean wasCallToActionClicked) {
                 if (mMediationBannerListener != null) {
@@ -308,7 +299,6 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
                         // wasCallToActionClicked can be used for tracking clicks.
                         mMediationBannerListener.onAdClicked(VungleInterstitialAdapter.this);
                         mMediationBannerListener.onAdOpened(VungleInterstitialAdapter.this);
-                        mMediationBannerListener.onAdLeftApplication(VungleInterstitialAdapter.this);
                         mMediationBannerListener.onAdClosed(VungleInterstitialAdapter.this);
                     }
                 }
