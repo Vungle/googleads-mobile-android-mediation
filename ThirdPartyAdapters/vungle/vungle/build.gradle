@@ -16,15 +16,14 @@ ext {
 }
 
 android {
-    compileSdkVersion 28
-
+    compileSdkVersion 26
     lintOptions {
         abortOnError false
     }
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 28
-        versionCode 6041100
+        targetSdkVersion 26
+        versionCode 6050000
         versionName stringVersion
 
     }
@@ -40,7 +39,8 @@ dependencies {
     if (gradle.ext.has('dependOnVungleSdkProject') && gradle.ext.dependOnVungleSdkProject) {
         implementation project(':vungle-android-sdk:publisher-sdk-android')
     } else {
-        implementation ('com.vungle:publisher-sdk-android:6.4.11') {
+        implementation ('com.github.vungle:vungle-android-sdk:6.5.0-RC3') {
+        //implementation ('com.vungle:publisher-sdk-android:6.4.11') {
             transitive=true
         }
     }
