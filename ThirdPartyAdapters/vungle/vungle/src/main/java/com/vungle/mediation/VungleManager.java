@@ -1,8 +1,9 @@
 package com.vungle.mediation;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 import com.vungle.warren.AdConfig;
@@ -170,6 +171,7 @@ public class VungleManager {
 
     VungleNativeAd getVungleNativeAd(String placement, AdConfig adConfig, VungleListener vungleListener) {
         Log.d(TAG, "getVungleNativeAd");
+
         cleanUpBanner(placement);
 
         VungleNativeAd bannerAd = Vungle.getNativeAd(placement, adConfig, playAdCallback(vungleListener));
