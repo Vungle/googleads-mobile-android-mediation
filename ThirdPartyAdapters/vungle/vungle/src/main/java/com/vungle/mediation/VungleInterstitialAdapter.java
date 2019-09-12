@@ -168,11 +168,11 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
         pendingRequestBanner.set(false);
         if (vungleBannerAd != null) {
             vungleBannerAd.destroyAd();
-            mVungleManager.removeActiveBanner(mPlacementForPlay);
+            mVungleManager.removeActiveBanner(mPlacementForPlay, vungleBannerAd);
             vungleBannerAd = null;
         } else if (vungleNativeAd != null) {
             vungleNativeAd.finishDisplayingAd();
-            mVungleManager.removeActiveBanner(mPlacementForPlay);
+            mVungleManager.removeActiveBanner(mPlacementForPlay, vungleNativeAd);
             vungleNativeAd = null;
         }
         adLayout = null;
@@ -183,7 +183,7 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
     @Override
     public void onPause() {
         Log.d(TAG, "onPause");
-        paused = false;
+        paused = true;
         updateVisibility();
     }
 
@@ -271,18 +271,12 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
 
     private void loadBanner() {
         if (mVungleManager.isAdPlayable(mPlacementForPlay, adConfig.getAdSize())) {
-            if (mMediationBannerListener != null) {
-                createBanner();
-                mMediationBannerListener.onAdLoaded(VungleInterstitialAdapter.this);
-            }
+            createBanner();
         } else if (mVungleManager.isValidPlacement(mPlacementForPlay)) {
             mVungleManager.loadAd(mPlacementForPlay, adConfig.getAdSize(), new VungleListener() {
                 @Override
                 void onAdAvailable() {
-                    if (mMediationBannerListener != null) {
-                        createBanner();
-                        mMediationBannerListener.onAdLoaded(VungleInterstitialAdapter.this);
-                    }
+                    createBanner();
                 }
 
                 @Override
@@ -333,13 +327,14 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
         if (mVungleManager == null || !pendingRequestBanner.get())
             return;
 
-        mVungleManager.cleanUpBanner(mPlacementForPlay);
-
         if (AdConfig.AdSize.isBannerAdSize(adConfig.getAdSize())) {
             vungleBannerAd = mVungleManager.getVungleBanner(mPlacementForPlay, adConfig.getAdSize(), mVunglePlayListener);
             if (vungleBannerAd != null) {
                 updateVisibility();
                 adLayout.addView(vungleBannerAd);
+                if (mMediationBannerListener != null) {
+                    mMediationBannerListener.onAdLoaded(VungleInterstitialAdapter.this);
+                }
             } else {
                 //missing resources
                 if (mMediationBannerListener != null) {
@@ -352,6 +347,9 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter, 
             if (adView != null) {
                 updateVisibility();
                 adLayout.addView(adView);
+                if (mMediationBannerListener != null) {
+                    mMediationBannerListener.onAdLoaded(VungleInterstitialAdapter.this);
+                }
             } else {
                 //missing resources
                 if (mMediationBannerListener != null) {

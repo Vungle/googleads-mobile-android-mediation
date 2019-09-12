@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.util.Log;
 
 import com.vungle.warren.AdConfig;
@@ -158,9 +159,9 @@ public class VungleManager {
     }
 
     VungleBanner getVungleBanner(String placement, AdConfig.AdSize adSize, VungleListener vungleListener) {
-        Log.d(TAG, "getVungleBanner");
         cleanUpBanner(placement);
 
+        Log.d(TAG, "getVungleBanner");
         VungleBanner bannerAd = Banners.getBanner(placement, adSize, playAdCallback(vungleListener));
         if (bannerAd != null) {
             activeBannerAds.put(placement, bannerAd);
@@ -170,10 +171,10 @@ public class VungleManager {
     }
 
     VungleNativeAd getVungleNativeAd(String placement, AdConfig adConfig, VungleListener vungleListener) {
-        Log.d(TAG, "getVungleNativeAd");
-
         cleanUpBanner(placement);
 
+        //Fetch new ad
+        Log.d(TAG, "getVungleNativeAd");
         VungleNativeAd bannerAd = Vungle.getNativeAd(placement, adConfig, playAdCallback(vungleListener));
         if (bannerAd != null) {
             activeNativeAds.put(placement, bannerAd);
@@ -182,14 +183,29 @@ public class VungleManager {
         return bannerAd;
     }
 
-    void removeActiveBanner(String placementId) {
+    void removeActiveBanner(String placementId, VungleNativeAd willRemoveBannerAd) {
         if (placementId == null) {
             return;
         }
-        if (activeBannerAds.containsKey(placementId)) {
-            activeBannerAds.remove(placementId);
-        } else {
+        Log.d(TAG, "removeActiveBanner");
+        VungleNativeAd activeBannerAd = activeNativeAds.get(placementId);
+        // must make sure that will be removed active banner ad is what you want.
+        if (activeBannerAd == willRemoveBannerAd) {
+            Log.d(TAG, "removeActiveBanner # deal");
             activeNativeAds.remove(placementId);
+        }
+    }
+
+    void removeActiveBanner(String placementId, VungleBanner willRemoveBannerAd) {
+        if (placementId == null) {
+            return;
+        }
+        Log.d(TAG, "removeActiveBanner");
+        VungleBanner activeBannerAd = activeBannerAds.get(placementId);
+        // must make sure that will be removed active banner ad is what you want.
+        if (activeBannerAd == willRemoveBannerAd) {
+            Log.d(TAG, "removeActiveBanner # deal");
+            activeBannerAds.remove(placementId);
         }
     }
 
@@ -202,17 +218,15 @@ public class VungleManager {
         Log.d(TAG, "cleanUpBanner");
         VungleBanner vungleBanner = activeBannerAds.get(placementId);
         if (vungleBanner != null) {
-            //Remove ad
-            //We should do Report ad
             Log.d(TAG, "cleanUpBanner # destroyAd");
             vungleBanner.destroyAd();
-            removeActiveBanner(placementId);
+            removeActiveBanner(placementId, vungleBanner);
         } else {
             VungleNativeAd vungleNativeAd = activeNativeAds.get(placementId);
             if (vungleNativeAd != null) {
                 Log.d(TAG, "cleanUpBanner # finishDisplayingAd");
                 vungleNativeAd.finishDisplayingAd();
-                removeActiveBanner(placementId);
+                removeActiveBanner(placementId, vungleNativeAd);
             }
         }
     }
