@@ -2,23 +2,28 @@ package com.google.ads.mediation.facebook.rtb;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
+import com.facebook.ads.ExtraHints;
 import  com.facebook.ads.InterstitialAd;
-import com.facebook.ads.InterstitialAdListener;
+import com.facebook.ads.InterstitialAdExtendedListener;
 import com.google.ads.mediation.facebook.FacebookMediationAdapter;
 import com.google.android.gms.ads.mediation.MediationAdLoadCallback;
 import com.google.android.gms.ads.mediation.MediationInterstitialAd;
 import com.google.android.gms.ads.mediation.MediationInterstitialAdCallback;
 import com.google.android.gms.ads.mediation.MediationInterstitialAdConfiguration;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 
-public class FacebookRtbInterstitialAd implements MediationInterstitialAd, InterstitialAdListener {
+
+public class FacebookRtbInterstitialAd implements MediationInterstitialAd, InterstitialAdExtendedListener {
     private MediationInterstitialAdConfiguration adConfiguration;
     private MediationAdLoadCallback<MediationInterstitialAd, MediationInterstitialAdCallback> callback;
     private InterstitialAd interstitialAd;
     private MediationInterstitialAdCallback mInterstitalAdCallback;
+    private AtomicBoolean didInterstitialAdClose = new AtomicBoolean();
 
     public FacebookRtbInterstitialAd(MediationInterstitialAdConfiguration adConfiguration,
                                      MediationAdLoadCallback<MediationInterstitialAd, MediationInterstitialAdCallback> callback) {
@@ -35,6 +40,10 @@ public class FacebookRtbInterstitialAd implements MediationInterstitialAd, Inter
         }
         interstitialAd = new InterstitialAd(adConfiguration.getContext(), placementId);
         interstitialAd.setAdListener(this);
+        if (!TextUtils.isEmpty(adConfiguration.getWatermark())) {
+            interstitialAd.setExtraHints(new ExtraHints.Builder()
+                    .mediationData(adConfiguration.getWatermark()).build());
+        }
         interstitialAd.loadAdFromBid(adConfiguration.getBidResponse());
     }
 
@@ -54,7 +63,7 @@ public class FacebookRtbInterstitialAd implements MediationInterstitialAd, Inter
 
     @Override
     public void onInterstitialDismissed(Ad ad) {
-        if (mInterstitalAdCallback != null) {
+        if (!didInterstitialAdClose.getAndSet(true) && mInterstitalAdCallback != null) {
             mInterstitalAdCallback.onAdClosed();
         }
     }
@@ -84,5 +93,27 @@ public class FacebookRtbInterstitialAd implements MediationInterstitialAd, Inter
             // TODO: Upon approval, add this callback back in.
             // mInterstitalAdCallback.reportAdImpression();
         }
+    }
+
+    @Override
+    public void onInterstitialActivityDestroyed() {
+        if (!didInterstitialAdClose.getAndSet(true) && mInterstitalAdCallback != null) {
+            mInterstitalAdCallback.onAdClosed();
+        }
+    }
+
+    @Override
+    public void onRewardedAdCompleted() {
+        //no-op
+    }
+
+    @Override
+    public void onRewardedAdServerSucceeded() {
+        //no-op
+    }
+
+    @Override
+    public void onRewardedAdServerFailed() {
+        //no-op
     }
 }
