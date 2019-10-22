@@ -232,7 +232,7 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter,
         }
 
         mAdConfig = VungleExtrasBuilder.adConfigWithNetworkExtras(mediationExtras);
-        if (!VungleExtrasBuilder.isStartMuteConfigured(mediationExtras)) {
+        if (VungleExtrasBuilder.isStartMutedNotConfigured(mediationExtras)) {
             mAdConfig.setMuted(true); // start muted by default
         }
         if (!hasBannerSizeAd(adSize)) {
