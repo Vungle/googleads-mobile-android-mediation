@@ -137,12 +137,20 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter,
             mVungleManager.playAd(mPlacementForPlay, mAdConfig, new VungleListener() {
                 @Override
                 void onAdEnd(String placement, boolean wasSuccessfulView, boolean wasCallToActionClicked) {
+                    //Deprecated event
+                }
+
+                @Override
+                void onAdClick(String placement) {
                     if (mMediationInterstitialListener != null) {
-                        if (wasCallToActionClicked) {
-                            // Only the call to action button is clickable for Vungle ads. So the
-                            // wasCallToActionClicked can be used for tracking clicks.
-                            mMediationInterstitialListener.onAdClicked(VungleInterstitialAdapter.this);
-                        }
+                        mMediationInterstitialListener.onAdClicked(VungleInterstitialAdapter.this);
+                        mMediationInterstitialListener.onAdLeftApplication(VungleInterstitialAdapter.this);
+                    }
+                }
+
+                @Override
+                void onAdEnd(String placement) {
+                    if (mMediationInterstitialListener != null) {
                         mMediationInterstitialListener.onAdClosed(VungleInterstitialAdapter.this);
                     }
                 }
@@ -305,14 +313,16 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter,
     private VungleListener mVunglePlayListener = new VungleListener() {
         @Override
         void onAdEnd(String placement, boolean wasSuccessfulView, boolean wasCallToActionClicked) {
+            //Deprecated event
+        }
+
+        @Override
+        void onAdClick(String placement) {
             if (mMediationBannerListener != null) {
-                if (wasCallToActionClicked) {
-                    // Only the call to action button is clickable for Vungle ads. So the
-                    // wasCallToActionClicked can be used for tracking clicks.
-                    mMediationBannerListener.onAdClicked(VungleInterstitialAdapter.this);
-                    mMediationBannerListener.onAdOpened(VungleInterstitialAdapter.this);
-                    mMediationBannerListener.onAdClosed(VungleInterstitialAdapter.this);
-                }
+                mMediationBannerListener.onAdClicked(VungleInterstitialAdapter.this);
+                mMediationBannerListener.onAdOpened(VungleInterstitialAdapter.this);
+                mMediationBannerListener.onAdClosed(VungleInterstitialAdapter.this);
+                mMediationBannerListener.onAdLeftApplication(VungleInterstitialAdapter.this);
             }
         }
 

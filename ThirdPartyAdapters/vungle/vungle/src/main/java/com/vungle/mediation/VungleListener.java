@@ -9,6 +9,12 @@ abstract class VungleListener {
 
     void onAdStart(String placement) {}
 
+    void onAdClick(String placement) {}
+
+    void onAdEnd(String placement) {}
+
+    void onAdRewarded(String placement) {}
+
     void onAdFail(String placement) {}
 
     void onAdAvailable() {}

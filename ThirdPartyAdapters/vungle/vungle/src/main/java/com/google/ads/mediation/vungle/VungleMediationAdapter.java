@@ -272,23 +272,44 @@ public class VungleMediationAdapter extends Adapter
     public void onAdEnd(final String placementID,
                         final boolean wasSuccessfulView,
                         final boolean wasCallToActionClicked) {
+        //Deprecated event
+    }
+
+    @Override
+    public void onAdEnd(final String placementID) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (mMediationRewardedAdCallback != null) {
-                    if (wasSuccessfulView) {
-                        mMediationRewardedAdCallback.onVideoComplete();
-                        mMediationRewardedAdCallback.onUserEarnedReward(
-                                new VungleReward("vungle", 1));
-                    }
-                    if (wasCallToActionClicked) {
-                        // Only the call to action button is clickable for Vungle ads. So the
-                        // wasCallToActionClicked can be used for tracking clicks.
-                        mMediationRewardedAdCallback.reportAdClicked();
-                    }
                     mMediationRewardedAdCallback.onAdClosed();
                 }
                 mPlacementsInUse.remove(placementID);
+            }
+        });
+    }
+
+    @Override
+    public void onAdClick(String id) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mMediationRewardedAdCallback != null) {
+                    mMediationRewardedAdCallback.reportAdClicked();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onAdRewarded(String id) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mMediationRewardedAdCallback != null) {
+                    mMediationRewardedAdCallback.onVideoComplete();
+                    mMediationRewardedAdCallback.onUserEarnedReward(
+                            new VungleReward("vungle", 1));
+                }
             }
         });
     }
