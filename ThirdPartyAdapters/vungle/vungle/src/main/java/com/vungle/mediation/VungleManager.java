@@ -148,6 +148,13 @@ public class VungleManager {
             }
 
             @Override
+            public void onAdLeftApplication(String id) {
+                if (listener != null) {
+                    listener.onAdLeftApplication(id);
+                }
+            }
+
+            @Override
             public void onError(String id, VungleException error) {
                 if (listener != null) {
                     listener.onAdFail(id);

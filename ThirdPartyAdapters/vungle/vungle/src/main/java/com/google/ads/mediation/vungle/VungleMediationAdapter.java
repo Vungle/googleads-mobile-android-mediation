@@ -314,6 +314,11 @@ public class VungleMediationAdapter extends Adapter
         });
     }
 
+    @Override
+    public void onAdLeftApplication(String id) {
+        //nothing to do
+    }
+
     // Vungle's LoadAdCallback and PlayAdCallback shares the same onError() call; when an
     // ad request to Vungle fails, and when an ad fails to play.
     @Override

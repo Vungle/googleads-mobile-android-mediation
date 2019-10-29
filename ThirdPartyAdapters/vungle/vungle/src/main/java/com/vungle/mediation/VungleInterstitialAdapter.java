@@ -144,7 +144,6 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter,
                 void onAdClick(String placement) {
                     if (mMediationInterstitialListener != null) {
                         mMediationInterstitialListener.onAdClicked(VungleInterstitialAdapter.this);
-                        mMediationInterstitialListener.onAdLeftApplication(VungleInterstitialAdapter.this);
                     }
                 }
 
@@ -152,6 +151,13 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter,
                 void onAdEnd(String placement) {
                     if (mMediationInterstitialListener != null) {
                         mMediationInterstitialListener.onAdClosed(VungleInterstitialAdapter.this);
+                    }
+                }
+
+                @Override
+                void onAdLeftApplication(String placement) {
+                    if (mMediationInterstitialListener != null) {
+                        mMediationInterstitialListener.onAdLeftApplication(VungleInterstitialAdapter.this);
                     }
                 }
 
@@ -322,6 +328,12 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter,
                 mMediationBannerListener.onAdClicked(VungleInterstitialAdapter.this);
                 mMediationBannerListener.onAdOpened(VungleInterstitialAdapter.this);
                 mMediationBannerListener.onAdClosed(VungleInterstitialAdapter.this);
+            }
+        }
+
+        @Override
+        void onAdLeftApplication(String placement) {
+            if (mMediationBannerListener != null) {
                 mMediationBannerListener.onAdLeftApplication(VungleInterstitialAdapter.this);
             }
         }
