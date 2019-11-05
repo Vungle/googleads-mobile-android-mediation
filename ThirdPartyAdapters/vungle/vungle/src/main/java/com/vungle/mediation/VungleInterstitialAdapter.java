@@ -48,7 +48,6 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter,
     private AtomicBoolean pendingRequestBanner = new AtomicBoolean(false);
     private MediationBannerListener mMediationBannerListener;
     private boolean paused;
-    private boolean visible;
 
     @Override
     public void requestInterstitialAd(Context context,
@@ -241,15 +240,7 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter,
             return;
         }
 
-        //workaround for missing onPause/onResume/onDestroy
-        adLayout = new RelativeLayout(context) {
-            @Override
-            protected void onWindowVisibilityChanged(int visibility) {
-                super.onWindowVisibilityChanged(visibility);
-                visible = (visibility == VISIBLE);
-                updateVisibility();
-            }
-        };
+        adLayout = new RelativeLayout(context);
         // Make adLayout wrapper match the requested ad size, as Vungle's ad uses MATCH_PARENT for
         // its dimensions.
         RelativeLayout.LayoutParams adViewLayoutParams = new RelativeLayout.LayoutParams(
@@ -324,6 +315,7 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter,
 
         @Override
         void onAdFail(String placement) {
+            Log.w(TAG, "Ad playback error Placement: " + placement);
             if (mMediationBannerListener != null) {
                 mMediationBannerListener.onAdFailedToLoad(VungleInterstitialAdapter.this,
                         AdRequest.ERROR_CODE_INTERNAL_ERROR);
@@ -373,9 +365,9 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter,
 
     private void updateVisibility() {
         if (vungleBannerAd != null) {
-            vungleBannerAd.setAdVisibility(!paused && visible);
+            vungleBannerAd.setAdVisibility(!paused);
         } else if (vungleNativeAd != null) {
-            vungleNativeAd.setAdVisibility(!paused && visible);
+            vungleNativeAd.setAdVisibility(!paused);
         }
     }
 
