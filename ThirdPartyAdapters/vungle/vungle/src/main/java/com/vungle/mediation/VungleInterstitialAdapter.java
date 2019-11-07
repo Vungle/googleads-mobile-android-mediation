@@ -232,6 +232,9 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter,
         }
 
         mAdConfig = VungleExtrasBuilder.adConfigWithNetworkExtras(mediationExtras);
+        if (VungleExtrasBuilder.isStartMutedNotConfigured(mediationExtras)) {
+            mAdConfig.setMuted(true); // start muted by default
+        }
         if (!hasBannerSizeAd(adSize)) {
             String message = "Failed to load ad from Vungle: Invalid banner size.";
             Log.w(TAG, message);
