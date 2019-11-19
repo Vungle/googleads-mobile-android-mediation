@@ -121,9 +121,7 @@ public class VungleManager {
 
             @Override
             public void onAdEnd(String id, boolean completed, boolean isCTAClicked) {
-                if (listener != null) {
-                    listener.onAdEnd(id, completed, isCTAClicked);
-                }
+                //Deprecated event
             }
 
             @Override

@@ -135,10 +135,6 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter,
     public void showInterstitial() {
         if (mVungleManager != null)
             mVungleManager.playAd(mPlacementForPlay, mAdConfig, new VungleListener() {
-                @Override
-                void onAdEnd(String placement, boolean wasSuccessfulView, boolean wasCallToActionClicked) {
-                    //Deprecated event
-                }
 
                 @Override
                 void onAdClick(String placement) {
@@ -317,10 +313,6 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter,
     }
 
     private VungleListener mVunglePlayListener = new VungleListener() {
-        @Override
-        void onAdEnd(String placement, boolean wasSuccessfulView, boolean wasCallToActionClicked) {
-            //Deprecated event
-        }
 
         @Override
         void onAdClick(String placement) {
