@@ -5,9 +5,16 @@ package com.vungle.mediation;
  * {@link VungleInterstitialAdapter} and {@link VungleAdapter}.
  */
 abstract class VungleListener {
-    void onAdEnd(String placement, boolean wasSuccessfulView, boolean wasCallToActionClicked) {}
 
     void onAdStart(String placement) {}
+
+    void onAdClick(String placement) {}
+
+    void onAdEnd(String placement) {}
+
+    void onAdRewarded(String placement) {}
+
+    void onAdLeftApplication(String placement) {}
 
     void onAdFail(String placement) {}
 

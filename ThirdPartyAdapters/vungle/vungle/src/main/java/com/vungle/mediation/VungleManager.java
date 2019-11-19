@@ -121,8 +121,34 @@ public class VungleManager {
 
             @Override
             public void onAdEnd(String id, boolean completed, boolean isCTAClicked) {
+                //Deprecated event
+            }
+
+            @Override
+            public void onAdEnd(String id) {
                 if (listener != null) {
-                    listener.onAdEnd(id, completed, isCTAClicked);
+                    listener.onAdEnd(id);
+                }
+            }
+
+            @Override
+            public void onAdClick(String id) {
+                if (listener != null) {
+                    listener.onAdClick(id);
+                }
+            }
+
+            @Override
+            public void onAdRewarded(String id) {
+                if (listener != null) {
+                    listener.onAdRewarded(id);
+                }
+            }
+
+            @Override
+            public void onAdLeftApplication(String id) {
+                if (listener != null) {
+                    listener.onAdLeftApplication(id);
                 }
             }
 
