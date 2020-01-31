@@ -57,8 +57,6 @@ public final class InMobiAdapter extends InMobiMediationAdapter
 
     private NativeMediationAdRequest mNativeMedAdReq;
 
-    private Boolean mIsOnlyUrl = false;
-
     private InMobiNative mAdNative;
 
     public static Boolean isAppInitialized() {
@@ -252,42 +250,17 @@ public final class InMobiAdapter extends InMobiMediationAdapter
     private AdSize getSupportedAdSize(Context context, AdSize adSize) {
         /*
         Supported Sizes (ref: https://www.inmobi.com/ui/pdfs/ad-specs.pdf)
-        300x50; 600x100
-        320x48; 640x96
-        320x50; 640x100
-        300x250; 600x500
-        120x600; 240x1200
-        468x60; 936x120
-        728x90; 1456x180
-        1024x768; 1536x2048
-        320x480; 640x960
-        1280x800; 1600x2560
+        320x50,
+        300x250,
+        728x90.
          */
-        AdSize original = new AdSize(adSize.getWidth(), adSize.getHeight());
 
-        ArrayList<AdSize> potentials = new ArrayList<AdSize>(20);
-        potentials.add(new AdSize(300, 50));
-        potentials.add(new AdSize(600, 100));
-        potentials.add(new AdSize(320, 48));
-        potentials.add(new AdSize(640, 96));
-        potentials.add(new AdSize(320, 50));
-        potentials.add(new AdSize(640, 100));
-        potentials.add(new AdSize(300, 250));
-        potentials.add(new AdSize(600, 500));
-        potentials.add(new AdSize(120, 600));
-        potentials.add(new AdSize(240, 1200));
-        potentials.add(new AdSize(468, 60));
-        potentials.add(new AdSize(936, 120));
-        potentials.add(new AdSize(728, 90));
-        potentials.add(new AdSize(1456, 180));
-        potentials.add(new AdSize(1024, 768));
-        potentials.add(new AdSize(1536, 2048));
-        potentials.add(new AdSize(320, 480));
-        potentials.add(new AdSize(640, 960));
-        potentials.add(new AdSize(1280, 800));
-        potentials.add(new AdSize(1600, 2560));
+        ArrayList<AdSize> potentials = new ArrayList<AdSize>(3);
+        potentials.add(new AdSize(320,50));
+        potentials.add(new AdSize(300,250));
+        potentials.add(new AdSize(728,90));
         Log.i(TAG, potentials.toString());
-        return InMobiAdapterUtils.findClosestSize(context, original, potentials);
+        return InMobiAdapterUtils.findClosestSize(context, adSize, potentials);
     }
 
     @Override
@@ -420,7 +393,7 @@ public final class InMobiAdapter extends InMobiMediationAdapter
     public void requestNativeAd(final Context context,
                                 MediationNativeListener listener,
                                 Bundle serverParameters,
-                                NativeMediationAdRequest mediationAdRequest,
+                                final NativeMediationAdRequest mediationAdRequest,
                                 Bundle mediationExtras) {
         this.mNativeMedAdReq = mediationAdRequest;
 
@@ -432,17 +405,11 @@ public final class InMobiAdapter extends InMobiMediationAdapter
         }
         this.mNativeListener = listener;
 
-        final Boolean serveAnyAd = (mediationAdRequest.isAppInstallAdRequested()
-                && mediationAdRequest.isContentAdRequested())
-                || mediationAdRequest.isUnifiedNativeAdRequested();
-
-        /*
-         * InMobi Adapter will serve ad only if publisher requests for both AppInstall and Content
-         * Ads else we will give No-Fill to Publisher
-         */
-        if (!serveAnyAd) {
-            this.mNativeListener
-                    .onAdFailedToLoad(InMobiAdapter.this, AdRequest.ERROR_CODE_INVALID_REQUEST);
+        if (!mNativeMedAdReq.isUnifiedNativeAdRequested()
+                && !mNativeMedAdReq.isAppInstallAdRequested()) {
+            Log.e(TAG, "Failed to request native ad. Unified Native Ad or App install Ad should " +
+                    "be requested");
+            listener.onAdFailedToLoad(this, AdRequest.ERROR_CODE_INVALID_REQUEST);
             return;
         }
 
@@ -462,19 +429,29 @@ public final class InMobiAdapter extends InMobiMediationAdapter
                         //This setting decides whether to download images or not
                         NativeAdOptions nativeAdOptions =
                                 InMobiAdapter.this.mNativeMedAdReq.getNativeAdOptions();
-
+                         boolean mIsOnlyUrl = false;
 
                         if (null != nativeAdOptions) {
                             mIsOnlyUrl = nativeAdOptions.shouldReturnUrlsForImageAssets();
                         }
 
-                        InMobiAppInstallNativeAdMapper inMobiAppInstallNativeAdMapper =
-                                new InMobiAppInstallNativeAdMapper(
-                                        InMobiAdapter.this,
-                                        imNativeAd,
-                                        mIsOnlyUrl,
-                                        mNativeListener);
-                        inMobiAppInstallNativeAdMapper.mapAppInstallAd(context);
+                        if (mediationAdRequest.isUnifiedNativeAdRequested()) {
+                            InMobiUnifiedNativeAdMapper inMobiUnifiedNativeAdMapper =
+                                    new InMobiUnifiedNativeAdMapper(InMobiAdapter.this,
+                                            imNativeAd,
+                                            mIsOnlyUrl,
+                                            mNativeListener);
+                            inMobiUnifiedNativeAdMapper.mapUnifiedNativeAd(context);
+                        } else if (mediationAdRequest.isAppInstallAdRequested()) {
+
+                            InMobiAppInstallNativeAdMapper inMobiAppInstallNativeAdMapper =
+                                    new InMobiAppInstallNativeAdMapper(
+                                            InMobiAdapter.this,
+                                            imNativeAd,
+                                            mIsOnlyUrl,
+                                            mNativeListener);
+                            inMobiAppInstallNativeAdMapper.mapAppInstallAd(context);
+                        }
                     }
 
                     @Override

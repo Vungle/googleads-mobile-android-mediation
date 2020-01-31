@@ -2,7 +2,6 @@ package com.vungle.mediation;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.Keep;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +20,8 @@ import com.vungle.warren.VungleBanner;
 import com.vungle.warren.VungleNativeAd;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import androidx.annotation.Keep;
 
 import static com.vungle.warren.AdConfig.AdSize.BANNER;
 import static com.vungle.warren.AdConfig.AdSize.BANNER_LEADERBOARD;

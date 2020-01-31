@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.google.android.gms.ads.formats.NativeAd;
 import com.google.android.gms.ads.formats.NativeAdOptions;
 import com.google.android.gms.ads.mediation.NativeAppInstallAdMapper;
@@ -19,7 +22,6 @@ import com.mopub.nativeads.NativeImageHelper;
 import com.mopub.nativeads.StaticNativeAd;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -28,42 +30,48 @@ import java.util.List;
  */
 public class MoPubNativeAppInstallAdMapper extends NativeAppInstallAdMapper {
 
-    private StaticNativeAd mMopubNativeAdData;
+    /**
+     * MoPub StaticNativeAd instance.
+     */
+    private StaticNativeAd mMoPubNativeAdData;
+    /**
+     * Holds privacy icon placement.
+     */
     private int privacyIconPlacement;
+    /**
+     * Holds MoPub privacy information icon.
+     */
     private ImageView privacyInformationIconImageView;
+    /**
+     * The size of MoPub's privacy icon.
+     */
     private int mPrivacyIconSize;
 
-    public MoPubNativeAppInstallAdMapper(StaticNativeAd ad, HashMap<String, Drawable>
-            drawableMap, int privacyIconPlacementParam, int privacyIconSize) {
-        mMopubNativeAdData = ad;
-        setHeadline(mMopubNativeAdData.getTitle());
-        setBody(mMopubNativeAdData.getText());
-        setCallToAction(mMopubNativeAdData.getCallToAction());
+    public MoPubNativeAppInstallAdMapper(@NonNull Context context,
+                                         @NonNull StaticNativeAd ad,
+                                         @Nullable Drawable icon,
+                                         @Nullable Drawable nativeAdMainImage,
+                                         int privacyIconPlacementParam,
+                                         int privacyIconSize) {
+        mMoPubNativeAdData = ad;
+        setHeadline(mMoPubNativeAdData.getTitle());
+        setBody(mMoPubNativeAdData.getText());
+        setCallToAction(mMoPubNativeAdData.getCallToAction());
         privacyIconPlacement = privacyIconPlacementParam;
         mPrivacyIconSize = privacyIconSize;
 
-        if (drawableMap != null) {
-            setIcon(new MoPubNativeMappedImage(
-                    drawableMap.get(DownloadDrawablesAsync.KEY_ICON),
-                    mMopubNativeAdData.getIconImageUrl(),
-                    MoPubAdapter.DEFAULT_MOPUB_IMAGE_SCALE));
-
-            List<NativeAd.Image> imagesList = new ArrayList<NativeAd.Image>();
-            imagesList.add(new MoPubNativeMappedImage(
-                    drawableMap.get(DownloadDrawablesAsync.KEY_IMAGE),
-                    mMopubNativeAdData.getMainImageUrl(),
-                    MoPubAdapter.DEFAULT_MOPUB_IMAGE_SCALE));
-            setImages(imagesList);
-        } else {
-
-            setIcon(new MoPubNativeMappedImage(null,
-                    mMopubNativeAdData.getIconImageUrl(), MoPubAdapter.DEFAULT_MOPUB_IMAGE_SCALE));
-
-            List<NativeAd.Image> imagesList = new ArrayList<NativeAd.Image>();
-            imagesList.add(new MoPubNativeMappedImage(null,
-                    mMopubNativeAdData.getMainImageUrl(), MoPubAdapter.DEFAULT_MOPUB_IMAGE_SCALE));
-            setImages(imagesList);
-        }
+        MoPubNativeMappedImage iconImage = new MoPubNativeMappedImage(icon,
+                mMoPubNativeAdData.getIconImageUrl(), MoPubAdapter.DEFAULT_MOPUB_IMAGE_SCALE);
+        setIcon(iconImage);
+        MoPubNativeMappedImage mainImage = new MoPubNativeMappedImage(
+                nativeAdMainImage, mMoPubNativeAdData.getMainImageUrl(),
+                MoPubAdapter.DEFAULT_MOPUB_IMAGE_SCALE);
+        List<NativeAd.Image> imagesList = new ArrayList<NativeAd.Image>();
+        imagesList.add(mainImage);
+        setImages(imagesList);
+        ImageView mediaView = new ImageView(context);
+        mediaView.setImageDrawable(nativeAdMainImage);
+        setMediaView(mediaView);
         setOverrideClickHandling(true);
         setOverrideImpressionRecording(true);
     }
@@ -71,7 +79,7 @@ public class MoPubNativeAppInstallAdMapper extends NativeAppInstallAdMapper {
     @Override
     public void untrackView(View view) {
         super.untrackView(view);
-        mMopubNativeAdData.clear(view);
+        mMoPubNativeAdData.clear(view);
 
         if (privacyInformationIconImageView != null && (ViewGroup)
                 privacyInformationIconImageView.getParent() != null) {
@@ -82,7 +90,7 @@ public class MoPubNativeAppInstallAdMapper extends NativeAppInstallAdMapper {
 
     public void trackView(View view) {
 
-        mMopubNativeAdData.prepare(view);
+        mMoPubNativeAdData.prepare(view);
 
         if (!(view instanceof ViewGroup)) {
             return;
@@ -100,8 +108,8 @@ public class MoPubNativeAppInstallAdMapper extends NativeAppInstallAdMapper {
 
             privacyInformationIconImageView = new ImageView(context);
             String privacyInformationImageUrl =
-                    mMopubNativeAdData.getPrivacyInformationIconImageUrl();
-            final String privacyInformationClickthroughUrl = mMopubNativeAdData
+                    mMoPubNativeAdData.getPrivacyInformationIconImageUrl();
+            final String privacyInformationClickthroughUrl = mMoPubNativeAdData
                     .getPrivacyInformationIconClickThroughUrl();
 
             if (privacyInformationImageUrl == null) {
@@ -114,7 +122,7 @@ public class MoPubNativeAppInstallAdMapper extends NativeAppInstallAdMapper {
 
             privacyInformationIconImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(final View v) {
+                public void onClick(final View view) {
                     new UrlHandler.Builder()
                             .withSupportedUrlActions(
                                     UrlAction.IGNORE_ABOUT_SCHEME,
