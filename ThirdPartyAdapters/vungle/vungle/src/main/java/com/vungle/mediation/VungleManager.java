@@ -1,20 +1,15 @@
 package com.vungle.mediation;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import android.util.Log;
-
 import com.vungle.warren.AdConfig;
-import com.vungle.warren.AdConfig.AdSize;
-import com.vungle.warren.Banners;
 import com.vungle.warren.LoadAdCallback;
 import com.vungle.warren.PlayAdCallback;
 import com.vungle.warren.Vungle;
-import com.vungle.warren.VungleBanner;
-import com.vungle.warren.VungleNativeAd;
 import com.vungle.warren.error.VungleException;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,8 +25,7 @@ public class VungleManager {
 
     private static VungleManager sInstance;
 
-    private ConcurrentHashMap<String, VungleBanner> activeBannerAds;
-    private ConcurrentHashMap<String, VungleNativeAd> activeNativeAds;
+    private ConcurrentHashMap<String, VungleBannerAdapter> mVungleBanners;
 
     public static synchronized VungleManager getInstance() {
         if (sInstance == null) {
@@ -41,8 +35,7 @@ public class VungleManager {
     }
 
     private VungleManager() {
-        activeBannerAds = new ConcurrentHashMap<>();
-        activeNativeAds = new ConcurrentHashMap<>();
+        mVungleBanners = new ConcurrentHashMap<>();
     }
 
     @Nullable
@@ -77,33 +70,10 @@ public class VungleManager {
             @Override
             public void onError(String placement, VungleException cause) {
                 if (listener != null) {
-                    listener.onAdFailedToLoad();
+                    listener.onAdFailedToLoad(0);
                 }
             }
         });
-    }
-
-    void loadAd(@NonNull String placement, @NonNull AdConfig.AdSize adSize,
-                @Nullable final VungleListener listener) {
-        if (AdSize.isBannerAdSize(adSize)) {
-            Banners.loadBanner(placement, adSize, new LoadAdCallback() {
-                @Override
-                public void onAdLoad(String placement) {
-                    if (listener != null) {
-                        listener.onAdAvailable();
-                    }
-                }
-
-                @Override
-                public void onError(String placement, VungleException exception) {
-                    if (listener != null) {
-                        listener.onAdFailedToLoad();
-                    }
-                }
-            });
-        } else {
-            loadAd(placement, listener);
-        }
     }
 
     void playAd(String placement, AdConfig cfg, @Nullable VungleListener listener) {
@@ -136,88 +106,52 @@ public class VungleManager {
     }
 
     boolean isAdPlayable(String placement) {
-        return (placement != null && !placement.isEmpty()) &&
-                Vungle.canPlayAd(placement);
-    }
-
-    boolean isAdPlayable(@NonNull String placement, @NonNull AdSize adSize) {
-        if (AdSize.isBannerAdSize(adSize)) {
-            return Banners.canPlayAd(placement, adSize);
-        } else {
-            return isAdPlayable(placement);
-        }
+        return (placement != null && !placement.isEmpty()) && Vungle.canPlayAd(placement);
     }
 
     /**
      * Checks and returns if the passed Placement ID is a valid placement for App ID
      *
-     * @param placementId
+     * @param placementId placement identifier
      * @return
      */
     boolean isValidPlacement(String placementId) {
-        return Vungle.isInitialized() &&
-                Vungle.getValidPlacements().contains(placementId);
+        return Vungle.isInitialized() && Vungle.getValidPlacements().contains(placementId);
     }
 
-    VungleBanner getVungleBanner(String placement, AdConfig.AdSize adSize, VungleListener vungleListener) {
-        Log.d(TAG, "getVungleBanner");
-        VungleBanner bannerAd = Banners.getBanner(placement, adSize, playAdCallback(vungleListener));
-        if (bannerAd != null) {
-            activeBannerAds.put(placement, bannerAd);
-        }
-
-        return bannerAd;
-    }
-
-    VungleNativeAd getVungleNativeAd(String placement, AdConfig adConfig,
-                                     VungleListener vungleListener) {
-        Log.d(TAG, "getVungleNativeAd");
-
-        //Fetch new ad
-        VungleNativeAd bannerAd = Vungle.getNativeAd(placement, adConfig,
-                playAdCallback(vungleListener));
-        if (bannerAd != null) {
-            activeNativeAds.put(placement, bannerAd);
-        }
-
-        return bannerAd;
-    }
-
-    void cleanUpBanner(@NonNull String placementId, VungleNativeAd bannerAd) {
-        VungleNativeAd activeBannerAd = activeNativeAds.get(placementId);
-        if (activeBannerAd == bannerAd) {
-            //Remove ad
-            //We should do Report ad
-            Log.d(TAG, "cleanUpBanner # finishDisplayingAd");
-            bannerAd.finishDisplayingAd();
-            activeNativeAds.remove(placementId);
-        }
-    }
-
-    void cleanUpBanner(@NonNull String placementId, VungleBanner bannerAd) {
-        VungleBanner activeBannerAd = activeBannerAds.get(placementId);
-        if (activeBannerAd == bannerAd) {
-            Log.d(TAG, "cleanUpBanner # destroyAd");
-            bannerAd.destroyAd();
-            activeBannerAds.remove(placementId);
-        }
-    }
-
-    /**
-     * called from adapters to clean, and remove
-     *
-     * @param placementId
-     */
-    void cleanUpBanner(@NonNull String placementId) {
-        Log.d(TAG, "cleanUpBanner");
-        VungleBanner vungleBanner = activeBannerAds.get(placementId);
-        if (vungleBanner != null) {
-            cleanUpBanner(placementId, vungleBanner);
-        } else {
-            VungleNativeAd vungleNativeAd = activeNativeAds.get(placementId);
-            if (vungleNativeAd != null) {
-                cleanUpBanner(placementId, vungleNativeAd);
+    @Nullable
+    synchronized VungleBannerAdapter getBannerRequest(@NonNull String placementId, @Nullable String requestUniqueId, @NonNull AdConfig adConfig) {
+        VungleBannerAdapter bannerRequest = mVungleBanners.get(placementId);
+        if (bannerRequest != null) {
+            String activeUniqueRequestId = bannerRequest.getUniquePubRequestId();
+            if (activeUniqueRequestId != null && activeUniqueRequestId.equals(requestUniqueId) || activeUniqueRequestId == null && requestUniqueId == null) {
+                Log.d(TAG, "Seems like Refresh: activeUniqueId: " + activeUniqueRequestId + " ###  RequestId: " + requestUniqueId);
+            } else {
+                Log.d(TAG, "Does NOT seems like Refresh: activeUniqueId: " + activeUniqueRequestId + " ###  RequestId: " + requestUniqueId);
+                return null;
             }
+        } else {
+            bannerRequest = new VungleBannerAdapter(placementId, requestUniqueId, adConfig);
+            mVungleBanners.put(placementId, bannerRequest);
+        }
+
+        Log.d(TAG, "New banner request:" + bannerRequest + "; size=" + mVungleBanners.size());
+        return bannerRequest;
+    }
+
+    void removeActiveBannerAd(String placementId) {
+        Log.d(TAG, "try to removeActiveBannerAd:" + placementId);
+        VungleBannerAdapter activeBannerAd = mVungleBanners.remove(placementId);
+        Log.d(TAG, "removeActiveBannerAd:" + activeBannerAd + "; size=" + mVungleBanners.size());
+        if (activeBannerAd != null) {
+            activeBannerAd.cleanUp();
+        }
+    }
+
+    void storeActiveBannerAd(@NonNull String placementId, @NonNull VungleBannerAdapter instance) {
+        if (!mVungleBanners.containsKey(placementId)) {
+            mVungleBanners.put(placementId, instance);
+            Log.d(TAG, "restoreActiveBannerAd:" + instance + "; size=" + mVungleBanners.size());
         }
     }
 }

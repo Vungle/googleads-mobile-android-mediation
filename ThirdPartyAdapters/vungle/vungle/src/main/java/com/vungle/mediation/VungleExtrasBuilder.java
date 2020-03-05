@@ -1,8 +1,11 @@
 package com.vungle.mediation;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.vungle.warren.AdConfig;
+
+import java.util.UUID;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.Size;
@@ -20,6 +23,7 @@ public final class VungleExtrasBuilder {
     private static final String EXTRA_ORIENTATION = "adOrientation";
     static final String EXTRA_ALL_PLACEMENTS = "allPlacements";
     static final String EXTRA_PLAY_PLACEMENT = "playPlacement";
+    static final String UUID_KEY = "uniqueVungleRequestKey";
 
     private final Bundle mBundle = new Bundle();
 
@@ -62,22 +66,27 @@ public final class VungleExtrasBuilder {
         return this;
     }
 
+    public VungleExtrasBuilder setBannerUniqueRequestID(String uniqueID) {
+        mBundle.putString(UUID_KEY, uniqueID);
+        return this;
+    }
+
     public Bundle build() {
+        if (TextUtils.isEmpty(mBundle.getString(UUID_KEY, null))) {
+            mBundle.putString(UUID_KEY, UUID.randomUUID().toString());
+        }
         return mBundle;
     }
 
     public static AdConfig adConfigWithNetworkExtras(Bundle networkExtras) {
         AdConfig adConfig = new AdConfig();
+        adConfig.setMuted(true); // start muted by default.
         if (networkExtras != null) {
-            adConfig.setMuted(networkExtras.getBoolean(EXTRA_START_MUTED, false));
+            adConfig.setMuted(networkExtras.getBoolean(EXTRA_START_MUTED, true));
             adConfig.setFlexViewCloseTime(networkExtras.getInt(EXTRA_FLEXVIEW_CLOSE_TIME, 0));
             adConfig.setOrdinal(networkExtras.getInt(EXTRA_ORDINAL_VIEW_COUNT, 0));
             adConfig.setAdOrientation(networkExtras.getInt(EXTRA_ORIENTATION, AdConfig.AUTO_ROTATE));
         }
         return adConfig;
-    }
-
-    static boolean isStartMutedNotConfigured(Bundle networkExtras) {
-        return (networkExtras != null && !networkExtras.containsKey(EXTRA_START_MUTED));
     }
 }
