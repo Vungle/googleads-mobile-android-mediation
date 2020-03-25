@@ -3,7 +3,6 @@ package com.vungle.mediation;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -102,7 +101,7 @@ class VungleBannerAdapter {
             Log.d(TAG, "Vungle banner adapter cleanUp: destroyAd # " + mVungleBannerAd.hashCode());
             mVungleBannerAd.destroyAd();
             if (mVungleBannerAd != null && mVungleBannerAd.getParent() != null) {
-                ((ViewGroup) mVungleBannerAd.getParent()).removeView(mVungleBannerAd);
+                ((RelativeLayout) mVungleBannerAd.getParent()).removeView(mVungleBannerAd);
             }
             mVungleBannerAd = null;
         }
@@ -112,7 +111,7 @@ class VungleBannerAdapter {
             if (mVungleNativeAd != null) {
                 View adView = mVungleNativeAd.renderNativeView();
                 if (adView != null && adView.getParent() != null) {
-                    ((ViewGroup) adView.getParent()).removeView(adView);
+                    ((RelativeLayout) adView.getParent()).removeView(adView);
                 }
             }
             mVungleNativeAd = null;
