@@ -127,9 +127,9 @@ class VungleBannerAdapter {
     if (adView == mAdLayout) {
       Log.d(TAG, "Vungle banner adapter destroy:" + this);
       mVisibility = false;
-      mPendingRequestBanner = false;
       mVungleManager.removeActiveBannerAd(mPlacementId);
       cleanUp();
+      mPendingRequestBanner = false;
     }
   }
 
@@ -202,9 +202,35 @@ class VungleBannerAdapter {
     }
 
     @Override
+    @Deprecated
     public void onAdEnd(String placementId, boolean completed, boolean isCTAClicked) {
+    }
+
+    @Override
+    public void onAdEnd(String placementId) {
       if (mPendingRequestBanner && mVungleListener != null) {
-        mVungleListener.onAdEnd(placementId, completed, isCTAClicked);
+        mVungleListener.onAdEnd(placementId);
+      }
+    }
+
+    @Override
+    public void onAdClick(String placementId) {
+      if (mPendingRequestBanner && mVungleListener != null) {
+        mVungleListener.onAdClick(placementId);
+      }
+    }
+
+    @Override
+    public void onAdRewarded(String placementId) {
+      if (mPendingRequestBanner && mVungleListener != null) {
+        mVungleListener.onAdRewarded(placementId);
+      }
+    }
+
+    @Override
+    public void onAdLeftApplication(String placementId) {
+      if (mPendingRequestBanner && mVungleListener != null) {
+        mVungleListener.onAdLeftApplication(placementId);
       }
     }
 
