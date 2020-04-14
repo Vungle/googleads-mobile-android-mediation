@@ -284,15 +284,14 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter,
             if (mMediationBannerListener != null) {
                 // Only the call to action button is clickable for Vungle ads.
                 mMediationBannerListener.onAdClicked(VungleInterstitialAdapter.this);
+                mMediationBannerListener.onAdOpened(VungleInterstitialAdapter.this);
+                mMediationBannerListener.onAdClosed(VungleInterstitialAdapter.this);
             }
         }
 
         @Override
         void onAdEnd(String placementId) {
-            if (mMediationBannerListener != null) {
-                mMediationBannerListener.onAdOpened(VungleInterstitialAdapter.this);
-                mMediationBannerListener.onAdClosed(VungleInterstitialAdapter.this);
-            }
+            //no op
         }
 
         @Override

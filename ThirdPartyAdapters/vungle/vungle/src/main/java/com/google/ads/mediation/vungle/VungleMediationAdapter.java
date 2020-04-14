@@ -333,7 +333,7 @@ public class VungleMediationAdapter extends Adapter
 
     @Override
     public void onAdLeftApplication(String placementID) {
-
+        //no op
     }
 
     // Vungle's LoadAdCallback and PlayAdCallback shares the same onError() call; when an
