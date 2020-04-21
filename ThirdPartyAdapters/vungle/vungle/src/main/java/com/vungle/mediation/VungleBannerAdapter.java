@@ -90,9 +90,9 @@ class VungleBannerAdapter {
         if (adView == mAdLayout) {
             Log.d(TAG, "Vungle banner adapter destroy:" + this);
             mVisibility = false;
-            mPendingRequestBanner = false;
             mVungleManager.removeActiveBannerAd(mPlacementId);
             cleanUp();
+            mPendingRequestBanner = false;
         }
     }
 
