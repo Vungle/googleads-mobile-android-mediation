@@ -35,9 +35,14 @@ android {
 }
 
 dependencies {
-    implementation ('com.vungle:publisher-sdk-android:6.5.3') {
-        transitive=true
+    //Vungle SDK
+    if (gradle.ext.has('dependOnVungleSdkProject') && gradle.ext.dependOnVungleSdkProject) {
+        implementation project(':vungle-android-sdk:publisher-sdk-android')
+    } else {
+//        implementation 'com.vungle:publisher-sdk-android:6.5.3'
+        implementation 'com.github.vungle:vungle-android-sdk:6.7.0-RC1'
     }
+
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'com.google.android.gms:play-services-ads:19.0.1'
 }

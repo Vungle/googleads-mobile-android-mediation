@@ -309,6 +309,26 @@ public class VungleMediationAdapter extends Adapter
         });
     }
 
+    @Override
+    public void onAdEnd(String id) {
+
+    }
+
+    @Override
+    public void onAdClick(String id) {
+
+    }
+
+    @Override
+    public void onAdRewarded(String id) {
+
+    }
+
+    @Override
+    public void onAdLeftApplication(String id) {
+
+    }
+
     // Vungle's LoadAdCallback and PlayAdCallback shares the same onError() call; when an
     // ad request to Vungle fails, and when an ad fails to play.
     @Override

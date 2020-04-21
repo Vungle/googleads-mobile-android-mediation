@@ -97,6 +97,26 @@ public class VungleManager {
             }
 
             @Override
+            public void onAdEnd(String id) {
+
+            }
+
+            @Override
+            public void onAdClick(String id) {
+
+            }
+
+            @Override
+            public void onAdRewarded(String id) {
+
+            }
+
+            @Override
+            public void onAdLeftApplication(String id) {
+
+            }
+
+            @Override
             public void onError(String id, VungleException error) {
                 if (listener != null) {
                     listener.onAdFail(id);
