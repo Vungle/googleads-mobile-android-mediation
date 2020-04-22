@@ -246,7 +246,23 @@ public class VungleInterstitialAdapter implements MediationInterstitialAdapter,
       return;
     }
 
-    adLayout = new RelativeLayout(context);
+    adLayout = new RelativeLayout(context) {
+      @Override
+      protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (mBannerRequest != null) {
+          mBannerRequest.attach();
+        }
+      }
+
+      @Override
+      protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (mBannerRequest != null) {
+          mBannerRequest.detach();
+        }
+      }
+    };
     // Make adLayout wrapper match the requested ad size, as Vungle's ad uses MATCH_PARENT for
     // its dimensions.
     RelativeLayout.LayoutParams adViewLayoutParams = new RelativeLayout.LayoutParams(
