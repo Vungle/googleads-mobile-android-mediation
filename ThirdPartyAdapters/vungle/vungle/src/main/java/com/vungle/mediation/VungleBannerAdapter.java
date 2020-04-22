@@ -99,7 +99,6 @@ class VungleBannerAdapter {
   //to break view's parent-child references chain to the leaked VungleBannerAdapter in VungleManager.
   void setAdLayout(@NonNull RelativeLayout adLayout) {
     this.mAdLayout = new WeakReference<>(adLayout);
-    ;
   }
 
   void setVungleListener(@Nullable VungleListener vungleListener) {
