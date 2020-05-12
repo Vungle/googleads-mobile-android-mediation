@@ -32,4 +32,21 @@ public class VungleConsent {
   public static String getCurrentVungleConsentMessageVersion() {
     return sCurrentVungleConsentMessageVersion;
   }
+
+  /**
+   * Update CCPA consent status.
+   * @param status See {@link Vungle.Consent}.
+   *               If true, the user has consented to us gathering data about their device.
+   */
+  public static void setCCPAStatus(Vungle.Consent status) {
+    Vungle.updateCCPAStatus(status);
+  }
+
+  /**
+   * Whether a user has Accepted CCPA Consent.
+   * @return null if user has not called earlier with {@link VungleConsent#setCCPAStatus(Vungle.Consent)}.
+   */
+  public static Vungle.Consent getCCPAStatus() {
+    return Vungle.getCCPAStatus();
+  }
 }
