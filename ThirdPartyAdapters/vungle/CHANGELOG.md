@@ -1,5 +1,8 @@
 ## Vungle Android Mediation Adapter Changelog
 
+#### Version 6.4.12.0
+- Based on SDK hotfix 6.4.12, fixing build time issue due to Cyrillic char in Vungle SDK
+
 #### Version 6.4.11.1
 - Fixed an issue where banner ads failed to refresh.
 
