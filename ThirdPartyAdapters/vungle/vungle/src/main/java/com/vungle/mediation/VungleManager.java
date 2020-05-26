@@ -121,6 +121,13 @@ public class VungleManager {
       }
 
       @Override
+      public void onAdClosed(String id) {
+        if (listener != null) {
+          listener.onAdClosed(id);
+        }
+      }
+
+      @Override
       public void onError(String id, VungleException error) {
         if (listener != null) {
           listener.onAdFail(id);
