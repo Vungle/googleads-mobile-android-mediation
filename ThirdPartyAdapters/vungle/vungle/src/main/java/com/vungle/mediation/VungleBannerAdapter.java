@@ -252,14 +252,6 @@ class VungleBannerAdapter {
     }
 
     @Override
-    public void onAdClosed(String placementId) {
-      VungleListener listener = getVungleListener();
-      if (mPendingRequestBanner && listener != null) {
-        listener.onAdClosed(placementId);
-      }
-    }
-
-    @Override
     public void onError(String placementId, VungleException exception) {
       Log.d(TAG, "Ad play failed:" + VungleBannerAdapter.this);
       VungleListener listener = getVungleListener();
