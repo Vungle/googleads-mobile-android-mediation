@@ -96,7 +96,6 @@ public class VungleManager {
       public void onAdEnd(String id) {
         if (listener != null) {
           listener.onAdEnd(id);
-          listener.onAdClosed(id);
         }
       }
 
