@@ -209,6 +209,26 @@ class VungleBannerAdapter {
     }
 
     @Override
+    public void onAdEnd(String id) {
+
+    }
+
+    @Override
+    public void onAdClick(String id) {
+
+    }
+
+    @Override
+    public void onAdRewarded(String id) {
+
+    }
+
+    @Override
+    public void onAdLeftApplication(String id) {
+
+    }
+
+    @Override
     public void onError(String placementId, VungleException exception) {
       Log.d(TAG, "Ad play failed:" + VungleBannerAdapter.this);
       mVungleManager.removeActiveBannerAd(mPlacementId);
