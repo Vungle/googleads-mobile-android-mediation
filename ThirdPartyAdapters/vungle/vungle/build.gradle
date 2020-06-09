@@ -25,7 +25,7 @@ android {
         targetSdkVersion 28
         versionCode 6070000
         versionName stringVersion
-        versionNameSuffix "-early1"
+        versionNameSuffix "-ga-rc1"
     }
     buildTypes {
         release {
@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    implementation ('com.vungle.early-access:publisher-sdk-android:6.7.0-early1') {
+    implementation ('com.github.vungle:vungle-android-sdk:6.7.0-GA-RC1') {
         transitive=true
     }
     implementation 'androidx.annotation:annotation:1.1.0'
