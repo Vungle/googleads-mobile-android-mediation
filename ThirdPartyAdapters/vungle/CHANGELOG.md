@@ -3,7 +3,6 @@
 #### Version 6.7.0.0
 - Verified compatibility with Vungle SDK 6.7.0.
 - Retrofit dependency removed
-- Header bidding participation added
 
 #### Version 6.5.3.0
 - Verified compatibility with Vungle SDK 6.5.3.

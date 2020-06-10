@@ -35,7 +35,7 @@ android {
 }
 
 dependencies {
-    implementation ('com.github.vungle:vungle-android-sdk:6.7.0-GA-RC1') {
+    implementation ('com.github.vungle:vungle-android-sdk:6.7.0') {
         transitive=true
     }
     implementation 'androidx.annotation:annotation:1.1.0'
