@@ -1,5 +1,20 @@
 ## Unity Ads Android Mediation Adapter Changelog
 
+#### Version 3.4.2.3
+- Added descriptive error codes and reasons for adapter load/show failures.
+- Updated the minimum required Google Mobile Ads SDK version to 19.1.0.
+
+Built and tested with:
+- Google Mobile Ads SDK version 19.1.0.
+- Unity Ads SDK version 3.4.2.
+
+#### Version 3.4.2.2
+- Fixed a `ConcurrentModificationException` crash that occurred when Unity Ads returns an error.
+
+Built and tested with:
+- Google Mobile Ads SDK version 19.0.1.
+- Unity Ads SDK version 3.4.2.
+
 #### Version 3.4.2.1
 - Improved forwarding of Unity's errors to recognize initialization and ad load failures earlier and reduce timeouts.
 - Updated the minimum required Google Mobile Ads SDK version to 19.0.1.
