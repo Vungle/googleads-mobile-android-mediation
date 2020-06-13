@@ -1,5 +1,9 @@
 ## Vungle Android Mediation Adapter Changelog
 
+#### Version 6.7.0.0
+- Verified compatibility with Vungle SDK 6.7.0.
+- Retrofit dependency removed
+
 #### Version 6.5.3.0
 - Verified compatibility with Vungle SDK 6.5.3.
 - Add support for the newly-introduced Vungle's Banner format.
