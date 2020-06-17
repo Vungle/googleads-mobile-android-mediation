@@ -80,21 +80,9 @@ public final class FacebookAdapter extends FacebookMediationAdapter
   private MediationNativeListener mNativeListener;
   private AdView mAdView;
   private RelativeLayout mWrappedAdView;
+  private InterstitialAd mInterstitialAd;
   private boolean isNativeBanner;
 
-  /**
-   * Facebook interstitial ad instance.
-   */
-  private InterstitialAd mInterstitialAd;
-
-  /**
-   * Flag to determine whether the interstitial ad has been presented.
-   */
-  private AtomicBoolean showInterstitialCalled = new AtomicBoolean();
-
-  /**
-   * Flag to determine whether the interstitial ad has been closed.
-   */
   private AtomicBoolean didInterstitialAdClose = new AtomicBoolean();
 
   /**
@@ -244,16 +232,8 @@ public final class FacebookAdapter extends FacebookMediationAdapter
 
   @Override
   public void showInterstitial() {
-    showInterstitialCalled.set(true);
-    if (!mInterstitialAd.show()) {
-      String errorMessage = createAdapterError(ERROR_FAILED_TO_PRESENT_AD,
-          "Failed to present interstitial ad.");
-      Log.w(TAG, errorMessage);
-
-      if (mInterstitialListener != null) {
-        mInterstitialListener.onAdOpened(FacebookAdapter.this);
-        mInterstitialListener.onAdClosed(FacebookAdapter.this);
-      }
+    if (mInterstitialAd.isAdLoaded()) {
+      mInterstitialAd.show();
     }
   }
   //endregion
@@ -418,14 +398,9 @@ public final class FacebookAdapter extends FacebookMediationAdapter
     @Override
     public void onError(Ad ad, AdError adError) {
       String errorMessage = createSdkError(adError);
-      Log.w(TAG, errorMessage);
-
-      if (showInterstitialCalled.get()) {
-        FacebookAdapter.this.mInterstitialListener.onAdOpened(FacebookAdapter.this);
-        FacebookAdapter.this.mInterstitialListener.onAdClosed(FacebookAdapter.this);
-        return;
+      if (!TextUtils.isEmpty(adError.getErrorMessage())) {
+        Log.w(TAG, errorMessage);
       }
-
       FacebookAdapter.this.mInterstitialListener.onAdFailedToLoad(
           FacebookAdapter.this, adError.getErrorCode());
     }
@@ -913,7 +888,7 @@ public final class FacebookAdapter extends FacebookMediationAdapter
                 new FacebookAdapterNativeAdImage(Uri.parse(mNativeBannerAd.getAdIcon().getUrl())));
           }
         } else {
-          Drawable iconDrawable = mNativeBannerAd.getPreloadedIconViewDrawable();
+          Drawable iconDrawable = mNativeAd.getPreloadedIconViewDrawable();
           FacebookAdapterNativeAdImage iconImage = new FacebookAdapterNativeAdImage(iconDrawable);
           setIcon(iconImage);
         }
@@ -939,11 +914,11 @@ public final class FacebookAdapter extends FacebookMediationAdapter
             new FacebookAdapterNativeAdImage(Uri.parse(mNativeAd.getAdCoverImage().toString())));
         setImages(images);
         setBody(mNativeAd.getAdBodyText());
-        if (mNativeAd.getAdIcon() == null) {
+        if (mNativeBannerAd.getAdIcon() == null) {
           setIcon(new FacebookAdapterNativeAdImage());
         } else {
           setIcon(
-              new FacebookAdapterNativeAdImage(Uri.parse(mNativeAd.getAdIcon().getUrl())));
+              new FacebookAdapterNativeAdImage(Uri.parse(mNativeBannerAd.getAdIcon().getUrl())));
         }
         setCallToAction(mNativeAd.getAdCallToAction());
 
@@ -1190,11 +1165,11 @@ public final class FacebookAdapter extends FacebookMediationAdapter
         setImages(images);
         setBody(mNativeAd.getAdBodyText());
         if (mNativeAd.getPreloadedIconViewDrawable() == null) {
-          if (mNativeAd.getAdIcon() == null) {
+          if (mNativeBannerAd.getAdIcon() == null) {
             setIcon(new FacebookAdapterNativeAdImage());
           } else {
             setIcon(
-                new FacebookAdapterNativeAdImage(Uri.parse(mNativeAd.getAdIcon().getUrl())));
+                new FacebookAdapterNativeAdImage(Uri.parse(mNativeBannerAd.getAdIcon().getUrl())));
           }
         } else {
           Drawable iconDrawable = mNativeAd.getPreloadedIconViewDrawable();

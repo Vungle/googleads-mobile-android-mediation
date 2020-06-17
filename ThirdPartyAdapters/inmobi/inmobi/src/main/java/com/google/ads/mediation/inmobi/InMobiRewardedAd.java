@@ -2,6 +2,7 @@ package com.google.ads.mediation.inmobi;
 
 import static com.google.ads.mediation.inmobi.InMobiMediationAdapter.TAG;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,7 +14,6 @@ import com.google.android.gms.ads.mediation.MediationRewardedAd;
 import com.google.android.gms.ads.mediation.MediationRewardedAdCallback;
 import com.google.android.gms.ads.mediation.MediationRewardedAdConfiguration;
 import com.google.android.gms.ads.rewarded.RewardItem;
-import com.inmobi.ads.AdMetaInfo;
 import com.inmobi.ads.InMobiAdRequestStatus;
 import com.inmobi.ads.InMobiInterstitial;
 import com.inmobi.ads.exceptions.SdkNotInitializedException;
@@ -52,7 +52,7 @@ public class InMobiRewardedAd implements MediationRewardedAd {
       }
 
       @Override
-      public void onInitializeError(@NonNull Error error) {
+      public void onInitializeError(Error error) {
         Log.e(TAG, "Failed to initialize InMobi SDK: " + error.getMessage());
         mMediationAdLoadCallback.onFailure(error.getMessage());
       }
@@ -84,9 +84,9 @@ public class InMobiRewardedAd implements MediationRewardedAd {
       mInMobiRewardedAd = new InMobiInterstitial(context, placementId,
           new InterstitialAdEventListener() {
             @Override
-            public void onRewardsUnlocked(@NonNull InMobiInterstitial inMobiInterstitial,
+            public void onRewardsUnlocked(InMobiInterstitial inMobiInterstitial,
                 Map<Object, Object> rewards) {
-              Log.d(TAG, "InMobi rewarded ad user earned a reward.");
+              Log.d(TAG, "InMobi Rewarded Video onRewardsUnlocked.");
               String rewardKey = "";
               String rewardStringValue = "";
               int rewardValue = 0;
@@ -121,22 +121,21 @@ public class InMobiRewardedAd implements MediationRewardedAd {
             }
 
             @Override
-            public void onAdDisplayFailed(@NonNull InMobiInterstitial inMobiInterstitial) {
-              Log.d(TAG, "InMobi rewarded ad failed to show.");
+            public void onAdDisplayFailed(InMobiInterstitial inMobiInterstitial) {
+              Log.d(TAG, "onAdDisplayFailed");
               if (mRewardedAdCallback != null) {
                 mRewardedAdCallback.onAdFailedToShow("Internal Error.");
               }
             }
 
             @Override
-            public void onAdWillDisplay(@NonNull InMobiInterstitial inMobiInterstitial) {
-              Log.d(TAG, "InMobi rewarded ad will be shown.");
+            public void onAdWillDisplay(InMobiInterstitial inMobiInterstitial) {
+              Log.d(TAG, "onAdWillDisplay");
             }
 
             @Override
-            public void onAdDisplayed(@NonNull InMobiInterstitial inMobiInterstitial,
-                @NonNull AdMetaInfo adMetaInfo) {
-              Log.d(TAG, "InMobi rewarded ad has been shown.");
+            public void onAdDisplayed(InMobiInterstitial inMobiInterstitial) {
+              Log.d(TAG, "onAdDisplayed");
               if (mRewardedAdCallback != null) {
                 mRewardedAdCallback.onAdOpened();
                 mRewardedAdCallback.onVideoStart();
@@ -145,26 +144,25 @@ public class InMobiRewardedAd implements MediationRewardedAd {
             }
 
             @Override
-            public void onAdDismissed(@NonNull InMobiInterstitial inMobiInterstitial) {
-              Log.d(TAG, "InMobi rewarded ad has been dismissed.");
+            public void onAdDismissed(InMobiInterstitial inMobiInterstitial) {
+              Log.d(TAG, "onAdDismissed");
               if (mRewardedAdCallback != null) {
                 mRewardedAdCallback.onAdClosed();
               }
             }
 
             @Override
-            public void onAdClicked(@NonNull InMobiInterstitial inMobiInterstitial,
-                Map<Object, Object> parameters) {
-              Log.d(TAG, "InMobi rewarded ad has been clicked.");
+            public void onAdClicked(InMobiInterstitial inMobiInterstitial,
+                Map<Object, Object> map) {
+              Log.d(TAG, "onAdClicked");
               if (mRewardedAdCallback != null) {
                 mRewardedAdCallback.reportAdClicked();
               }
             }
 
             @Override
-            public void onAdLoadSucceeded(@NonNull InMobiInterstitial inMobiInterstitial,
-                @NonNull AdMetaInfo adMetaInfo) {
-              Log.d(TAG, "InMobi rewaded ad has been loaded.");
+            public void onAdLoadSucceeded(InMobiInterstitial inMobiInterstitial) {
+              Log.d(TAG, "onAdLoadSucceeded");
               if (mMediationAdLoadCallback != null) {
                 mRewardedAdCallback =
                     mMediationAdLoadCallback.onSuccess(InMobiRewardedAd.this);
@@ -172,9 +170,9 @@ public class InMobiRewardedAd implements MediationRewardedAd {
             }
 
             @Override
-            public void onAdLoadFailed(@NonNull InMobiInterstitial inMobiInterstitial,
-                @NonNull InMobiAdRequestStatus inMobiAdRequestStatus) {
-              String logMessage = "Failed to load rewarded ad from InMobi: "
+            public void onAdLoadFailed(InMobiInterstitial inMobiInterstitial,
+                InMobiAdRequestStatus inMobiAdRequestStatus) {
+              String logMessage = "Failed to load ad from InMobi: "
                   + inMobiAdRequestStatus.getMessage();
               Log.e(TAG, logMessage);
               if (mMediationAdLoadCallback != null) {
@@ -183,15 +181,13 @@ public class InMobiRewardedAd implements MediationRewardedAd {
             }
 
             @Override
-            public void onAdFetchSuccessful(@NonNull InMobiInterstitial inMobiInterstitial,
-                @NonNull AdMetaInfo adMetaInfo) {
-              Log.d(TAG, "InMobi rewarded ad fetched from server, "
-                  + "but ad contents still need to be loaded.");
+            public void onAdReceived(InMobiInterstitial inMobiInterstitial) {
+              Log.d(TAG, "InMobi Ad server responded with an Ad.");
             }
 
             @Override
-            public void onUserLeftApplication(@NonNull InMobiInterstitial inMobiInterstitial) {
-              Log.d(TAG, "InMobi rewarded ad left application.");
+            public void onUserLeftApplication(InMobiInterstitial inMobiInterstitial) {
+              Log.d(TAG, "onUserLeftApplication");
             }
 
             @Override
@@ -200,7 +196,7 @@ public class InMobiRewardedAd implements MediationRewardedAd {
             }
 
             @Override
-            public void onRequestPayloadCreationFailed(@NonNull InMobiAdRequestStatus status) {
+            public void onRequestPayloadCreationFailed(InMobiAdRequestStatus status) {
               // No op.
             }
           });

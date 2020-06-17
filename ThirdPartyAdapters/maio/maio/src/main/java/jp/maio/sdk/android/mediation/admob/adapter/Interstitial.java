@@ -5,8 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import androidx.annotation.NonNull;
-import com.google.ads.mediation.maio.MaioAdsManagerListener;
 import com.google.ads.mediation.maio.MaioMediationAdapter;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.mediation.MediationAdRequest;
@@ -14,10 +12,11 @@ import com.google.android.gms.ads.mediation.MediationInterstitialAdapter;
 import com.google.android.gms.ads.mediation.MediationInterstitialListener;
 import jp.maio.sdk.android.FailNotificationReason;
 import jp.maio.sdk.android.MaioAds;
+import jp.maio.sdk.android.MaioAdsListenerInterface;
 
 /** maio mediation adapter for AdMob Interstitial videos. */
 public class Interstitial extends MaioMediationAdapter
-    implements MediationInterstitialAdapter, MaioAdsManagerListener {
+    implements MediationInterstitialAdapter, MaioAdsListenerInterface {
 
   private MediationInterstitialListener mMediationInterstitialListener;
 
@@ -84,7 +83,7 @@ public class Interstitial extends MaioMediationAdapter
   }
   // endregion
 
-  // region MaioAdsManagerListener implementation
+  // region MaioAdsListenerInterface implementation
   @Override
   public void onInitialized() {
     // Not called.
@@ -104,15 +103,6 @@ public class Interstitial extends MaioMediationAdapter
     if (this.mMediationInterstitialListener != null) {
       this.mMediationInterstitialListener.onAdFailedToLoad(
           Interstitial.this, AdRequest.ERROR_CODE_NO_FILL);
-    }
-  }
-
-  @Override
-  public void onAdFailedToLoad(@AdapterError int code, @NonNull String errorMessage) {
-    String logMessage = createAdapterError(code, errorMessage);
-    Log.w(TAG, "Failed to request ad from Maio: " + logMessage);
-    if (this.mMediationInterstitialListener != null) {
-      this.mMediationInterstitialListener.onAdFailedToLoad(Interstitial.this, code);
     }
   }
 
