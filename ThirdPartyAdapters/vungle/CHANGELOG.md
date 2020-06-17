@@ -2,7 +2,9 @@
 
 #### Version 6.7.0.0
 - Verified compatibility with Vungle SDK 6.7.0.
-- Retrofit dependency removed
+- Retrofit dependency removed.
+- Updated the adapter to support inline adaptive banner requests.
+- Updated the minimum required Google Mobile Ads SDK version to 19.1.0.
 
 #### Version 6.5.3.0
 - Verified compatibility with Vungle SDK 6.5.3.

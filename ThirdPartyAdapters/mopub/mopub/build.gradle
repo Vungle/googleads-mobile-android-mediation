@@ -9,19 +9,18 @@ apply plugin: 'maven-publish'
  */
 ext {
     // String property to store version name.
-    stringVersion = "5.11.1.1"
+    stringVersion = "5.13.0.0"
     // String property to store group id.
     stringGroupId = "com.google.ads.mediation"
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 5110101
+        targetSdkVersion 29
+        versionCode 5130000
         versionName stringVersion
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -30,8 +29,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-
 }
 
 repositories {
@@ -43,12 +40,12 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.google.android.gms:play-services-ads:18.3.0'
-    implementation 'androidx.annotation:annotation:1.1.0 '
-    implementation('com.mopub:mopub-sdk:5.11.1@aar') {
+    implementation('com.mopub:mopub-sdk:5.13.0@aar') {
         transitive = true
     }
 
+    implementation 'com.google.android.gms:play-services-ads:19.1.0'
+    implementation 'androidx.annotation:annotation:1.1.0'
 }
 
 /**

@@ -3,6 +3,7 @@ package com.applovin.mediation;
 import static android.util.Log.DEBUG;
 import static android.util.Log.ERROR;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -65,6 +66,16 @@ public class ApplovinAdapter extends AppLovinMediationAdapter
       Bundle serverParameters,
       MediationAdRequest mediationAdRequest,
       Bundle networkExtras) {
+
+    if (!(context instanceof Activity)) {
+      String adapterError =
+          createAdapterError(
+              ERROR_CONTEXT_NOT_ACTIVITY, "AppLovin requires an Activity context to load ads.");
+      log(ERROR, "Failed to load interstitial ad from AppLovin: " + adapterError);
+      interstitialListener.onAdFailedToLoad(ApplovinAdapter.this, ERROR_CONTEXT_NOT_ACTIVITY);
+      return;
+    }
+
     // Store parent objects.
     mSdk = AppLovinUtils.retrieveSdk(serverParameters, context);
     mContext = context;
@@ -184,42 +195,45 @@ public class ApplovinAdapter extends AppLovinMediationAdapter
       AdSize adSize,
       MediationAdRequest mediationAdRequest,
       Bundle networkExtras) {
+
+    if (!(context instanceof Activity)) {
+      String adapterError =
+          createAdapterError(
+              ERROR_CONTEXT_NOT_ACTIVITY, "AppLovin requires an Activity context to load ads.");
+      log(ERROR, "Failed to load banner ad from AppLovin: " + adapterError);
+      mediationBannerListener.onAdFailedToLoad(ApplovinAdapter.this, ERROR_CONTEXT_NOT_ACTIVITY);
+      return;
+    }
+
     // Store parent objects
     mSdk = AppLovinUtils.retrieveSdk(serverParameters, context);
     mZoneId = AppLovinUtils.retrieveZoneId(serverParameters);
 
-    log(DEBUG, "Requesting banner of size " + adSize + " for zone: " + mZoneId);
-
     // Convert requested size to AppLovin Ad Size.
     final AppLovinAdSize appLovinAdSize = AppLovinUtils
         .appLovinAdSizeFromAdMobAdSize(context, adSize);
-    if (appLovinAdSize != null) {
-      mAdView = new AppLovinAdView(mSdk, appLovinAdSize, context);
-
-      final AppLovinBannerAdListener listener = new AppLovinBannerAdListener(
-          mZoneId, mAdView, this, mediationBannerListener);
-      mAdView.setAdDisplayListener(listener);
-      mAdView.setAdClickListener(listener);
-      mAdView.setAdViewEventListener(listener);
-
-      if (!TextUtils.isEmpty(mZoneId)) {
-        mSdk.getAdService().loadNextAdForZoneId(mZoneId, listener);
-      } else {
-        mSdk.getAdService().loadNextAd(appLovinAdSize, listener);
-      }
-    } else {
+    if (appLovinAdSize == null) {
       String errorMessage = createAdapterError(ERROR_BANNER_SIZE_MISMATCH,
-          "Failed to request banner with unsupported size");
+          "Failed to request banner with unsupported size: " + adSize.toString());
       log(ERROR, errorMessage);
       if (mediationBannerListener != null) {
-        AppLovinSdkUtils.runOnUiThread(new Runnable() {
-          @Override
-          public void run() {
-            mediationBannerListener.onAdFailedToLoad(
-                ApplovinAdapter.this, ERROR_BANNER_SIZE_MISMATCH);
-          }
-        });
+        mediationBannerListener.onAdFailedToLoad(ApplovinAdapter.this, ERROR_BANNER_SIZE_MISMATCH);
       }
+    }
+
+    log(DEBUG, "Requesting banner of size " + appLovinAdSize + " for zone: " + mZoneId);
+    mAdView = new AppLovinAdView(mSdk, appLovinAdSize, context);
+
+    final AppLovinBannerAdListener listener = new AppLovinBannerAdListener(mZoneId, mAdView, this,
+        mediationBannerListener);
+    mAdView.setAdDisplayListener(listener);
+    mAdView.setAdClickListener(listener);
+    mAdView.setAdViewEventListener(listener);
+
+    if (!TextUtils.isEmpty(mZoneId)) {
+      mSdk.getAdService().loadNextAdForZoneId(mZoneId, listener);
+    } else {
+      mSdk.getAdService().loadNextAd(appLovinAdSize, listener);
     }
   }
 
