@@ -130,20 +130,12 @@ public final class IMobileAdapter
 
     // Create view to display banner ads.
     bannerView = new FrameLayout(activity);
-    float scaleRatio = canScale(supportedAdSize) ? calcScaleRatio(activity, adSize, supportedAdSize) : 1.0f;
     bannerView.setLayoutParams(
-        new FrameLayout.LayoutParams((int) (supportedAdSize.getWidthInPixels(activity) * scaleRatio),
-            (int) (supportedAdSize.getHeightInPixels(activity) * scaleRatio)));
-    ImobileSdkAd.showAdForAdMobMediation(activity, spotId, bannerView, scaleRatio);
-  }
+        new FrameLayout.LayoutParams(supportedAdSize.getWidthInPixels(activity),
+            supportedAdSize.getHeightInPixels(activity)));
 
-  private boolean canScale(AdSize iMobileAdSize) {
-    return iMobileAdSize.getWidth() == 320 && (iMobileAdSize.getHeight() == 50 || iMobileAdSize.getHeight() == 100);
-  }
-
-  private float calcScaleRatio(Context context, AdSize requestedAdSize, AdSize iMobileAdSize) {
-    return Math.min(((float) requestedAdSize.getWidthInPixels(context) / iMobileAdSize.getWidthInPixels(context)),
-        ((float) requestedAdSize.getHeightInPixels(context) / iMobileAdSize.getHeightInPixels(context)));
+    // Start getting ads.
+    ImobileSdkAd.showAdForAdMobMediation(activity, spotId, bannerView);
   }
 
   @Override
