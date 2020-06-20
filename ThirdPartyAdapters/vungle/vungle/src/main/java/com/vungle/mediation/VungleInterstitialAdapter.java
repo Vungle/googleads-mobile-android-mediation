@@ -265,7 +265,10 @@ public class VungleInterstitialAdapter
       return;
     }
 
-    // Create the adLayout wrapper with the requested ad size, as Vungle's ad uses MATCH_PARENT for
+    //by default set muted to true for banners
+    adConfig.setMuted(true);
+
+      // Create the adLayout wrapper with the requested ad size, as Vungle's ad uses MATCH_PARENT for
     // its dimensions.
     adLayout = new RelativeLayout(context) {
       @Override

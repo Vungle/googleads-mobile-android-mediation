@@ -77,9 +77,8 @@ public final class VungleExtrasBuilder {
 
   public static AdConfig adConfigWithNetworkExtras(Bundle networkExtras) {
     AdConfig adConfig = new AdConfig();
-    adConfig.setMuted(true); // start muted by default.
     if (networkExtras != null) {
-      adConfig.setMuted(networkExtras.getBoolean(EXTRA_START_MUTED, true));
+      adConfig.setMuted(networkExtras.getBoolean(EXTRA_START_MUTED, false));
       adConfig.setFlexViewCloseTime(networkExtras.getInt(EXTRA_FLEXVIEW_CLOSE_TIME, 0));
       adConfig.setOrdinal(networkExtras.getInt(EXTRA_ORDINAL_VIEW_COUNT, 0));
       adConfig.setAdOrientation(networkExtras.getInt(EXTRA_ORIENTATION, AdConfig.AUTO_ROTATE));
