@@ -256,8 +256,9 @@ public class VungleInterstitialAdapter
       return;
     }
 
-    AdConfig adConfig = VungleExtrasBuilder.adConfigWithNetworkExtras(mediationExtras);
-    if (!hasBannerSizeAd(context, adSize, adConfig)) {
+    AdConfig.AdSize bannerSize = getClosestBannerSize(context, adSize);
+
+    if (bannerSize == null) {
       String message = "Failed to load ad from Vungle: Invalid banner size.";
       Log.w(TAG, message);
       mMediationBannerListener.onAdFailedToLoad(
@@ -265,8 +266,8 @@ public class VungleInterstitialAdapter
       return;
     }
 
-    //by default set muted to true for banners
-    adConfig.setMuted(true);
+    AdConfig adConfig = VungleExtrasBuilder.adConfigWithNetworkExtras(mediationExtras, bannerSize);
+    adConfig.setAdSize(bannerSize);
 
       // Create the adLayout wrapper with the requested ad size, as Vungle's ad uses MATCH_PARENT for
     // its dimensions.
@@ -379,36 +380,31 @@ public class VungleInterstitialAdapter
     return adLayout;
   }
 
-  private boolean hasBannerSizeAd(Context context, AdSize adSize, AdConfig adConfig) {
-    ArrayList<AdSize> potentials = new ArrayList<>();
-    potentials.add(new AdSize(BANNER_SHORT.getWidth(), BANNER_SHORT.getHeight()));
-    potentials.add(new AdSize(BANNER.getWidth(), BANNER.getHeight()));
-    potentials.add(new AdSize(BANNER_LEADERBOARD.getWidth(), BANNER_LEADERBOARD.getHeight()));
-    potentials.add(new AdSize(VUNGLE_MREC.getWidth(), VUNGLE_MREC.getHeight()));
+  private AdConfig.AdSize getClosestBannerSize(Context context, AdSize adSize) {
+      ArrayList<AdSize> potentials = new ArrayList<>();
+      potentials.add(new AdSize(BANNER_SHORT.getWidth(), BANNER_SHORT.getHeight()));
+      potentials.add(new AdSize(BANNER.getWidth(), BANNER.getHeight()));
+      potentials.add(new AdSize(BANNER_LEADERBOARD.getWidth(), BANNER_LEADERBOARD.getHeight()));
+      potentials.add(new AdSize(VUNGLE_MREC.getWidth(), VUNGLE_MREC.getHeight()));
 
-    AdSize closestSize = MediationUtils.findClosestSize(context, adSize, potentials);
-    if (closestSize == null) {
-      Log.i(TAG, "Not found closest ad size: " + adSize);
-      return false;
-    }
-    Log.i(
-        TAG,
-        "Found closest ad size: " + closestSize.toString() + " for requested ad size: " + adSize);
+      AdSize closestSize = MediationUtils.findClosestSize(context, adSize, potentials);
+      if (closestSize == null) {
+          return null;
+      }
 
-    if (closestSize.getWidth() == BANNER_SHORT.getWidth()
-        && closestSize.getHeight() == BANNER_SHORT.getHeight()) {
-      adConfig.setAdSize(BANNER_SHORT);
-    } else if (closestSize.getWidth() == BANNER.getWidth()
-        && closestSize.getHeight() == BANNER.getHeight()) {
-      adConfig.setAdSize(BANNER);
-    } else if (closestSize.getWidth() == BANNER_LEADERBOARD.getWidth()
-        && closestSize.getHeight() == BANNER_LEADERBOARD.getHeight()) {
-      adConfig.setAdSize(BANNER_LEADERBOARD);
-    } else if (closestSize.getWidth() == VUNGLE_MREC.getWidth()
-        && closestSize.getHeight() == VUNGLE_MREC.getHeight()) {
-      adConfig.setAdSize(VUNGLE_MREC);
-    }
-
-    return true;
+      if (closestSize.getWidth() == BANNER_SHORT.getWidth()
+              && closestSize.getHeight() == BANNER_SHORT.getHeight()) {
+          return BANNER_SHORT;
+      } else if (closestSize.getWidth() == BANNER.getWidth()
+              && closestSize.getHeight() == BANNER.getHeight()) {
+          return BANNER;
+      } else if (closestSize.getWidth() == BANNER_LEADERBOARD.getWidth()
+              && closestSize.getHeight() == BANNER_LEADERBOARD.getHeight()) {
+          return BANNER_LEADERBOARD;
+      } else if (closestSize.getWidth() == VUNGLE_MREC.getWidth()
+              && closestSize.getHeight() == VUNGLE_MREC.getHeight()) {
+          return VUNGLE_MREC;
+      }
+      return null;
   }
 }

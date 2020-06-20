@@ -76,12 +76,21 @@ public final class VungleExtrasBuilder {
   }
 
   public static AdConfig adConfigWithNetworkExtras(Bundle networkExtras) {
+    return adConfigWithNetworkExtras(networkExtras, null);
+  }
+
+  protected static AdConfig adConfigWithNetworkExtras(Bundle networkExtras, AdConfig.AdSize size) {
     AdConfig adConfig = new AdConfig();
     if (networkExtras != null) {
-      adConfig.setMuted(networkExtras.getBoolean(EXTRA_START_MUTED, false));
+      boolean hasit = networkExtras.containsKey(EXTRA_START_MUTED);
+      boolean thenwhatisit = networkExtras.getBoolean(EXTRA_START_MUTED);
+      adConfig.setMuted(networkExtras.getBoolean(EXTRA_START_MUTED,
+              (size == AdConfig.AdSize.VUNGLE_MREC || AdConfig.AdSize.isBannerAdSize(size)) ? true : false ));
       adConfig.setFlexViewCloseTime(networkExtras.getInt(EXTRA_FLEXVIEW_CLOSE_TIME, 0));
       adConfig.setOrdinal(networkExtras.getInt(EXTRA_ORDINAL_VIEW_COUNT, 0));
       adConfig.setAdOrientation(networkExtras.getInt(EXTRA_ORIENTATION, AdConfig.AUTO_ROTATE));
+    } else if (size == AdConfig.AdSize.VUNGLE_MREC || AdConfig.AdSize.isBannerAdSize(size)) {
+      adConfig.setMuted(true);
     }
     return adConfig;
   }
