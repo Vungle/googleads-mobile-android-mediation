@@ -10,6 +10,7 @@ import com.vungle.warren.PlayAdCallback;
 import com.vungle.warren.Vungle;
 import com.vungle.warren.VungleNativeAd;
 
+import com.vungle.warren.error.VungleException;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -66,7 +67,7 @@ public class VungleManager {
             }
 
             @Override
-            public void onError(String placement, Throwable cause) {
+            public void onError(String placement, VungleException cause) {
                 if (listener != null) {
                     listener.onAdFailedToLoad();
                 }
@@ -95,7 +96,27 @@ public class VungleManager {
             }
 
             @Override
-            public void onError(String id, Throwable error) {
+            public void onAdEnd(String s) {
+                //no-op
+            }
+
+            @Override
+            public void onAdClick(String s) {
+                //no-op
+            }
+
+            @Override
+            public void onAdRewarded(String s) {
+                //no-op
+            }
+
+            @Override
+            public void onAdLeftApplication(String s) {
+                //no-op
+            }
+
+            @Override
+            public void onError(String id, VungleException error) {
                 if (listener != null) {
                     listener.onAdFail(id);
                 }

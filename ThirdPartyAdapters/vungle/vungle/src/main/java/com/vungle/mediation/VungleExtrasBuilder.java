@@ -66,7 +66,7 @@ public final class VungleExtrasBuilder {
             adConfig.setMuted(!networkExtras.getBoolean(EXTRA_SOUND_ENABLED, true));
             adConfig.setFlexViewCloseTime(networkExtras.getInt(EXTRA_FLEXVIEW_CLOSE_TIME, 0));
             adConfig.setOrdinal(networkExtras.getInt(EXTRA_ORDINAL_VIEW_COUNT, 0));
-            adConfig.setAutoRotate(networkExtras.getBoolean(EXTRA_AUTO_ROTATE_ENABLED, false));
+            adConfig.setAdOrientation(networkExtras.getBoolean(EXTRA_AUTO_ROTATE_ENABLED, false) ? AdConfig.AUTO_ROTATE : AdConfig.MATCH_VIDEO);
         }
         return adConfig;
     }

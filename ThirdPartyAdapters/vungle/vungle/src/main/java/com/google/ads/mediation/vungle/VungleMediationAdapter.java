@@ -26,6 +26,7 @@ import com.vungle.warren.LoadAdCallback;
 import com.vungle.warren.PlayAdCallback;
 import com.vungle.warren.Vungle;
 
+import com.vungle.warren.error.VungleException;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -292,11 +293,31 @@ public class VungleMediationAdapter extends Adapter
         });
     }
 
+    @Override
+    public void onAdEnd(String s) {
+        //no-op
+    }
+
+    @Override
+    public void onAdClick(String s) {
+        //no-op
+    }
+
+    @Override
+    public void onAdRewarded(String s) {
+        //no-op
+    }
+
+    @Override
+    public void onAdLeftApplication(String s) {
+        //no-op
+    }
+
     // Vungle's LoadAdCallback and PlayAdCallback shares the same onError() call; when an
     // ad request to Vungle fails, and when an ad fails to play.
     @Override
     public void onError(final String placementID,
-                        final Throwable throwable) {
+                        final VungleException throwable) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {

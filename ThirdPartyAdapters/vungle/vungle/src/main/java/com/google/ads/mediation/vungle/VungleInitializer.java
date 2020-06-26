@@ -12,6 +12,7 @@ import com.vungle.warren.Vungle;
 import com.vungle.warren.VungleApiClient;
 import com.vungle.warren.VungleSettings;
 
+import com.vungle.warren.error.VungleException;
 import java.util.ArrayList;
 
 public class VungleInitializer implements InitCallback {
@@ -100,7 +101,7 @@ public class VungleInitializer implements InitCallback {
     }
 
     @Override
-    public void onError(final Throwable throwable) {
+    public void onError(final VungleException throwable) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
