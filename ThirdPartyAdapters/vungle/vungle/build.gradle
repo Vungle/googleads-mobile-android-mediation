@@ -44,7 +44,7 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-base:16.0.1'
     implementation 'com.google.android.gms:play-services-ads:17.2.0'
-    implementation project(path: ':vungle-android-sdk-6.7.0-dax')
+    implementation (name: 'vungle-android-sdk-6.7.0-dax', ext:'aar')
 
 //    implementation ('com.vungle:publisher-sdk-android:6.7.0') {
 //        transitive=true
