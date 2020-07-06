@@ -24,12 +24,10 @@ class VungleBannerAdapter {
   private static final String TAG = VungleBannerAdapter.class.getSimpleName();
 
   /** Vungle banner placement ID. */
-  @NonNull
-  private String mPlacementId;
+  @NonNull private String mPlacementId;
 
   /** Unique Vungle banner request ID. */
-  @Nullable
-  private String mUniquePubRequestId;
+  @Nullable private String mUniquePubRequestId;
 
   /** Vungle listener class to forward to the adapter. */
   @NonNull private WeakReference<VungleListener> mVungleListener = new WeakReference<>(null);

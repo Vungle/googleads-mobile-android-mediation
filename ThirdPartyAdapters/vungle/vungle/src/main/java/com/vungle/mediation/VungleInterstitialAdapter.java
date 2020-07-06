@@ -14,11 +14,6 @@
 
 package com.vungle.mediation;
 
-import static com.vungle.warren.AdConfig.AdSize.BANNER;
-import static com.vungle.warren.AdConfig.AdSize.BANNER_LEADERBOARD;
-import static com.vungle.warren.AdConfig.AdSize.BANNER_SHORT;
-import static com.vungle.warren.AdConfig.AdSize.VUNGLE_MREC;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Keep;
@@ -36,6 +31,11 @@ import com.google.android.gms.ads.mediation.MediationInterstitialAdapter;
 import com.google.android.gms.ads.mediation.MediationInterstitialListener;
 import com.vungle.warren.AdConfig;
 import java.util.ArrayList;
+
+import static com.vungle.warren.AdConfig.AdSize.BANNER;
+import static com.vungle.warren.AdConfig.AdSize.BANNER_LEADERBOARD;
+import static com.vungle.warren.AdConfig.AdSize.BANNER_SHORT;
+import static com.vungle.warren.AdConfig.AdSize.VUNGLE_MREC;
 
 /**
  * A {@link MediationInterstitialAdapter} used to load and show Vungle interstitial ads using Google
