@@ -58,9 +58,14 @@ public final class VungleExtrasBuilder {
     return this;
   }
 
-  public VungleExtrasBuilder setAdOrientation(int adOrientation) {
+  public VungleExtrasBuilder setAdOrientation(@AdConfig.Orientation int adOrientation) {
     mBundle.putInt(EXTRA_ORIENTATION, adOrientation);
     return this;
+  }
+
+  @Deprecated
+  public VungleExtrasBuilder setAutoRotateEnabled(boolean enabled) {
+    return setAdOrientation(enabled ? AdConfig.AUTO_ROTATE : AdConfig.MATCH_VIDEO);
   }
 
   public VungleExtrasBuilder setBannerUniqueRequestID(String uniqueID) {
@@ -82,7 +87,7 @@ public final class VungleExtrasBuilder {
       adConfig.setMuted(networkExtras.getBoolean(EXTRA_START_MUTED, false));
       adConfig.setFlexViewCloseTime(networkExtras.getInt(EXTRA_FLEXVIEW_CLOSE_TIME, 0));
       adConfig.setOrdinal(networkExtras.getInt(EXTRA_ORDINAL_VIEW_COUNT, 0));
-      adConfig.setAdOrientation(networkExtras.getInt(EXTRA_ORIENTATION, AdConfig.AUTO_ROTATE));
+      adConfig.setAdOrientation(networkExtras.getInt(EXTRA_ORIENTATION, AdConfig.MATCH_VIDEO));
     }
     return adConfig;
   }
