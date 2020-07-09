@@ -16,25 +16,21 @@ package com.vungle.mediation;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Keep;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
-
 import com.google.ads.mediation.vungle.VungleInitializer;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.MediationUtils;
 import com.google.android.gms.ads.mediation.MediationAdRequest;
 import com.google.android.gms.ads.mediation.MediationBannerAdapter;
 import com.google.android.gms.ads.mediation.MediationBannerListener;
 import com.google.android.gms.ads.mediation.MediationInterstitialAdapter;
 import com.google.android.gms.ads.mediation.MediationInterstitialListener;
 import com.vungle.warren.AdConfig;
-
 import java.util.ArrayList;
-
-import androidx.annotation.Keep;
 
 import static com.vungle.warren.AdConfig.AdSize.BANNER;
 import static com.vungle.warren.AdConfig.AdSize.BANNER_LEADERBOARD;
@@ -378,35 +374,83 @@ public class VungleInterstitialAdapter
   }
 
   private boolean hasBannerSizeAd(Context context, AdSize adSize, AdConfig adConfig) {
-    ArrayList<AdSize> potentials = new ArrayList<>();
-    potentials.add(new AdSize(BANNER_SHORT.getWidth(), BANNER_SHORT.getHeight()));
-    potentials.add(new AdSize(BANNER.getWidth(), BANNER.getHeight()));
-    potentials.add(new AdSize(BANNER_LEADERBOARD.getWidth(), BANNER_LEADERBOARD.getHeight()));
-    potentials.add(new AdSize(VUNGLE_MREC.getWidth(), VUNGLE_MREC.getHeight()));
+    ArrayList<AdConfig.AdSize> potentials = new ArrayList<>(4);
+    potentials.add(0, BANNER_SHORT);
+    potentials.add(1, BANNER);
+    potentials.add(2, BANNER_LEADERBOARD);
+    potentials.add(3, VUNGLE_MREC);
 
-    AdSize closestSize = MediationUtils.findClosestSize(context, adSize, potentials);
+    Log.i(TAG, "Potential ad sizes: " + potentials.toString());
+    AdConfig.AdSize closestSize = findClosestSize(context, adSize, potentials);
     if (closestSize == null) {
       Log.i(TAG, "Not found closest ad size: " + adSize);
       return false;
     }
-    Log.i(
-        TAG,
-        "Found closest ad size: " + closestSize.toString() + " for requested ad size: " + adSize);
+    Log.i(TAG,
+        "Found closest ad size: " + closestSize.toString() + " for request ad size:" + adSize);
 
-    if (closestSize.getWidth() == BANNER_SHORT.getWidth()
-        && closestSize.getHeight() == BANNER_SHORT.getHeight()) {
-      adConfig.setAdSize(BANNER_SHORT);
-    } else if (closestSize.getWidth() == BANNER.getWidth()
-        && closestSize.getHeight() == BANNER.getHeight()) {
-      adConfig.setAdSize(BANNER);
-    } else if (closestSize.getWidth() == BANNER_LEADERBOARD.getWidth()
-        && closestSize.getHeight() == BANNER_LEADERBOARD.getHeight()) {
-      adConfig.setAdSize(BANNER_LEADERBOARD);
-    } else if (closestSize.getWidth() == VUNGLE_MREC.getWidth()
-        && closestSize.getHeight() == VUNGLE_MREC.getHeight()) {
-      adConfig.setAdSize(VUNGLE_MREC);
-    }
+    adConfig.setAdSize(closestSize);
 
     return true;
   }
+
+  // Copied some code from FB adapter:
+  // https://github.com/googleads/googleads-mobile-android-mediation/blob/ebce3b3ccf1c7a0cd8ecb31819c0037b8885d584/
+  // ThirdPartyAdapters/facebook/facebook/src/main/java/com/google/ads/mediation/facebook/FacebookAdapter.java#L760
+
+  // Start of helper code to remove when available in SDK
+
+  /**
+   * Find the closest supported AdSize from the list of potentials to the provided size. Returns
+   * null if none are within given threshold size range.
+   */
+  private AdConfig.AdSize findClosestSize(
+      Context context, AdSize original, ArrayList<AdConfig.AdSize> potentials) {
+    if (potentials == null || original == null) {
+      return null;
+    }
+    float density = context.getResources().getDisplayMetrics().density;
+    int actualWidth = Math.round(original.getWidthInPixels(context) / density);
+    int actualHeight = Math.round(original.getHeightInPixels(context) / density);
+    original = new AdSize(actualWidth, actualHeight);
+
+    AdConfig.AdSize largestPotential = null;
+    for (AdConfig.AdSize potential : potentials) {
+      if (isSizeInRange(original, potential)) {
+        if (largestPotential == null) {
+          largestPotential = potential;
+        } else {
+          largestPotential = getLargerByArea(largestPotential, potential);
+        }
+      }
+    }
+    return largestPotential;
+  }
+
+  private static boolean isSizeInRange(AdSize original, AdConfig.AdSize potential) {
+    if (potential == null) {
+      return false;
+    }
+    double minWidthRatio = 0.5;
+    double minHeightRatio = 0.7;
+
+    int originalWidth = original.getWidth();
+    int potentialWidth = potential.getWidth();
+    int originalHeight = original.getHeight();
+    int potentialHeight = potential.getHeight();
+
+    if (originalWidth * minWidthRatio > potentialWidth || originalWidth < potentialWidth) {
+      return false;
+    }
+
+    return !(originalHeight * minHeightRatio > potentialHeight)
+        && originalHeight >= potentialHeight;
+  }
+
+  private static AdConfig.AdSize getLargerByArea(AdConfig.AdSize size1, AdConfig.AdSize size2) {
+    int area1 = size1.getWidth() * size1.getHeight();
+    int area2 = size2.getWidth() * size2.getHeight();
+    return area1 > area2 ? size1 : size2;
+  }
+  // End code to remove when available in SDK
 }

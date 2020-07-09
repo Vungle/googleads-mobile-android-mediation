@@ -1,9 +1,9 @@
 package com.vungle.mediation;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.annotation.Size;
 import android.text.TextUtils;
-import androidx.annotation.Nullable;
-import androidx.annotation.Size;
 import com.vungle.warren.AdConfig;
 import java.util.UUID;
 
@@ -58,9 +58,14 @@ public final class VungleExtrasBuilder {
     return this;
   }
 
-  public VungleExtrasBuilder setAdOrientation(int adOrientation) {
+  public VungleExtrasBuilder setAdOrientation(@AdConfig.Orientation int adOrientation) {
     mBundle.putInt(EXTRA_ORIENTATION, adOrientation);
     return this;
+  }
+
+  @Deprecated
+  public VungleExtrasBuilder setAutoRotateEnabled(boolean enabled) {
+    return setAdOrientation(enabled ? AdConfig.AUTO_ROTATE : AdConfig.MATCH_VIDEO);
   }
 
   public VungleExtrasBuilder setBannerUniqueRequestID(String uniqueID) {
