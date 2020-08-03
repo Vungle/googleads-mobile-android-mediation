@@ -1,7 +1,7 @@
 ## Vungle Android Mediation Adapter Changelog
 
-#### Version 6.7.0.0
-- Verified compatibility with Vungle SDK 6.7.0.
+#### Version 6.7.1.0
+- Verified compatibility with Vungle SDK 6.7.1.
 - Updated the adapter to support inline adaptive banner requests.
 - Interstitial and rewarded ads are now unmuted by default.
 - Interstitial ads now forward the `onAdLeftApplication()` callback when clicked.
