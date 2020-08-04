@@ -2,6 +2,12 @@
 
 #### Version 6.7.1.0
 - Verified compatibility with Vungle SDK 6.7.1.
+- Various Bug Fixes
+- Removed Vungle#setUserLegacyID API
+- Added warning flag: On devices <=API 21, OkHttp 3.14+ does not work, use 3.12.12
+
+#### Version 6.7.0.0
+- Verified compatibility with Vungle SDK 6.7.0.
 - Updated the adapter to support inline adaptive banner requests.
 - Interstitial and rewarded ads are now unmuted by default.
 - Interstitial ads now forward the `onAdLeftApplication()` callback when clicked.
