@@ -16,7 +16,7 @@ ext {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     lintOptions {
         abortOnError false
     }
