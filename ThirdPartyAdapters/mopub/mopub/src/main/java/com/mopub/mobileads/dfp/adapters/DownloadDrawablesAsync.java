@@ -19,7 +19,9 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-/** An {@link AsyncTask} used to load native ad images. */
+/**
+ * An {@link AsyncTask} used to load native ad images.
+ */
 public class DownloadDrawablesAsync extends AsyncTask<Object, Void, HashMap<String, Drawable>> {
 
   public static final String KEY_IMAGE = "image_key";
@@ -40,7 +42,8 @@ public class DownloadDrawablesAsync extends AsyncTask<Object, Void, HashMap<Stri
 
     Future<Drawable> imageDrawableFuture =
         getDrawableFuture(urlsMap.get(KEY_IMAGE), executorService);
-    Future<Drawable> iconDrawableFuture = getDrawableFuture(urlsMap.get(KEY_ICON), executorService);
+    Future<Drawable> iconDrawableFuture =
+        getDrawableFuture(urlsMap.get(KEY_ICON), executorService);
 
     try {
       Drawable imageDrawable =
@@ -52,7 +55,7 @@ public class DownloadDrawablesAsync extends AsyncTask<Object, Void, HashMap<Stri
       drawablesMap.put(KEY_ICON, iconDrawable);
       return drawablesMap;
     } catch (InterruptedException | ExecutionException | TimeoutException e) {
-      Log.d(MoPubAdapter.TAG, "Native ad images failed to download.");
+      Log.d(MoPubAdapter.TAG, "Native ad images failed to download");
       return null;
     }
   }
@@ -60,18 +63,17 @@ public class DownloadDrawablesAsync extends AsyncTask<Object, Void, HashMap<Stri
   private Future<Drawable> getDrawableFuture(final URL url, ExecutorService executorService) {
     // The call() will be executed as the threads in executorService's thread pool become
     // available.
-    return executorService.submit(
-        new Callable<Drawable>() {
-          @Override
-          public Drawable call() throws Exception {
-            InputStream in = url.openStream();
-            Bitmap bitmap = BitmapFactory.decodeStream(in);
+    return executorService.submit(new Callable<Drawable>() {
+      @Override
+      public Drawable call() throws Exception {
+        InputStream in = url.openStream();
+        Bitmap bitmap = BitmapFactory.decodeStream(in);
 
-            // Defaulting to a scale of 1.
-            bitmap.setDensity(DisplayMetrics.DENSITY_DEFAULT);
-            return new BitmapDrawable(Resources.getSystem(), bitmap);
-          }
-        });
+        // Defaulting to a scale of 1.
+        bitmap.setDensity(DisplayMetrics.DENSITY_DEFAULT);
+        return new BitmapDrawable(Resources.getSystem(), bitmap);
+      }
+    });
   }
 
   @Override
@@ -85,3 +87,4 @@ public class DownloadDrawablesAsync extends AsyncTask<Object, Void, HashMap<Stri
     }
   }
 }
+

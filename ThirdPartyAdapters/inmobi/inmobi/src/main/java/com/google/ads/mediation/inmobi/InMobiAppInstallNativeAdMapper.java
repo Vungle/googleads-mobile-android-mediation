@@ -13,7 +13,7 @@ import android.widget.RelativeLayout;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.formats.NativeAd;
 import com.google.android.gms.ads.mediation.MediationNativeListener;
-import com.google.android.gms.ads.mediation.UnifiedNativeAdMapper;
+import com.google.android.gms.ads.mediation.NativeAppInstallAdMapper;
 import com.inmobi.ads.InMobiNative;
 
 import org.json.JSONException;
@@ -27,7 +27,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class InMobiUnifiedNativeAdMapper extends UnifiedNativeAdMapper {
+/**
+ * A {@link NativeAppInstallAdMapper} used to map an InMobi Native ad to Google Native App install
+ * ad.
+ */
+class InMobiAppInstallNativeAdMapper extends NativeAppInstallAdMapper {
 
   /** InMobi native ad instance. */
   private final InMobiNative mInMobiNative;
@@ -38,7 +42,7 @@ class InMobiUnifiedNativeAdMapper extends UnifiedNativeAdMapper {
   /** InMobi adapter instance. */
   private final InMobiAdapter mInMobiAdapter;
 
-  public InMobiUnifiedNativeAdMapper(
+  public InMobiAppInstallNativeAdMapper(
       InMobiAdapter inMobiAdapter,
       InMobiNative inMobiNative,
       Boolean isOnlyURL,
@@ -49,8 +53,8 @@ class InMobiUnifiedNativeAdMapper extends UnifiedNativeAdMapper {
     this.mMediationNativeListener = mediationNativeListener;
   }
 
-  // Map InMobi Native Ad to AdMob Unified Native Ad.
-  void mapUnifiedNativeAd(final Context context) {
+  // Map InMobi Native Ad to AdMob App Install Ad.
+  void mapAppInstallAd(final Context context) {
     JSONObject payLoad;
     HashMap<String, URL> map;
     final Uri iconUri;
@@ -137,10 +141,6 @@ class InMobiUnifiedNativeAdMapper extends UnifiedNativeAdMapper {
             }
 
             placeHolderView.addView(primaryView);
-            int viewHeight = primaryView.getLayoutParams().height;
-            if (viewHeight > 0) {
-              setMediaContentAspectRatio((float) primaryView.getLayoutParams().width / viewHeight);
-            }
           }
         });
 
@@ -165,7 +165,7 @@ class InMobiUnifiedNativeAdMapper extends UnifiedNativeAdMapper {
 
                   if ((null != iconDrawable)) {
                     mMediationNativeListener.onAdLoaded(
-                        mInMobiAdapter, InMobiUnifiedNativeAdMapper.this);
+                        mInMobiAdapter, InMobiAppInstallNativeAdMapper.this);
                   } else {
                     mMediationNativeListener.onAdFailedToLoad(
                         mInMobiAdapter, AdRequest.ERROR_CODE_NETWORK_ERROR);
@@ -180,7 +180,7 @@ class InMobiUnifiedNativeAdMapper extends UnifiedNativeAdMapper {
               })
           .execute(map);
     } else {
-      mMediationNativeListener.onAdLoaded(mInMobiAdapter, InMobiUnifiedNativeAdMapper.this);
+      mMediationNativeListener.onAdLoaded(mInMobiAdapter, InMobiAppInstallNativeAdMapper.this);
     }
   }
 

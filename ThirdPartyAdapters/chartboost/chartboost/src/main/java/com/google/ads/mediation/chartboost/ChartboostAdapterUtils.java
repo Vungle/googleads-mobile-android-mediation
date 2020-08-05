@@ -8,9 +8,6 @@ import androidx.annotation.Nullable;
 import com.chartboost.sdk.Banner.BannerSize;
 import com.chartboost.sdk.CBLocation;
 import com.chartboost.sdk.Chartboost;
-import com.chartboost.sdk.Events.ChartboostCacheError;
-import com.chartboost.sdk.Events.ChartboostClickError;
-import com.chartboost.sdk.Events.ChartboostShowError;
 import com.chartboost.sdk.Model.CBError.CBImpressionError;
 import com.google.ads.mediation.chartboost.ChartboostMediationAdapter.AdapterError;
 import com.google.android.gms.ads.AdSize;
@@ -194,48 +191,9 @@ class ChartboostAdapterUtils {
    * @return the error message.
    */
   @NonNull
-  static String createSDKError(@NonNull CBImpressionError impressionError) {
+  static String createSDKError(CBImpressionError impressionError) {
     return String.format(
         "%d: %s", getMediationErrorCode(impressionError), impressionError.toString());
-  }
-
-  /**
-   * Creates a formatted SDK error string given Chartboost's {@link ChartboostCacheError}.
-   *
-   * @param cacheError Chartboost's error.
-   * @return the error message.
-   */
-  @NonNull
-  static String createSDKError(@NonNull ChartboostCacheError cacheError) {
-    // Use the error's code as opposed to getting the mediation error code due to Chartboost not
-    // having an enum for cache errors.
-    return String.format("%d: %s", cacheError.code.getErrorCode(), cacheError.toString());
-  }
-
-  /**
-   * Creates a formatted SDK error string given Chartboost's {@link ChartboostShowError}.
-   *
-   * @param showError Chartboost's error.
-   * @return the error message.
-   */
-  @NonNull
-  static String createSDKError(@NonNull ChartboostShowError showError) {
-    // Use the error's code as opposed to getting the mediation error code due to Chartboost not
-    // having an enum for show errors.
-    return String.format("%d: %s", showError.code.getErrorCode(), showError.toString());
-  }
-
-  /**
-   * Creates a formatted SDK error string given Chartboost's {@link ChartboostClickError}.
-   *
-   * @param clickError Chartboost's error.
-   * @return the error message.
-   */
-  @NonNull
-  static String createSDKError(@NonNull ChartboostClickError clickError) {
-    // Use the error's code as opposed to getting the mediation error code due to Chartboost not
-    // having an enum for click errors.
-    return String.format("%d: %s", clickError.code.getErrorCode(), clickError.toString());
   }
 
   /**
@@ -246,7 +204,7 @@ class ChartboostAdapterUtils {
    * @return the error message.
    */
   @NonNull
-  static String createAdapterError(@AdapterError int code, @NonNull String description) {
+  static String createAdapterError(@AdapterError int code, String description) {
     return String.format("%d: %s", code, description);
   }
 

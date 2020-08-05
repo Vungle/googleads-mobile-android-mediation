@@ -193,8 +193,7 @@ public class VungleMediationAdapter extends Adapter
       return;
     }
 
-    // Unmute full-screen ads by default.
-    mAdConfig = VungleExtrasBuilder.adConfigWithNetworkExtras(mediationExtras, false);
+    mAdConfig = VungleExtrasBuilder.adConfigWithNetworkExtras(mediationExtras);
     VungleInitializer.getInstance()
         .initialize(
             appID,
@@ -272,52 +271,50 @@ public class VungleMediationAdapter extends Adapter
   public void onAdEnd(
       final String placementID,
       final boolean wasSuccessfulView,
-      final boolean wasCallToActionClicked) {}
+      final boolean wasCallToActionClicked) {
+  }
 
   @Override
   public void onAdEnd(final String placementID) {
-    mHandler.post(
-        new Runnable() {
-          @Override
-          public void run() {
-            if (mMediationRewardedAdCallback != null) {
-              mMediationRewardedAdCallback.onAdClosed();
-            }
-            mPlacementsInUse.remove(placementID);
-          }
-        });
+    mHandler.post(new Runnable() {
+      @Override
+      public void run() {
+        if (mMediationRewardedAdCallback != null) {
+          mMediationRewardedAdCallback.onAdClosed();
+        }
+        mPlacementsInUse.remove(placementID);
+      }
+    });
   }
 
   @Override
   public void onAdClick(String placementID) {
-    mHandler.post(
-        new Runnable() {
-          @Override
-          public void run() {
-            if (mMediationRewardedAdCallback != null) {
-              mMediationRewardedAdCallback.reportAdClicked();
-            }
-          }
-        });
+    mHandler.post(new Runnable() {
+      @Override
+      public void run() {
+        if (mMediationRewardedAdCallback != null) {
+          mMediationRewardedAdCallback.reportAdClicked();
+        }
+      }
+    });
   }
 
   @Override
   public void onAdRewarded(String placementID) {
-    mHandler.post(
-        new Runnable() {
-          @Override
-          public void run() {
-            if (mMediationRewardedAdCallback != null) {
-              mMediationRewardedAdCallback.onVideoComplete();
-              mMediationRewardedAdCallback.onUserEarnedReward(new VungleReward("vungle", 1));
-            }
-          }
-        });
+    mHandler.post(new Runnable() {
+      @Override
+      public void run() {
+        if (mMediationRewardedAdCallback != null) {
+          mMediationRewardedAdCallback.onVideoComplete();
+          mMediationRewardedAdCallback.onUserEarnedReward(new VungleReward("vungle", 1));
+        }
+      }
+    });
   }
 
   @Override
   public void onAdLeftApplication(String placementID) {
-    // no op
+    //no op
   }
 
   // Vungle's LoadAdCallback and PlayAdCallback shares the same onError() call; when an

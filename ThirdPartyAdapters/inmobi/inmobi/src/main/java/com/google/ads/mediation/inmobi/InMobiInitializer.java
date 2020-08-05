@@ -40,7 +40,6 @@ public class InMobiInitializer {
   public static final int INITIALIZED = 2;
 
   private @InitializationStatus int initializationStatus;
-
   private ArrayList<Listener> mListeners = new ArrayList<>();
 
   private InMobiInitializer() {
@@ -74,16 +73,19 @@ public class InMobiInitializer {
         new SdkInitializationListener() {
           @Override
           public void onInitializationComplete(Error error) {
+
             if (error == null) {
               initializationStatus = INITIALIZED;
               for (Listener initListener : mListeners) {
                 initListener.onInitializeSuccess();
               }
+
             } else {
               initializationStatus = UNINITIALIZED;
               for (Listener initListener : mListeners) {
                 initListener.onInitializeError(error);
               }
+
             }
             mListeners.clear();
           }

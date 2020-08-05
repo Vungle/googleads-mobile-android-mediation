@@ -8,7 +8,6 @@ import com.fyber.inneractive.sdk.external.InneractiveAdRequest;
 import com.fyber.inneractive.sdk.external.InneractiveAdSpot;
 import com.fyber.inneractive.sdk.external.InneractiveAdSpotManager;
 import com.fyber.inneractive.sdk.external.InneractiveErrorCode;
-import com.fyber.inneractive.sdk.external.InneractiveFullScreenAdRewardedListener;
 import com.fyber.inneractive.sdk.external.InneractiveFullscreenAdEventsListenerAdapter;
 import com.fyber.inneractive.sdk.external.InneractiveFullscreenUnitController;
 import com.fyber.inneractive.sdk.external.InneractiveFullscreenVideoContentController;
@@ -158,22 +157,16 @@ public class FyberRewardedVideoRenderer implements MediationRewardedAd {
        */
       @Override
       public void onCompleted() {
-        // The video is completed. an end card is shown.
         mRewardedAdCallback.onVideoComplete();
-      }
-    });
 
-    controller.setEventsListener(adListener);
-
-    // Official rewarded interface for both Video and display ads (Since Marketplace 7.6.0)
-    controller.setRewardedListener(new InneractiveFullScreenAdRewardedListener() {
-      @Override
-      public void onAdRewarded(InneractiveAdSpot inneractiveAdSpot) {
+        // The video is completed. an end card is shown.
+        // The ad is not dismissed yet, but a reward is in order.
         mRewardedAdCallback.onUserEarnedReward(RewardItem.DEFAULT_REWARD);
       }
     });
 
     controller.addContentController(videoContentController);
+    controller.setEventsListener(adListener);
   }
 
   @Override

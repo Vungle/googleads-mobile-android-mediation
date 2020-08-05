@@ -1,21 +1,8 @@
 ## Vungle Android Mediation Adapter Changelog
 
-#### Version 6.7.1.0
-- Verified compatibility with Vungle SDK 6.7.1.
-- Various Bug Fixes
-- Removed Vungle#setUserLegacyID API
-- Added warning flag: On devices <=API 21, OkHttp 3.14+ does not work, use 3.12.12
-
-#### Version 6.7.0.0
-- Verified compatibility with Vungle SDK 6.7.0.
+#### Next Version
 - Updated the adapter to support inline adaptive banner requests.
-- Interstitial and rewarded ads are now unmuted by default.
-- Interstitial ads now forward the `onAdLeftApplication()` callback when clicked.
-- Updated the minimum required Google Mobile Ads SDK version to 19.2.0.
-
-Built and tested with:
-- Google Mobile Ads SDK version 19.2.0.
-- Vungle SDK version 6.7.0.
+- Updated the minimum required Google Mobile Ads SDK version to 19.1.0.
 
 #### Version 6.5.3.0
 - Verified compatibility with Vungle SDK 6.5.3.
