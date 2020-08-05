@@ -44,7 +44,7 @@ public class VungleInterstitialAdapter
   private AdConfig mAdConfig;
   private String mPlacementForPlay;
 
-  private VungleBannerAdapterProxy vungleBannerAdapter;
+  private VungleBannerAdapter vungleBannerAdapter;
 
   @Override
   public void requestInterstitialAd(Context context,
@@ -204,7 +204,7 @@ public class VungleInterstitialAdapter
   public void requestBannerAd(Context context, MediationBannerListener mediationBannerListener,
       Bundle serverParameters, AdSize adSize, MediationAdRequest mediationAdRequest,
       Bundle mediationExtras) {
-    vungleBannerAdapter = new VungleBannerAdapterProxy(context, VungleInterstitialAdapter.this,
+    vungleBannerAdapter = new VungleBannerAdapter(context, VungleInterstitialAdapter.this,
         mediationBannerListener);
     vungleBannerAdapter
         .requestBannerAd(adSize, mediationAdRequest, serverParameters, mediationExtras);
