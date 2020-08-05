@@ -44,7 +44,7 @@ public class VungleInterstitialAdapter
   private AdConfig mAdConfig;
   private String mPlacementForPlay;
 
-  private VungleBannerAdapter vungleBannerAdapter;
+  private VungleBannerAdapterProxy vungleBannerAdapter;
 
   @Override
   public void requestInterstitialAd(Context context,
@@ -180,6 +180,7 @@ public class VungleInterstitialAdapter
     Log.d(TAG, "onDestroy: " + hashCode());
     if (vungleBannerAdapter != null) {
       vungleBannerAdapter.onDestroy();
+      vungleBannerAdapter = null;
     }
   }
 
@@ -203,7 +204,7 @@ public class VungleInterstitialAdapter
   public void requestBannerAd(Context context, MediationBannerListener mediationBannerListener,
       Bundle serverParameters, AdSize adSize, MediationAdRequest mediationAdRequest,
       Bundle mediationExtras) {
-    vungleBannerAdapter = new VungleBannerAdapter(context, VungleInterstitialAdapter.this,
+    vungleBannerAdapter = new VungleBannerAdapterProxy(context, VungleInterstitialAdapter.this,
         mediationBannerListener);
     vungleBannerAdapter
         .requestBannerAd(adSize, mediationAdRequest, serverParameters, mediationExtras);

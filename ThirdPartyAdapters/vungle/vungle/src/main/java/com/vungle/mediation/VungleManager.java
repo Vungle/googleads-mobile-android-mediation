@@ -163,35 +163,38 @@ public class VungleManager {
     }
   }
 
-  synchronized boolean isBannerAdActive(@NonNull String placementId,
-      @Nullable String adapterRequestUniqueId) {
+  @Nullable
+  synchronized VungleBannerAdapter getBannerAdapter(
+      @NonNull String placementId, @Nullable String requestUniqueId, @NonNull AdConfig adConfig) {
     cleanLeakedBannerAdapters();
-    if (TextUtils.isEmpty(placementId)) {
-      return false;
+    VungleBannerAdapter activeBanner = mVungleBanners.get(placementId);
+    if (activeBanner != null) {
+      String activeUniqueRequestId = activeBanner.getUniquePubRequestId();
+      Log.d(
+          TAG, "activeUniqueId: " + activeUniqueRequestId + " ###  RequestId: " + requestUniqueId);
+
+      if (activeUniqueRequestId == null) {
+        Log.w(
+            TAG,
+            "Ad already loaded for placement ID: "
+                + placementId
+                + ", and cannot determine if "
+                + "this is a refresh. Set Vungle extras when making an ad request to support "
+                + "refresh on Vungle banner ads.");
+        return null;
+      }
+
+      if (!activeUniqueRequestId.equals(requestUniqueId)) {
+        Log.w(TAG, "Ad already loaded for placement ID: " + placementId);
+        return null;
+      }
+    } else {
+      activeBanner = new VungleBannerAdapter(placementId, requestUniqueId, adConfig);
+      storeActiveBannerAd(placementId, activeBanner);
     }
 
-    VungleBannerAdapter bannerAdapter = mVungleBanners.get(placementId);
-    if (bannerAdapter == null) {
-      return false;
-    }
-
-    String activeUniqueRequestId = bannerAdapter.getUniquePubRequestId();
-    Log.d(TAG, "activeUniqueId: " + activeUniqueRequestId + " ###  RequestId: "
-        + adapterRequestUniqueId);
-
-    if (activeUniqueRequestId == null) {
-      Log.w(TAG, "Ad already loaded for this placement ID and cannot determine if "
-          + "this is a refresh. Set Vungle extras when making an ad request to support "
-          + "refresh on Vungle banner ads. Placement ID: " + placementId);
-      return true;
-    }
-
-    if (!activeUniqueRequestId.equals(adapterRequestUniqueId)) {
-      Log.w(TAG, "Ad already loaded for placement ID: " + placementId);
-      return true;
-    }
-
-    return false;
+    Log.d(TAG, "Using banner adapter:" + activeBanner + "; size=" + mVungleBanners.size());
+    return activeBanner;
   }
 
   void removeActiveBannerAd(@NonNull String placementId) {
