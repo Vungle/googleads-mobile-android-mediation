@@ -19,7 +19,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.RelativeLayout;
 import androidx.annotation.Keep;
 import com.google.ads.mediation.vungle.VungleInitializer;
 import com.google.android.gms.ads.AdRequest;
