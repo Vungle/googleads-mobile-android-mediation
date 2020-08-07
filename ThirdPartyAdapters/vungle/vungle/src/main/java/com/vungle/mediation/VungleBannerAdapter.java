@@ -64,11 +64,10 @@ class VungleBannerAdapter {
    */
   @Nullable
   private String mUniquePubRequestId;
-
   /**
    * Ad container for Vungle's banner ad.
    */
-  private volatile RelativeLayout adLayout;
+  private WeakReference<RelativeLayout> adLayout;
 
   /**
    * Vungle ad configuration settings.
@@ -99,10 +98,11 @@ class VungleBannerAdapter {
   private boolean mVisibility = true;
 
   VungleBannerAdapter(@NonNull Context context, @NonNull MediationBannerAdapter adapter,
-      @NonNull MediationBannerListener mediationBannerListener) {
+      @NonNull MediationBannerListener mediationBannerListener, @NonNull RelativeLayout layout) {
     this.context = context.getApplicationContext();
     this.bannerListener = new WeakReference<>(mediationBannerListener);
     this.adapter = new WeakReference<>(adapter);
+    this.adLayout = new WeakReference<>(layout);
   }
 
   void requestBannerAd(@NonNull AdSize adSize, @NonNull MediationAdRequest mediationAdRequest,
@@ -162,33 +162,6 @@ class VungleBannerAdapter {
       return;
     }
 
-    // Create the adLayout wrapper with the requested ad size, as Vungle's ad uses MATCH_PARENT for
-    // its dimensions.
-    adLayout =
-        new RelativeLayout(context) {
-          @Override
-          protected void onAttachedToWindow() {
-            super.onAttachedToWindow();
-            attach();
-          }
-
-          @Override
-          protected void onDetachedFromWindow() {
-            super.onDetachedFromWindow();
-            detach();
-          }
-        };
-    int adLayoutHeight = adSize.getHeightInPixels(context);
-    // If the height is 0 (e.g. for inline adaptive banner requests), use the closest supported size
-    // as the height of the adLayout wrapper.
-    if (adLayoutHeight <= 0) {
-      float density = context.getResources().getDisplayMetrics().density;
-      adLayoutHeight = Math.round(mAdConfig.getAdSize().getHeight() * density);
-    }
-    RelativeLayout.LayoutParams adViewLayoutParams =
-        new RelativeLayout.LayoutParams(adSize.getWidthInPixels(context), adLayoutHeight);
-    adLayout.setLayoutParams(adViewLayoutParams);
-
     VungleManager.getInstance().storeActiveBannerAd(mPlacementId, VungleBannerAdapter.this, false);
     Log.d(TAG, "Requesting banner with ad size: " + mAdConfig.getAdSize());
     mPendingRequestBanner = true;
@@ -209,11 +182,6 @@ class VungleBannerAdapter {
             }
           }
         });
-  }
-
-  View getBannerView() {
-    Log.d(TAG, "getBannerView # instance: " + hashCode());
-    return adLayout;
   }
 
   void onDestroy() {
@@ -436,7 +404,8 @@ class VungleBannerAdapter {
         + "] ";
   }
 
-  private void attach() {
+  void attach() {
+    RelativeLayout adLayout = this.adLayout.get();
     if (adLayout != null) {
       if (mVungleBannerAd != null && mVungleBannerAd.getParent() == null) {
         adLayout.addView(mVungleBannerAd);
@@ -450,7 +419,7 @@ class VungleBannerAdapter {
     }
   }
 
-  private void detach() {
+  void detach() {
     if (mVungleBannerAd != null && mVungleBannerAd.getParent() != null) {
       ((ViewGroup) mVungleBannerAd.getParent()).removeView(mVungleBannerAd);
     }
