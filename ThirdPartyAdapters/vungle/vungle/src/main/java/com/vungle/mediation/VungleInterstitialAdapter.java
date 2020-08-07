@@ -48,7 +48,7 @@ public class VungleInterstitialAdapter
   /**
    * Ad container for Vungle's banner ad.
    */
-  private volatile RelativeLayout adLayout;
+  private volatile View adLayout;
   private VungleBannerAdapter vungleBannerAdapter;
 
   @Override
@@ -186,6 +186,7 @@ public class VungleInterstitialAdapter
     if (vungleBannerAdapter != null) {
       vungleBannerAdapter.onDestroy();
       vungleBannerAdapter = null;
+      adLayout = null;
     }
   }
 
@@ -209,40 +210,9 @@ public class VungleInterstitialAdapter
   public void requestBannerAd(Context context, MediationBannerListener mediationBannerListener,
       Bundle serverParameters, AdSize adSize, MediationAdRequest mediationAdRequest,
       Bundle mediationExtras) {
-    // Create the adLayout wrapper with the requested ad size, as Vungle's ad uses MATCH_PARENT for
-    // its dimensions.
-    adLayout =
-        new RelativeLayout(context) {
-          @Override
-          protected void onAttachedToWindow() {
-            super.onAttachedToWindow();
-            if (vungleBannerAdapter != null) {
-              vungleBannerAdapter.attach();
-            }
-          }
-
-          @Override
-          protected void onDetachedFromWindow() {
-            super.onDetachedFromWindow();
-            if (vungleBannerAdapter != null) {
-              vungleBannerAdapter.detach();
-            }
-          }
-        };
-    int adLayoutHeight = adSize.getHeightInPixels(context);
-    // If the height is 0 (e.g. for inline adaptive banner requests), use the closest supported size
-    // as the height of the adLayout wrapper.
-    if (adLayoutHeight <= 0) {
-      float density = context.getResources().getDisplayMetrics().density;
-      adLayoutHeight = Math.round(mAdConfig.getAdSize().getHeight() * density);
-    }
-    RelativeLayout.LayoutParams adViewLayoutParams =
-        new RelativeLayout.LayoutParams(adSize.getWidthInPixels(context), adLayoutHeight);
-    adLayout.setLayoutParams(adViewLayoutParams);
-
     vungleBannerAdapter = new VungleBannerAdapter(context, VungleInterstitialAdapter.this,
-        mediationBannerListener, adLayout);
-    vungleBannerAdapter
+        mediationBannerListener);
+    adLayout = vungleBannerAdapter
         .requestBannerAd(adSize, mediationAdRequest, serverParameters, mediationExtras);
   }
 
