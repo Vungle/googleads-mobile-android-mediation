@@ -3,8 +3,8 @@
 #### Version 6.7.1.0
 - Verified compatibility with Vungle SDK 6.7.1.
 - Various Bug Fixes
-- Removed Vungle#setUserLegacyID API
-- Added warning flag: On devices <=API 21, OkHttp 3.14+ does not work, use 3.12.12
+- Adapter has been tested only for up to API version 29.
+- Vungle 6.7.1 SDK has support for Android 11, and has resolved some issues in order to be used with API version 30
 
 #### Version 6.7.0.0
 - Verified compatibility with Vungle SDK 6.7.0.
