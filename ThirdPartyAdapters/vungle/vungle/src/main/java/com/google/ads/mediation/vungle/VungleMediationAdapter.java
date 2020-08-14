@@ -1,6 +1,5 @@
 package com.google.ads.mediation.vungle;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -149,6 +148,8 @@ public class VungleMediationAdapter extends Adapter
       MediationAdLoadCallback<MediationRewardedAd, MediationRewardedAdCallback>
           mediationAdLoadCallback) {
     mMediationAdLoadCallback = mediationAdLoadCallback;
+
+    Context context = mediationRewardedAdConfiguration.getContext();
 
     Bundle mediationExtras = mediationRewardedAdConfiguration.getMediationExtras();
     Bundle serverParameters = mediationRewardedAdConfiguration.getServerParameters();
