@@ -155,8 +155,8 @@ public class VungleMediationAdapter extends Adapter
       MediationAdLoadCallback<MediationRewardedAd, MediationRewardedAdCallback>
           mediationAdLoadCallback) {
     mMediationAdLoadCallback = mediationAdLoadCallback;
-
     Context context = mediationRewardedAdConfiguration.getContext();
+
     if (!(context instanceof Activity)) {
       mediationAdLoadCallback.onFailure("Vungle SDK requires an Activity context to initialize.");
       return;
