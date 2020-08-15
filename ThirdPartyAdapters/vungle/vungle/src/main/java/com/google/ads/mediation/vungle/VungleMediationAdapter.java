@@ -149,6 +149,7 @@ public class VungleMediationAdapter extends Adapter
       MediationAdLoadCallback<MediationRewardedAd, MediationRewardedAdCallback>
           mediationAdLoadCallback) {
     mMediationAdLoadCallback = mediationAdLoadCallback;
+    Context context = mediationRewardedAdConfiguration.getContext();
 
     Bundle mediationExtras = mediationRewardedAdConfiguration.getMediationExtras();
     Bundle serverParameters = mediationRewardedAdConfiguration.getServerParameters();
