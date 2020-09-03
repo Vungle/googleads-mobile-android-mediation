@@ -1,5 +1,9 @@
 ## Vungle Android Mediation Adapter Changelog
 
+#### Version 6.8.0.0
+- Verified compatibility with Vungle SDK 6.8.0.
+- Fixed issue where a bad url could cause an invalid onAdLeftApplication callback
+
 #### Version 6.7.1.0
 - Verified compatibility with Vungle SDK 6.7.1.
 - Fixed a bug where ads wouldn't load if an ad was loaded using an application context.
