@@ -2,6 +2,7 @@
 
 #### Version 6.8.0.0
 - Verified compatibility with Vungle SDK 6.8.0.
+- Vungle's SDK has Android 11 Support (Since 6.7.1), adapter support pending.
 - Fixed issue where a bad url could cause an invalid onAdLeftApplication callback
 
 #### Version 6.7.1.0
