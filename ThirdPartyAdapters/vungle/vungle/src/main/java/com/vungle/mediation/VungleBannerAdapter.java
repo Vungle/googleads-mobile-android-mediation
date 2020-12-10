@@ -160,7 +160,7 @@ public class VungleBannerAdapter {
     mVisibility = false;
     mVungleManager.removeActiveBannerAd(placementId, vungleBannerAd);
     if (vungleBannerAd != null) {
-      vungleBannerAd.detach();
+      vungleBannerAd.destroy();
     }
     vungleBannerAd = null;
     mPendingRequestBanner = false;

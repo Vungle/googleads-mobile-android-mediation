@@ -94,10 +94,6 @@ public class VungleBannerAd {
       if (vungleBanner.getParent() != null) {
         ((ViewGroup) vungleBanner.getParent()).removeView(vungleBanner);
       }
-
-      Log.d(TAG, "Vungle banner adapter cleanUp: destroyAd # " + vungleBanner.hashCode());
-      vungleBanner.destroyAd();
-      vungleBanner = null;
     }
 
     if (vungleMRECBanner != null) {
@@ -105,9 +101,19 @@ public class VungleBannerAd {
       if (adView != null && adView.getParent() != null) {
         ((ViewGroup) adView.getParent()).removeView(adView);
       }
+    }
+  }
 
-      Log.d(TAG,
-          "Vungle banner adapter cleanUp: finishDisplayingAd # " + vungleMRECBanner.hashCode());
+  public void destroy() {
+    detach();
+    if (vungleBanner != null) {
+      Log.d(TAG, "Vungle banner adapter cleanUp: destroyAd # " + vungleBanner.hashCode());
+      vungleBanner.destroyAd();
+      vungleBanner = null;
+    }
+
+    if (vungleMRECBanner != null) {
+      Log.d(TAG, "Vungle banner adapter cleanUp: finishDisplayingAd # " + vungleMRECBanner.hashCode());
       vungleMRECBanner.finishDisplayingAd();
       vungleMRECBanner = null;
     }
