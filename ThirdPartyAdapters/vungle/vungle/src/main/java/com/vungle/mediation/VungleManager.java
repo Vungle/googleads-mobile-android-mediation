@@ -207,7 +207,8 @@ public class VungleManager {
     boolean didRemove = mVungleBanners.remove(placementId, activeBannerAd);
     if (didRemove && activeBannerAd != null) {
       Log.d(TAG, "removeActiveBannerAd: " + activeBannerAd + "; size=" + mVungleBanners.size());
-      activeBannerAd.destroy();
+      activeBannerAd.detach();
+      activeBannerAd.destroyAd();
     }
   }
 

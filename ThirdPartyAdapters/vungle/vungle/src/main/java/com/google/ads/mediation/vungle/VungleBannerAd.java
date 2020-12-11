@@ -104,8 +104,7 @@ public class VungleBannerAd {
     }
   }
 
-  public void destroy() {
-    detach();
+  public void destroyAd() {
     if (vungleBanner != null) {
       Log.d(TAG, "Vungle banner adapter cleanUp: destroyAd # " + vungleBanner.hashCode());
       vungleBanner.destroyAd();
@@ -113,7 +112,8 @@ public class VungleBannerAd {
     }
 
     if (vungleMRECBanner != null) {
-      Log.d(TAG, "Vungle banner adapter cleanUp: finishDisplayingAd # " + vungleMRECBanner.hashCode());
+      Log.d(TAG,
+          "Vungle banner adapter cleanUp: finishDisplayingAd # " + vungleMRECBanner.hashCode());
       vungleMRECBanner.finishDisplayingAd();
       vungleMRECBanner = null;
     }
