@@ -53,7 +53,8 @@ public class VungleMediationAdapter extends Adapter
   @Override
   public VersionInfo getVersionInfo() {
     String versionString = BuildConfig.VERSION_NAME;
-    String[] splits = versionString.split("\\.");
+    //remove any suffixes from name
+    String[] splits = versionString.split("-")[0].split("\\.");
 
     if (splits.length >= 4) {
       int major = Integer.parseInt(splits[0]);
@@ -253,8 +254,6 @@ public class VungleMediationAdapter extends Adapter
           public void run() {
             if (mMediationRewardedAdCallback != null) {
               mMediationRewardedAdCallback.onAdOpened();
-              mMediationRewardedAdCallback.onVideoStart();
-              mMediationRewardedAdCallback.reportAdImpression();
             }
           }
         });
@@ -337,7 +336,8 @@ public class VungleMediationAdapter extends Adapter
 
   @Override
   public void onAdViewed(String placementId) {
-    // "no-op , to be mapped to respective adapter events in future release"
+    mMediationRewardedAdCallback.onVideoStart();
+    mMediationRewardedAdCallback.reportAdImpression();
   }
 
   /**
