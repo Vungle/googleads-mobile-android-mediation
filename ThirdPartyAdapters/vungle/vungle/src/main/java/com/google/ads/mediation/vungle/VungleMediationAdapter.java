@@ -52,9 +52,8 @@ public class VungleMediationAdapter extends Adapter
 
   @Override
   public VersionInfo getVersionInfo() {
-    String versionString = BuildConfig.VERSION_NAME;
-    //remove any suffixes from name
-    String[] splits = versionString.split("-")[0].split("\\.");
+    String versionString = BuildConfig.ADAPTER_VERSION;
+    String[] splits = versionString.split("\\.");
 
     if (splits.length >= 4) {
       int major = Integer.parseInt(splits[0]);
