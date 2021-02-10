@@ -242,6 +242,11 @@ public class VungleMediationAdapter extends Adapter
         });
   }
 
+  @Override
+  public void creativeId(String creativeId) {
+
+  }
+
   /**
    * {@link PlayAdCallback} implemenatation from Vungle
    */

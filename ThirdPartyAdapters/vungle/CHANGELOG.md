@@ -1,4 +1,5 @@
 ## Vungle Android Mediation Adapter Changelog
+#### Version 6.10.0.0
 
 #### Version 6.9.1.0
 - Verified compatibility with Vungle SDK 6.9.1.
