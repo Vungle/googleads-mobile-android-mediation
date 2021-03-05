@@ -25,7 +25,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import androidx.annotation.Keep;
-import com.google.ads.mediation.vungle.VungleBannerAd;
+
 import com.google.ads.mediation.vungle.VungleInitializer;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -265,8 +265,7 @@ public class VungleInterstitialAdapter
     Log.d(TAG, "New banner adapter: " + vungleBannerAdapter + "; size: " + adConfig.getAdSize());
     vungleBannerAdapter.setVungleListener(mVungleBannerListener);
 
-    VungleBannerAd vungleBanner = new VungleBannerAd(placementForPlay, vungleBannerAdapter);
-    mVungleManager.registerBannerAd(placementForPlay, vungleBanner);
+    mVungleManager.registerBannerAd(placementForPlay, vungleBannerAdapter);
 
     Log.d(TAG, "Requesting banner with ad size: " + adConfig.getAdSize());
     vungleBannerAdapter.requestBannerAd(context, config.getAppId(), adSize);

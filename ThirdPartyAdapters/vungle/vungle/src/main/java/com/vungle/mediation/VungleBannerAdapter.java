@@ -2,11 +2,11 @@ package com.vungle.mediation;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.google.ads.mediation.vungle.VungleBannerAd;
+
 import com.google.ads.mediation.vungle.VungleInitializer;
 import com.google.ads.mediation.vungle.VunglePlayAdCallback;
 import com.google.android.gms.ads.AdRequest;
@@ -16,7 +16,6 @@ import com.vungle.warren.Banners;
 import com.vungle.warren.LoadAdCallback;
 import com.vungle.warren.Vungle;
 import com.vungle.warren.VungleBanner;
-import com.vungle.warren.VungleNativeAd;
 import com.vungle.warren.error.VungleException;
 import java.lang.ref.WeakReference;
 
@@ -50,7 +49,7 @@ public class VungleBannerAdapter {
   /**
    * Wrapper object for Vungle banner ads.
    */
-  private VungleBannerAd vungleBannerAd;
+  private VungleBanner vungleBannerAd;
 
   /**
    * Container for Vungle's banner ad view.
@@ -147,7 +146,7 @@ public class VungleBannerAdapter {
               public void onInitializeError(String errorMessage) {
                 Log.d(TAG, "SDK init failed: " + VungleBannerAdapter.this);
                 VungleListener listener = getVungleListener();
-                mVungleManager.removeActiveBannerAd(placementId, vungleBannerAd);
+                mVungleManager.removeActiveBannerAd(placementId, VungleBannerAdapter.this);
                 if (mPendingRequestBanner && listener != null) {
                   listener.onAdFailedToLoad(AdRequest.ERROR_CODE_INTERNAL_ERROR);
                 }
@@ -158,9 +157,9 @@ public class VungleBannerAdapter {
   void destroy() {
     Log.d(TAG, "Vungle banner adapter destroy:" + this);
     mVisibility = false;
-    mVungleManager.removeActiveBannerAd(placementId, vungleBannerAd);
+    mVungleManager.removeActiveBannerAd(placementId, this);
     if (vungleBannerAd != null) {
-      vungleBannerAd.detach();
+      detach();
       vungleBannerAd.destroyAd();
     }
     vungleBannerAd = null;
@@ -179,14 +178,8 @@ public class VungleBannerAdapter {
     if (vungleBannerAd == null) {
       return;
     }
-
     this.mVisibility = visible;
-    if (vungleBannerAd.getVungleBanner() != null) {
-      vungleBannerAd.getVungleBanner().setAdVisibility(visible);
-    }
-    if (vungleBannerAd.getVungleMRECBanner() != null) {
-      vungleBannerAd.getVungleMRECBanner().setAdVisibility(visible);
-    }
+    vungleBannerAd.setAdVisibility(visible);
   }
 
   private final LoadAdCallback mAdLoadCallback =
@@ -200,7 +193,7 @@ public class VungleBannerAdapter {
         public void onError(String id, VungleException exception) {
           Log.d(TAG, "Ad load failed:" + VungleBannerAdapter.this);
           VungleListener listener = getVungleListener();
-          mVungleManager.removeActiveBannerAd(placementId, vungleBannerAd);
+          mVungleManager.removeActiveBannerAd(placementId, VungleBannerAdapter.this);
           if (mPendingRequestBanner && listener != null) {
             listener.onAdFailedToLoad(AdRequest.ERROR_CODE_NO_FILL);
           }
@@ -232,21 +225,17 @@ public class VungleBannerAdapter {
     adParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
     adParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
 
-    vungleBannerAd = mVungleManager.getVungleBannerAd(placementId);
     VunglePlayAdCallback playAdCallback = new VunglePlayAdCallback(listener,
-        VungleBannerAdapter.this, vungleBannerAd);
+        VungleBannerAdapter.this);
 
     if (AdConfig.AdSize.isBannerAdSize(mAdConfig.getAdSize())) {
-      VungleBanner vungleBanner = Banners
+      vungleBannerAd = Banners
           .getBanner(placementId, mAdConfig.getAdSize(), playAdCallback);
-      if (vungleBanner != null) {
-        Log.d(TAG, "display banner:" + vungleBanner.hashCode() + this);
-        if (vungleBannerAd != null) {
-          vungleBannerAd.setVungleBanner(vungleBanner);
-        }
+      if (vungleBannerAd != null) {
+        Log.d(TAG, "display banner:" + vungleBannerAd.hashCode() + this);
 
         updateVisibility(mVisibility);
-        vungleBanner.setLayoutParams(adParams);
+        vungleBannerAd.setLayoutParams(adParams);
         // don't add to parent here
         listener.onAdAvailable();
       } else {
@@ -271,14 +260,20 @@ public class VungleBannerAdapter {
   }
 
   void attach() {
-    if (vungleBannerAd != null) {
-      vungleBannerAd.attach();
+
+    RelativeLayout layout = getAdLayout();
+    if (layout == null) {
+      return;
+    }
+
+    if (vungleBannerAd != null && vungleBannerAd.getParent() == null) {
+      layout.addView(vungleBannerAd);
     }
   }
 
   void detach() {
-    if (vungleBannerAd != null) {
-      vungleBannerAd.detach();
+    if (vungleBannerAd != null && vungleBannerAd.getParent() != null) {
+      ((ViewGroup) vungleBannerAd.getParent()).removeView(vungleBannerAd);
     }
   }
 

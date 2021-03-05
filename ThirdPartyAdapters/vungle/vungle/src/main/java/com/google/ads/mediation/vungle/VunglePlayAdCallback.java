@@ -1,7 +1,7 @@
 package com.google.ads.mediation.vungle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
 import com.vungle.mediation.VungleBannerAdapter;
 import com.vungle.mediation.VungleListener;
 import com.vungle.mediation.VungleManager;
@@ -18,13 +18,11 @@ public class VunglePlayAdCallback implements PlayAdCallback {
 
   private final WeakReference<VungleBannerAdapter> adapterReference;
   private final WeakReference<VungleListener> listenerReference;
-  private final VungleBannerAd vungleBannerAd;
 
   public VunglePlayAdCallback(@NonNull VungleListener listener,
-      @NonNull VungleBannerAdapter adapter, @Nullable VungleBannerAd vungleBannerAd) {
+                              @NonNull VungleBannerAdapter adapter) {
     this.listenerReference = new WeakReference<>(listener);
     this.adapterReference = new WeakReference<>(adapter);
-    this.vungleBannerAd = vungleBannerAd;
   }
 
   @Override
@@ -84,7 +82,7 @@ public class VunglePlayAdCallback implements PlayAdCallback {
 
   @Override
   public void onError(String placementID, VungleException exception) {
-    VungleManager.getInstance().removeActiveBannerAd(placementID, vungleBannerAd);
+    VungleManager.getInstance().removeActiveBannerAd(placementID, adapterReference.get());
 
     VungleListener listener = listenerReference.get();
     VungleBannerAdapter adapter = adapterReference.get();
