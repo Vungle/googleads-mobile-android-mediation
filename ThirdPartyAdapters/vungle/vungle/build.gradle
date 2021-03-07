@@ -23,7 +23,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 6090100
+        versionCode 6100000
         versionName stringVersion
         buildConfigField("String", "ADAPTER_VERSION", "\"${stringVersion}\"")
     }
@@ -37,7 +37,7 @@ android {
 
 dependencies {
 
-    implementation ('com.vungle:publisher-sdk-android:6.9.1') {
+    implementation (name:'vungle-android-sdk-6.10.0-RC1', ext: 'aar') {
         transitive=true
     }
 
