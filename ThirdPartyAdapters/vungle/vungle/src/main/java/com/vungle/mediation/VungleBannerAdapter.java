@@ -250,7 +250,7 @@ public class VungleBannerAdapter {
         listener.onAdFailedToLoad(AdRequest.ERROR_CODE_INTERNAL_ERROR);
       }
     } else {
-      listener.onAdFailedToLoad(AdRequest.ERROR_CODE_INTERNAL_ERROR);
+      listener.onAdFailedToLoad(AdRequest.ERROR_CODE_INVALID_REQUEST);
     }
   }
 

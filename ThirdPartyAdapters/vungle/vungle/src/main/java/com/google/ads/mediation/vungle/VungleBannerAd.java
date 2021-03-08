@@ -28,7 +28,7 @@ public class VungleBannerAd {
   private String placementId;
 
   /**
-   * Vungle ad object for non-MREC banner ads.
+   * Vungle ad object for banner ads.
    */
   private VungleBanner vungleBanner;
 
