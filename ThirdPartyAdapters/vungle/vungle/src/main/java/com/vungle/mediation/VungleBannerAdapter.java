@@ -16,7 +16,6 @@ import com.vungle.warren.Banners;
 import com.vungle.warren.LoadAdCallback;
 import com.vungle.warren.Vungle;
 import com.vungle.warren.VungleBanner;
-import com.vungle.warren.VungleNativeAd;
 import com.vungle.warren.error.VungleException;
 import java.lang.ref.WeakReference;
 
@@ -184,9 +183,6 @@ public class VungleBannerAdapter {
     if (vungleBannerAd.getVungleBanner() != null) {
       vungleBannerAd.getVungleBanner().setAdVisibility(visible);
     }
-    if (vungleBannerAd.getVungleMRECBanner() != null) {
-      vungleBannerAd.getVungleMRECBanner().setAdVisibility(visible);
-    }
   }
 
   private final LoadAdCallback mAdLoadCallback =
@@ -254,26 +250,7 @@ public class VungleBannerAdapter {
         listener.onAdFailedToLoad(AdRequest.ERROR_CODE_INTERNAL_ERROR);
       }
     } else {
-      View adView = null;
-      VungleNativeAd vungleMRECBanner = Vungle.getNativeAd(placementId, mAdConfig, playAdCallback);
-      if (vungleMRECBanner != null) {
-        adView = vungleMRECBanner.renderNativeView();
-      }
-
-      if (adView != null) {
-        Log.d(TAG, "display MREC:" + vungleMRECBanner.hashCode() + this);
-        if (vungleBannerAd != null) {
-          vungleBannerAd.setVungleMRECBanner(vungleMRECBanner);
-        }
-
-        updateVisibility(mVisibility);
-        adView.setLayoutParams(adParams);
-        // don't add to parent here
-        listener.onAdAvailable();
-      } else {
-        // missing resources
-        listener.onAdFailedToLoad(AdRequest.ERROR_CODE_INTERNAL_ERROR);
-      }
+      listener.onAdFailedToLoad(AdRequest.ERROR_CODE_INTERNAL_ERROR);
     }
   }
 

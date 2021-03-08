@@ -86,6 +86,11 @@ public class VungleManager {
   private PlayAdCallback playAdCallback(@Nullable final VungleListener listener) {
     return new PlayAdCallback() {
       @Override
+      public void creativeId(String creativeId) {
+        // no-op
+      }
+
+      @Override
       public void onAdStart(String id) {
         if (listener != null) {
           listener.onAdStart(id);
