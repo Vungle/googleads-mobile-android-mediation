@@ -2,7 +2,6 @@ package com.vungle.mediation;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +18,6 @@ import com.vungle.warren.LoadAdCallback;
 import com.vungle.warren.PlayAdCallback;
 import com.vungle.warren.Vungle;
 import com.vungle.warren.VungleBanner;
-import com.vungle.warren.VungleNativeAd;
 import com.vungle.warren.error.VungleException;
 
 public class VungleBannerAdapter implements PlayAdCallback {
@@ -186,9 +184,6 @@ public class VungleBannerAdapter implements PlayAdCallback {
     if (vungleBannerAd.getVungleBanner() != null) {
       vungleBannerAd.getVungleBanner().setAdVisibility(visible);
     }
-    if (vungleBannerAd.getVungleMRECBanner() != null) {
-      vungleBannerAd.getVungleMRECBanner().setAdVisibility(visible);
-    }
   }
 
   private final LoadAdCallback mAdLoadCallback =
@@ -254,30 +249,7 @@ public class VungleBannerAdapter implements PlayAdCallback {
         }
       }
     } else {
-      View adView = null;
-      VungleNativeAd vungleMRECBanner = Vungle.getNativeAd(placementId, mAdConfig, playAdCallback);
-      if (vungleMRECBanner != null) {
-        adView = vungleMRECBanner.renderNativeView();
-      }
-
-      if (adView != null) {
-        Log.d(TAG, "display MREC:" + vungleMRECBanner.hashCode() + this);
-        if (vungleBannerAd != null) {
-          vungleBannerAd.setVungleMRECBanner(vungleMRECBanner);
-        }
-
-        updateVisibility(mVisibility);
-        adView.setLayoutParams(adParams);
-        // don't add to parent here
-        if (mediationAdapter != null && mediationListener != null) {
-          mediationListener.onAdLoaded(mediationAdapter);
-        }
-      } else {
-        // missing resources
-        if (mediationAdapter != null && mediationListener != null) {
-          mediationListener.onAdFailedToLoad(mediationAdapter, AdRequest.ERROR_CODE_INTERNAL_ERROR);
-        }
-      }
+      mediationListener.onAdFailedToLoad(mediationAdapter, AdRequest.ERROR_CODE_INVALID_REQUEST);
     }
   }
 
@@ -303,6 +275,11 @@ public class VungleBannerAdapter implements PlayAdCallback {
     if (vungleBannerAd != null) {
       vungleBannerAd.detach();
     }
+  }
+
+  @Override
+  public void creativeId(String creativeId) {
+    //No op
   }
 
   /**
