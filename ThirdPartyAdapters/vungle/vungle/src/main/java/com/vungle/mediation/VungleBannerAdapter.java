@@ -305,6 +305,11 @@ public class VungleBannerAdapter implements PlayAdCallback {
     }
   }
 
+  @Override
+  public void creativeId(String creativeId) {
+    //No Op
+  }
+
   /**
    * Vungle SDK's {@link PlayAdCallback} implementation.
    */

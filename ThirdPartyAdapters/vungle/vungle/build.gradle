@@ -8,7 +8,7 @@ ext {
     // String property to store the proper name of the mediation network adapter.
     adapterName = "Vungle"
     // String property to store version name.
-    stringVersion = "6.9.1.0"
+    stringVersion = "6.10.1.0"
     // String property to store group id.
     stringGroupId = "com.google.ads.mediation"
 }
@@ -21,7 +21,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 6090100
+        versionCode 6100100
         versionName stringVersion
         buildConfigField("String", "ADAPTER_VERSION", "\"${stringVersion}\"")
     }
@@ -35,9 +35,11 @@ android {
 
 dependencies {
 
-    implementation ('com.vungle:publisher-sdk-android:6.9.1') {
-        transitive=true
-    }
+//    implementation ('com.vungle:publisher-sdk-android:6.9.1') {
+//        transitive=true
+//    }
+
+    implementation 'com.github.Vungle:vungle-android-sdk:6.10.1-RC2'
 
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'com.google.android.gms:play-services-ads:19.7.0'
