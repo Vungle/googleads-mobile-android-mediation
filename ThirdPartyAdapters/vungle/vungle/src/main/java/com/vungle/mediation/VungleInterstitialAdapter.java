@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import androidx.annotation.Keep;
 import com.google.ads.mediation.vungle.VungleBannerAd;
+import com.google.ads.mediation.vungle.VungleBaseAdapter;
 import com.google.ads.mediation.vungle.VungleInitializer;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -43,7 +44,7 @@ import java.util.ArrayList;
  * Mobile Ads SDK mediation.
  */
 @Keep
-public class VungleInterstitialAdapter
+public class VungleInterstitialAdapter extends VungleBaseAdapter
     implements MediationInterstitialAdapter, MediationBannerAdapter {
 
   private static final String TAG = VungleInterstitialAdapter.class.getSimpleName();
