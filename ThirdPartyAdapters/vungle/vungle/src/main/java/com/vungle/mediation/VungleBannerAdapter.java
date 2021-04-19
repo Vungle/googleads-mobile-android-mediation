@@ -2,7 +2,6 @@ package com.vungle.mediation;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,9 +11,9 @@ import com.google.ads.mediation.vungle.VunglePlayAdCallback;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.vungle.warren.AdConfig;
+import com.vungle.warren.BannerAdConfig;
 import com.vungle.warren.Banners;
 import com.vungle.warren.LoadAdCallback;
-import com.vungle.warren.Vungle;
 import com.vungle.warren.VungleBanner;
 import com.vungle.warren.error.VungleException;
 import java.lang.ref.WeakReference;
@@ -167,11 +166,7 @@ public class VungleBannerAdapter {
   }
 
   void preCache() {
-    if (AdConfig.AdSize.isBannerAdSize(mAdConfig.getAdSize())) {
-      Banners.loadBanner(placementId, mAdConfig.getAdSize(), null);
-    } else {
-      Vungle.loadAd(placementId, null);
-    }
+    Banners.loadBanner(placementId, new BannerAdConfig(mAdConfig), null);
   }
 
   void updateVisibility(boolean visible) {
@@ -205,11 +200,7 @@ public class VungleBannerAdapter {
 
   private void loadBanner() {
     Log.d(TAG, "loadBanner: " + this);
-    if (AdConfig.AdSize.isBannerAdSize(mAdConfig.getAdSize())) {
-      Banners.loadBanner(placementId, mAdConfig.getAdSize(), mAdLoadCallback);
-    } else {
-      Vungle.loadAd(placementId, mAdLoadCallback);
-    }
+    Banners.loadBanner(placementId, new BannerAdConfig(mAdConfig), mAdLoadCallback);
   }
 
   private void createBanner() {
@@ -234,7 +225,7 @@ public class VungleBannerAdapter {
 
     if (AdConfig.AdSize.isBannerAdSize(mAdConfig.getAdSize())) {
       VungleBanner vungleBanner = Banners
-          .getBanner(placementId, mAdConfig.getAdSize(), playAdCallback);
+          .getBanner(placementId, new BannerAdConfig(mAdConfig), playAdCallback);
       if (vungleBanner != null) {
         Log.d(TAG, "display banner:" + vungleBanner.hashCode() + this);
         if (vungleBannerAd != null) {
