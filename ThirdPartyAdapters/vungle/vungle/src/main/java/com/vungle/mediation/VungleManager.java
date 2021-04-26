@@ -5,6 +5,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.ads.mediation.vungle.VungleBannerAd;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
 import com.vungle.warren.Vungle;
 import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,7 +22,7 @@ public class VungleManager {
 
   private static VungleManager sInstance;
 
-  private ConcurrentHashMap<String, VungleBannerAd> mVungleBanners;
+  private final ConcurrentHashMap<String, VungleBannerAd> mVungleBanners;
 
   public static synchronized VungleManager getInstance() {
     if (sInstance == null) {
@@ -81,19 +83,19 @@ public class VungleManager {
     }
   }
 
-  // TODO: Make this method return an AdError object instead of a boolean.
-  synchronized boolean canRequestBannerAd(@NonNull String placementId,
+  public synchronized AdError canRequestBannerAd(@NonNull String placementId,
       @Nullable String requestUniqueId) {
+    AdError adError = null;
     cleanLeakedBannerAdapters();
 
     VungleBannerAd bannerAd = mVungleBanners.get(placementId);
     if (bannerAd == null) {
-      return true;
+      return adError;
     }
 
     if (bannerAd.getAdapter() == null) {
       mVungleBanners.remove(placementId);
-      return true;
+      return adError;
     }
 
     VungleBannerAdapter adapter = bannerAd.getAdapter();
@@ -102,18 +104,24 @@ public class VungleManager {
         "activeUniqueId: " + activeUniqueRequestId + " ###  RequestId: " + requestUniqueId);
 
     if (activeUniqueRequestId == null) {
-      Log.w(TAG, "Ad already loaded for placement ID: " + placementId + ", and cannot "
+      String message = "Ad already loaded for placement ID: " + placementId + ", and cannot "
           + "determine if this is a refresh. Set Vungle extras when making an ad request to "
-          + "support refresh on Vungle banner ads.");
-      return false;
+          + "support refresh on Vungle banner ads.";
+      Log.w(TAG, message);
+      adError = new AdError(AdRequest.ERROR_CODE_INVALID_REQUEST, message,
+          VungleManager.class.getName());
+      return adError;
     }
 
     if (!activeUniqueRequestId.equals(requestUniqueId)) {
-      Log.w(TAG, "Ad already loaded for placement ID: " + placementId);
-      return false;
+      String message = "Ad already loaded for placement ID: " + placementId;
+      Log.w(TAG, message);
+      adError = new AdError(AdRequest.ERROR_CODE_INVALID_REQUEST, message,
+          VungleManager.class.getName());
+      return adError;
     }
 
-    return true;
+    return adError;
   }
 
   public void removeActiveBannerAd(@NonNull String placementId,
@@ -128,7 +136,7 @@ public class VungleManager {
     }
   }
 
-  void registerBannerAd(@NonNull String placementId, @NonNull VungleBannerAd instance) {
+  public void registerBannerAd(@NonNull String placementId, @NonNull VungleBannerAd instance) {
     removeActiveBannerAd(placementId, mVungleBanners.get(placementId));
     if (!mVungleBanners.containsKey(placementId)) {
       mVungleBanners.put(placementId, instance);
