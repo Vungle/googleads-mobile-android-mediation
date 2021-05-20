@@ -27,6 +27,7 @@ import android.view.View;
 import androidx.annotation.Keep;
 import com.google.ads.mediation.vungle.VungleBannerAd;
 import com.google.ads.mediation.vungle.VungleInitializer;
+import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.MediationUtils;
@@ -55,6 +56,7 @@ public class VungleInterstitialAdapter
   private VungleManager mVungleManager;
   private AdConfig mAdConfig;
   private String mPlacementForPlay;
+  private String mAdMarkUp;
 
   // banner/MREC
   private MediationBannerListener mMediationBannerListener;
@@ -279,7 +281,8 @@ public class VungleInterstitialAdapter
     // Adapter does not support multiple Banner instances playing for same placement except for
     // refresh.
     String uniqueRequestId = config.getRequestUniqueId();
-    if (!mVungleManager.canRequestBannerAd(placementForPlay, uniqueRequestId)) {
+    AdError error = mVungleManager.canRequestBannerAd(placementForPlay, uniqueRequestId);
+    if (error != null) {
       mMediationBannerListener.onAdFailedToLoad(
           VungleInterstitialAdapter.this, AdRequest.ERROR_CODE_INVALID_REQUEST);
       return;
