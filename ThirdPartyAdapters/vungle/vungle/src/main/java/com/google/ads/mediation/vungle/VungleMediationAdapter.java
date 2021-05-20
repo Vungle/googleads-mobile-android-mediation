@@ -137,7 +137,7 @@ public class VungleMediationAdapter extends VungleBaseAdapter
   }
 
   /**
-   * {@link LoadAdCallback} implemenatation from Vungle
+   * {@link LoadAdCallback} implemenatation from Vungle.
    */
   @Override
   public void onAdLoad(final String placementId) {
@@ -177,9 +177,7 @@ public class VungleMediationAdapter extends VungleBaseAdapter
 
   @Override
   @Deprecated
-  public void onAdEnd(
-      final String placementId,
-      final boolean wasSuccessfulView,
+  public void onAdEnd(final String placementId, final boolean wasSuccessfulView,
       final boolean wasCallToActionClicked) {
   }
 
