@@ -242,7 +242,7 @@ public class VungleInterstitialAdapter
     mMediationBannerListener = mediationBannerListener;
     String appID = serverParameters.getString(KEY_APP_ID);
     AdapterParametersParser.Config config;
-    config = AdapterParametersParser.parse(appID, serverParameters);
+    config = AdapterParametersParser.parse(appID, mediationExtras);
 
     if (TextUtils.isEmpty(appID)) {
 
