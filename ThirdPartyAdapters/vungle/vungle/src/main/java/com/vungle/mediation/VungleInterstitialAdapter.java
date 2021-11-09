@@ -65,6 +65,9 @@ public class VungleInterstitialAdapter
       return;
     }
 
+    VungleInitializer.getInstance()
+            .updateCoppaStatus(mediationAdRequest.taggedForChildDirectedTreatment());
+
     mMediationInterstitialListener = mediationInterstitialListener;
     mVungleManager = VungleManager.getInstance();
     mPlacementForPlay = mVungleManager.findPlacement(mediationExtras, serverParameters);
@@ -248,6 +251,10 @@ public class VungleInterstitialAdapter
       }
       return;
     }
+
+    VungleInitializer.getInstance()
+            .updateCoppaStatus(mediationAdRequest.taggedForChildDirectedTreatment());
+
     mVungleManager = VungleManager.getInstance();
 
     String placementForPlay = mVungleManager.findPlacement(mediationExtras, serverParameters);

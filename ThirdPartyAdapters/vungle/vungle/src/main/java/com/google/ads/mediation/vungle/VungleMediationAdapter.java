@@ -292,6 +292,10 @@ public class VungleMediationAdapter extends RtbAdapter
 
     // Unmute full-screen ads by default.
     mAdConfig = VungleExtrasBuilder.adConfigWithNetworkExtras(mediationExtras, false);
+
+    VungleInitializer.getInstance()
+            .updateCoppaStatus(mediationRewardedAdConfiguration.taggedForChildDirectedTreatment());
+
     VungleInitializer.getInstance()
         .initialize(
             appID,
