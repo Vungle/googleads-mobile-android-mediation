@@ -1,5 +1,9 @@
 ## Vungle Android Mediation Adapter Changelog
 
+#### Version 6.10.3.0
+- Verified compatibility with Vungle SDK 6.10.3.
+- Added support for Child-Directed setting (COPPA) to be pass to the Vungle SDK via new API
+
 #### Version 6.10.2.0
  - Verified compatibility with Vungle SDK 6.10.2.
  - Fixed an adapter issue by replacing parameter `serverParameters`, with `mediationExtras` to obtain Vungle network-specific parameters, when requesting Banner and Interstitial ads.
