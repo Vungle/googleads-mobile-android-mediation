@@ -42,6 +42,7 @@ public class VungleRtbInterstitialAd implements MediationInterstitialAd {
       @NonNull MediationAdLoadCallback<MediationInterstitialAd, MediationInterstitialAdCallback> mediationAdLoadCallback) {
     this.mediationInterstitialAdConfiguration = mediationInterstitialAdConfiguration;
     this.mMediationAdLoadCallback = mediationAdLoadCallback;
+    VungleInitializer.getInstance().updateCoppaStatus(mediationInterstitialAdConfiguration.taggedForChildDirectedTreatment());
   }
 
   public void render() {
