@@ -2,7 +2,8 @@
 
 #### Version 6.10.3.0
 - Verified compatibility with Vungle SDK 6.10.3.
-- Added support for Child-Directed setting (COPPA) to be pass to the Vungle SDK via new API
+- Added support for Child-Directed Setting
+- Added new Vungle API for passing COPPA Status Vungle#updateCoppaStatus(boolean status)
 
 #### Version 6.10.2.0
  - Verified compatibility with Vungle SDK 6.10.2.

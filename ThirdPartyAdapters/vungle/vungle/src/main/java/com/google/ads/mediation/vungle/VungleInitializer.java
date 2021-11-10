@@ -110,7 +110,7 @@ public class VungleInitializer implements InitCallback {
     // Unused
   }
 
-  public void updateCoppaStatus(int configuration){
+  public void updateCoppaStatus(int configuration) {
     switch (configuration) {
       case RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE :
         Vungle.updateUserCoppaStatus(true);
