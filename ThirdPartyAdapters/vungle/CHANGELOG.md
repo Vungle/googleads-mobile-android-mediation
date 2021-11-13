@@ -5,6 +5,10 @@
 - Added support for Child-Directed Setting
 - Added new Vungle API for passing COPPA Status Vungle#updateCoppaStatus(boolean status)
 
+Built and tested with:
+- Google Mobile Ads SDK version 20.4.0.
+- Vungle SDK version 6.10.3.
+
 #### Version 6.10.2.0
  - Verified compatibility with Vungle SDK 6.10.2.
  - Fixed an adapter issue by replacing parameter `serverParameters`, with `mediationExtras` to obtain Vungle network-specific parameters, when requesting Banner and Interstitial ads.
