@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import androidx.annotation.NonNull;
 import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.RequestConfiguration;
 import com.vungle.mediation.VungleConsent;
 import com.vungle.mediation.VungleNetworkSettings;
@@ -60,9 +61,12 @@ public class VungleInitializer implements InitCallback {
             }
 
             // Pass new settings to SDK.
+            updateCoppaStatus(MobileAds.getRequestConfiguration().getTagForChildDirectedTreatment());
             Vungle.init(appId, context.getApplicationContext(), VungleInitializer.this, settings);
           }
         });
+
+    updateCoppaStatus(MobileAds.getRequestConfiguration().getTagForChildDirectedTreatment());
 
     VungleSettings vungleSettings = VungleNetworkSettings.getVungleSettings();
     Vungle.init(appId, context.getApplicationContext(), VungleInitializer.this, vungleSettings);
