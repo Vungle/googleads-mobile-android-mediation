@@ -143,21 +143,11 @@ public class VungleNativeAdapter extends UnifiedNativeAdMapper {
     }
 
     @Override
-    public void onAdStart(String placementId) {
-      // No-op
-    }
-
-    @Override
     public void onAdClick(String placementId) {
       if (nativeAdCallback != null) {
         nativeAdCallback.reportAdClicked();
         nativeAdCallback.onAdOpened();
       }
-    }
-
-    @Override
-    public void onAdEnd(String placementId) {
-      // No-op
     }
 
     @Override
@@ -168,7 +158,7 @@ public class VungleNativeAdapter extends UnifiedNativeAdMapper {
     }
 
     @Override
-    public void onAdViewed(String placementId) {
+    public void onAdImpression(String placementId) {
       if (nativeAdCallback != null) {
         nativeAdCallback.reportAdImpression();
       }
