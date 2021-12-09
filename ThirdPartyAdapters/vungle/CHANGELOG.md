@@ -1,5 +1,13 @@
 ## Vungle Android Mediation Adapter Changelog
 
+#### Version 6.10.3.0
+- Verified compatibility with Vungle SDK 6.10.3.
+- Added support for Child-Directed setting (COPPA) to be pass to the Vungle SDK via new API
+
+Built and tested with:
+- Google Mobile Ads SDK version 20.5.0.
+- Vungle SDK version 6.10.3.
+
 #### Version 6.10.2.1
 - Verified compatibility with Vungle SDK 6.10.2.
 - Added bidding support for banner, interstitial and rewarded ad formats.
