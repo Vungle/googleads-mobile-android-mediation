@@ -158,6 +158,11 @@ public class VungleNativeAdapter extends UnifiedNativeAdMapper {
     }
 
     @Override
+    public void creativeId(String creativeId) {
+      // no-op
+    }
+
+    @Override
     public void onAdImpression(String placementId) {
       if (nativeAdCallback != null) {
         nativeAdCallback.reportAdImpression();
