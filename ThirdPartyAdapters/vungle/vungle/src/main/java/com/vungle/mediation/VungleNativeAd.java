@@ -29,10 +29,11 @@ public class VungleNativeAd {
    */
   private NativeAd nativeAd;
 
-  public VungleNativeAd(@NonNull Context context, @NonNull String placementId) {
+  public VungleNativeAd(@NonNull Context context, @NonNull String placementId, boolean disabled) {
     this.placementId = placementId;
     this.nativeAd = new NativeAd(context, placementId);
     this.nativeAdLayout = new NativeAdLayout(context);
+    this.nativeAdLayout.disableLifeCycleManagement(disabled);
     this.mediaView = new MediaView(context);
   }
 
@@ -44,6 +45,7 @@ public class VungleNativeAd {
     nativeAd.loadAd(adConfig, listener);
   }
 
+  @Nullable
   public NativeAd getNativeAd() {
     return nativeAd;
   }
@@ -75,7 +77,6 @@ public class VungleNativeAd {
       Log.d(TAG, "Vungle native adapter cleanUp: destroyAd # " + nativeAd.hashCode());
       nativeAd.unregisterView();
       nativeAd.destroy();
-      nativeAd = null;
     }
   }
 

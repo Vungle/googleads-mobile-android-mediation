@@ -39,6 +39,8 @@ public class VungleNativeAdapter extends UnifiedNativeAdMapper {
 
   public static final String KEY_SPONSORED_CONTEXT_ASSET = "sponsoredBy";
 
+  public static final String EXTRA_DISABLE_FEED_MANAGEMENT = "disableFeedLifecycleManagement";
+
   private final MediationNativeAdConfiguration adConfiguration;
   private final MediationAdLoadCallback<UnifiedNativeAdMapper, MediationNativeAdCallback> callback;
   private MediationNativeAdCallback nativeAdCallback;
@@ -91,7 +93,10 @@ public class VungleNativeAdapter extends UnifiedNativeAdMapper {
     adConfig = VungleExtrasBuilder
         .adConfigWithNetworkExtras(mediationExtras, nativeAdOptions, true);
 
-    vungleNativeAd = new VungleNativeAd(context, placementId);
+    Log.d(TAG,"start to render native ads...");
+
+    boolean disabled = mediationExtras.getBoolean(EXTRA_DISABLE_FEED_MANAGEMENT, false);
+    vungleNativeAd = new VungleNativeAd(context, placementId, disabled);
     VungleManager.getInstance().registerNativeAd(placementId, vungleNativeAd);
 
     VungleInitializer.getInstance()
@@ -179,6 +184,10 @@ public class VungleNativeAdapter extends UnifiedNativeAdMapper {
       return;
     }
 
+    if (vungleNativeAd.getNativeAd() == null) {
+      return;
+    }
+
     ViewGroup adView = (ViewGroup) view;
 
     View containerView = adView.getChildAt(adView.getChildCount() - 1);
@@ -214,10 +223,14 @@ public class VungleNativeAdapter extends UnifiedNativeAdMapper {
   public void untrackView(@NonNull View view) {
     super.untrackView(view);
     Log.d(TAG, "untrackView: " + view);
-    vungleNativeAd.getNativeAd().unregisterView();
-    vungleNativeAd.getNativeAd().destroy();
+    if (vungleNativeAd.getNativeAd() == null) {
+      return;
+    }
 
-    VungleManager.getInstance().removeActiveNativeAd(placementId, vungleNativeAd);
+    vungleNativeAd.getNativeAd().unregisterView();
+
+    // vungleNativeAd.getNativeAd().destroy();
+    // VungleManager.getInstance().removeActiveNativeAd(placementId, vungleNativeAd);
   }
 
   private void mapNativeAd() {
