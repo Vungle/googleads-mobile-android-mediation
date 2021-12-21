@@ -93,7 +93,7 @@ public class VungleNativeAdapter extends UnifiedNativeAdMapper {
     adConfig = VungleExtrasBuilder
         .adConfigWithNetworkExtras(mediationExtras, nativeAdOptions, true);
 
-    Log.d(TAG,"start to render native ads...");
+    Log.d(TAG, "start to render native ads...");
 
     boolean disabled = mediationExtras.getBoolean(EXTRA_DISABLE_FEED_MANAGEMENT, false);
     vungleNativeAd = new VungleNativeAd(context, placementId, disabled);
@@ -179,22 +179,18 @@ public class VungleNativeAdapter extends UnifiedNativeAdMapper {
   public void trackViews(@NonNull View view, @NonNull Map<String, View> clickableAssetViews,
       @NonNull Map<String, View> nonClickableAssetViews) {
     super.trackViews(view, clickableAssetViews, nonClickableAssetViews);
-    Log.d(TAG, "trackViews()");
+    Log.d(TAG, "trackViews(): " + view);
     if (!(view instanceof ViewGroup)) {
       return;
     }
 
-    if (vungleNativeAd.getNativeAd() == null) {
+    if (vungleNativeAd.getNativeAd() == null || !vungleNativeAd.getNativeAd().canPlayAd()) {
       return;
     }
 
-    ViewGroup adView = (ViewGroup) view;
-
-    View containerView = adView.getChildAt(adView.getChildCount() - 1);
-
-    if (containerView instanceof FrameLayout) {
+    if (view instanceof FrameLayout) {
       // We will render our privacy icon as a child of containerView and place at one of the four corners.
-      vungleNativeAd.getNativeAd().setAdOptionsRootView((FrameLayout) containerView);
+      vungleNativeAd.getNativeAd().setAdOptionsRootView((FrameLayout) view);
 
       View iconView = null;
 
@@ -208,9 +204,10 @@ public class VungleNativeAdapter extends UnifiedNativeAdMapper {
       }
 
       if (iconView instanceof ImageView) {
-        vungleNativeAd.getNativeAd().registerViewForInteraction(vungleNativeAd.getNativeAdLayout(),
-            vungleNativeAd.getMediaView(), (ImageView) iconView,
-            assetViews);
+        vungleNativeAd.getNativeAd()
+            .registerViewForInteraction(vungleNativeAd.getNativeAdLayout(),
+                vungleNativeAd.getMediaView(), (ImageView) iconView,
+                assetViews);
       } else {
         Log.w(TAG, "Native app icon asset is not of type ImageView!");
       }
@@ -227,7 +224,7 @@ public class VungleNativeAdapter extends UnifiedNativeAdMapper {
       return;
     }
 
-    vungleNativeAd.getNativeAd().unregisterView();
+    // vungleNativeAd.getNativeAd().unregisterView();
 
     // vungleNativeAd.getNativeAd().destroy();
     // VungleManager.getInstance().removeActiveNativeAd(placementId, vungleNativeAd);
