@@ -179,18 +179,22 @@ public class VungleNativeAdapter extends UnifiedNativeAdMapper {
   public void trackViews(@NonNull View view, @NonNull Map<String, View> clickableAssetViews,
       @NonNull Map<String, View> nonClickableAssetViews) {
     super.trackViews(view, clickableAssetViews, nonClickableAssetViews);
-    Log.d(TAG, "trackViews(): " + view);
+    Log.d(TAG, "trackViews()");
     if (!(view instanceof ViewGroup)) {
       return;
     }
+
+    ViewGroup adView = (ViewGroup) view;
+
+    View overlayView = adView.getChildAt(adView.getChildCount() - 1);
 
     if (vungleNativeAd.getNativeAd() == null || !vungleNativeAd.getNativeAd().canPlayAd()) {
       return;
     }
 
-    if (view instanceof FrameLayout) {
+    if (overlayView instanceof FrameLayout) {
       // We will render our privacy icon as a child of containerView and place at one of the four corners.
-      vungleNativeAd.getNativeAd().setAdOptionsRootView((FrameLayout) view);
+      vungleNativeAd.getNativeAd().setAdOptionsRootView((FrameLayout) overlayView);
 
       View iconView = null;
 
@@ -219,15 +223,12 @@ public class VungleNativeAdapter extends UnifiedNativeAdMapper {
   @Override
   public void untrackView(@NonNull View view) {
     super.untrackView(view);
-    Log.d(TAG, "untrackView: " + view);
+    Log.d(TAG, "untrackView()");
     if (vungleNativeAd.getNativeAd() == null) {
       return;
     }
 
-    // vungleNativeAd.getNativeAd().unregisterView();
-
-    // vungleNativeAd.getNativeAd().destroy();
-    // VungleManager.getInstance().removeActiveNativeAd(placementId, vungleNativeAd);
+    vungleNativeAd.getNativeAd().unregisterView();
   }
 
   private void mapNativeAd() {
@@ -251,6 +252,9 @@ public class VungleNativeAdapter extends UnifiedNativeAdMapper {
     setMediaView(nativeAdLayout);
 
     String iconUrl = nativeAd.getAppIcon();
+    if (iconUrl != null && iconUrl.startsWith("file://")) {
+      iconUrl = iconUrl.substring("file://".length());
+    }
     setIcon(new VungleNativeMappedImage(Uri.parse(iconUrl)));
 
     setOverrideImpressionRecording(true);
