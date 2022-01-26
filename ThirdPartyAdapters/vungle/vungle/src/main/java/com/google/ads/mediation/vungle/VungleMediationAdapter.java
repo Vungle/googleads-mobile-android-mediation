@@ -165,7 +165,7 @@ public class VungleMediationAdapter extends RtbAdapter
   @NonNull
   @Override
   public VersionInfo getSDKVersionInfo() {
-    String versionString = com.vungle.warren.BuildConfig.VERSION_NAME;
+    String versionString = "6.11.0";// com.vungle.warren.BuildConfig.VERSION_NAME; TODO revert it for GA
     String[] splits = versionString.split("\\.");
 
     if (splits.length >= 3) {
