@@ -74,9 +74,21 @@ public class VungleBannerAd {
     }
   }
 
+  @NonNull
+  @Override
+  public String toString() {
+    return " [placementId="
+        + placementId
+        + " # vungleBanner.hashcode="
+        + (vungleBanner == null ? "Null" : vungleBanner.hashCode())
+        + " # hashcode="
+        + hashCode()
+        + "] ";
+  }
+
   public void destroyAd() {
     if (vungleBanner != null) {
-      Log.d(TAG, "Vungle banner adapter cleanUp: destroyAd # " + vungleBanner.hashCode());
+      Log.d(TAG, "Vungle banner adapter cleanUp: destroyAd # " + this);
       vungleBanner.destroyAd();
       vungleBanner = null;
     }

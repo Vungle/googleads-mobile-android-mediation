@@ -214,7 +214,6 @@ public class VungleBannerAdapter implements PlayAdCallback {
       vungleBannerAd.destroyAd();
     }
     vungleBannerAd = null;
-    mPendingRequestBanner = false;
   }
 
   void preCache() {
@@ -370,6 +369,7 @@ public class VungleBannerAdapter implements PlayAdCallback {
    */
   @Override
   public void onAdStart(String placementID) {
+    Log.d(TAG, "onAdStart:" + this);
     // Let's load it again to mimic auto-cache, don't care about errors.
     preCache();
   }
@@ -383,6 +383,8 @@ public class VungleBannerAdapter implements PlayAdCallback {
   @Override
   public void onAdEnd(String placementID) {
     // No-op for banner ads.
+    Log.d(TAG, "onAdEnd:" + this);
+    mPendingRequestBanner = false;
   }
 
   @Override
