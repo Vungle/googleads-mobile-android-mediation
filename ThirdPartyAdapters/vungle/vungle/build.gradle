@@ -31,7 +31,7 @@ android {
 }
 
 dependencies {
-    implementation ('com.github.Vungle:vungle-android-sdk:6.11.0-early1-RC6') {
+    implementation ('com.github.Vungle:vungle-android-sdk:6.11.0-early2-RC1') {
         transitive=true
     }
 
