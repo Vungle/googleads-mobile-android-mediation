@@ -5,7 +5,8 @@ import android.text.TextUtils;
 import androidx.annotation.Nullable;
 import androidx.annotation.Size;
 import com.google.android.gms.ads.nativead.NativeAdOptions;
-import com.vungle.warren.AdConfig;
+import com.vungle.ads.AdConfig;
+
 import java.util.UUID;
 
 /**
@@ -72,11 +73,11 @@ public final class VungleExtrasBuilder {
 
   public static AdConfig adConfigWithNetworkExtras(Bundle networkExtras, boolean defaultMuteState) {
     AdConfig adConfig = new AdConfig();
-    adConfig.setMuted(defaultMuteState);
+//    adConfig.setMuted(defaultMuteState);
 
     if (networkExtras != null) {
-      adConfig.setMuted(networkExtras.getBoolean(EXTRA_START_MUTED, defaultMuteState));
-      adConfig.setOrdinal(networkExtras.getInt(EXTRA_ORDINAL_VIEW_COUNT, 0));
+//      adConfig.setMuted(networkExtras.getBoolean(EXTRA_START_MUTED, defaultMuteState));
+//      adConfig.setOrdinal(networkExtras.getInt(EXTRA_ORDINAL_VIEW_COUNT, 0));
       adConfig.setAdOrientation(networkExtras.getInt(EXTRA_ORIENTATION, AdConfig.AUTO_ROTATE));
     }
     return adConfig;
@@ -109,7 +110,7 @@ public final class VungleExtrasBuilder {
         adOptionsPosition = AdConfig.TOP_RIGHT;
         break;
     }
-    adConfig.setAdOptionsPosition(adOptionsPosition);
+//    adConfig.setAdOptionsPosition(adOptionsPosition);
 
     return adConfig;
   }

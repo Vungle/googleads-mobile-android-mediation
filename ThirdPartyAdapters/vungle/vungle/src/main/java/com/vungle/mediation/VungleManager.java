@@ -1,9 +1,5 @@
 package com.vungle.mediation;
 
-import static com.vungle.warren.AdConfig.AdSize.BANNER;
-import static com.vungle.warren.AdConfig.AdSize.BANNER_LEADERBOARD;
-import static com.vungle.warren.AdConfig.AdSize.BANNER_SHORT;
-import static com.vungle.warren.AdConfig.AdSize.VUNGLE_MREC;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.TAG;
 
 import android.content.Context;
@@ -14,8 +10,8 @@ import androidx.annotation.Nullable;
 import com.google.ads.mediation.vungle.VungleBannerAd;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.MediationUtils;
-import com.vungle.warren.AdConfig;
-import com.vungle.warren.Vungle;
+import com.vungle.ads.AdConfig;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
@@ -73,9 +69,9 @@ public class VungleManager {
   private void cleanLeakedBannerAdapters() {
     for (String placementId : new HashSet<>(mVungleBanners.keySet())) {
       VungleBannerAd bannerAd = mVungleBanners.get(placementId);
-      if (bannerAd != null && bannerAd.getAdapter() == null) {
-        removeActiveBannerAd(placementId, bannerAd);
-      }
+//      if (bannerAd != null && bannerAd.getAdapter() == null) {
+//        removeActiveBannerAd(placementId, bannerAd);
+//      }
     }
   }
 
@@ -88,27 +84,27 @@ public class VungleManager {
       return true;
     }
 
-    if (bannerAd.getAdapter() == null) {
-      mVungleBanners.remove(placementId);
-      return true;
-    }
-
-    VungleBannerAdapter adapter = bannerAd.getAdapter();
-    String activeUniqueRequestId = adapter.getUniqueRequestId();
-    Log.d(TAG,
-        "activeUniqueId: " + activeUniqueRequestId + " ###  RequestId: " + requestUniqueId);
-
-    if (activeUniqueRequestId == null) {
-      Log.w(TAG, "Ad already loaded for placement ID: " + placementId + ", and cannot "
-          + "determine if this is a refresh. Set Vungle extras when making an ad request to "
-          + "support refresh on Vungle banner ads.");
-      return false;
-    }
-
-    if (!activeUniqueRequestId.equals(requestUniqueId)) {
-      Log.w(TAG, "Ad already loaded for placement ID: " + placementId);
-      return false;
-    }
+//    if (bannerAd.getAdapter() == null) {
+//      mVungleBanners.remove(placementId);
+//      return true;
+//    }
+//
+//    VungleBannerAdapter adapter = bannerAd.getAdapter();
+//    String activeUniqueRequestId = adapter.getUniqueRequestId();
+//    Log.d(TAG,
+//        "activeUniqueId: " + activeUniqueRequestId + " ###  RequestId: " + requestUniqueId);
+//
+//    if (activeUniqueRequestId == null) {
+//      Log.w(TAG, "Ad already loaded for placement ID: " + placementId + ", and cannot "
+//          + "determine if this is a refresh. Set Vungle extras when making an ad request to "
+//          + "support refresh on Vungle banner ads.");
+//      return false;
+//    }
+//
+//    if (!activeUniqueRequestId.equals(requestUniqueId)) {
+//      Log.w(TAG, "Ad already loaded for placement ID: " + placementId);
+//      return false;
+//    }
 
     return true;
   }
@@ -117,12 +113,12 @@ public class VungleManager {
       @Nullable VungleBannerAd activeBannerAd) {
     Log.d(TAG, "try to removeActiveBannerAd: " + placementId);
 
-    boolean didRemove = mVungleBanners.remove(placementId, activeBannerAd);
-    if (didRemove && activeBannerAd != null) {
-      Log.d(TAG, "removeActiveBannerAd: " + activeBannerAd + "; size=" + mVungleBanners.size());
-      activeBannerAd.detach();
-      activeBannerAd.destroyAd();
-    }
+//    boolean didRemove = mVungleBanners.remove(placementId, activeBannerAd);
+//    if (didRemove && activeBannerAd != null) {
+//      Log.d(TAG, "removeActiveBannerAd: " + activeBannerAd + "; size=" + mVungleBanners.size());
+//      activeBannerAd.detach();
+//      activeBannerAd.destroyAd();
+//    }
   }
 
   public void registerBannerAd(@NonNull String placementId, @NonNull VungleBannerAd instance) {
@@ -145,7 +141,7 @@ public class VungleManager {
     boolean didRemove = mVungleNativeAds.remove(placementId, activeNativeAd);
     if (didRemove && activeNativeAd != null) {
       Log.d(TAG, "removeActiveNativeAd: " + activeNativeAd + "; size=" + mVungleNativeAds.size());
-      activeNativeAd.destroyAd();
+//      activeNativeAd.destroyAd();
     }
   }
 
@@ -159,31 +155,31 @@ public class VungleManager {
 
   public boolean hasBannerSizeAd(Context context, AdSize adSize, AdConfig adConfig) {
     ArrayList<AdSize> potentials = new ArrayList<>();
-    potentials.add(new AdSize(BANNER_SHORT.getWidth(), BANNER_SHORT.getHeight()));
-    potentials.add(new AdSize(BANNER.getWidth(), BANNER.getHeight()));
-    potentials.add(new AdSize(BANNER_LEADERBOARD.getWidth(), BANNER_LEADERBOARD.getHeight()));
-    potentials.add(new AdSize(VUNGLE_MREC.getWidth(), VUNGLE_MREC.getHeight()));
-
-    AdSize closestSize = MediationUtils.findClosestSize(context, adSize, potentials);
-    if (closestSize == null) {
-      Log.i(TAG, "Not found closest ad size: " + adSize);
-      return false;
-    }
-    Log.i(TAG, "Found closest ad size: " + closestSize + " for requested ad size: " + adSize);
-
-    if (closestSize.getWidth() == BANNER_SHORT.getWidth()
-        && closestSize.getHeight() == BANNER_SHORT.getHeight()) {
-      adConfig.setAdSize(BANNER_SHORT);
-    } else if (closestSize.getWidth() == BANNER.getWidth()
-        && closestSize.getHeight() == BANNER.getHeight()) {
-      adConfig.setAdSize(BANNER);
-    } else if (closestSize.getWidth() == BANNER_LEADERBOARD.getWidth()
-        && closestSize.getHeight() == BANNER_LEADERBOARD.getHeight()) {
-      adConfig.setAdSize(BANNER_LEADERBOARD);
-    } else if (closestSize.getWidth() == VUNGLE_MREC.getWidth()
-        && closestSize.getHeight() == VUNGLE_MREC.getHeight()) {
-      adConfig.setAdSize(VUNGLE_MREC);
-    }
+//    potentials.add(new AdSize(BANNER_SHORT.getWidth(), BANNER_SHORT.getHeight()));
+//    potentials.add(new AdSize(BANNER.getWidth(), BANNER.getHeight()));
+//    potentials.add(new AdSize(BANNER_LEADERBOARD.getWidth(), BANNER_LEADERBOARD.getHeight()));
+//    potentials.add(new AdSize(VUNGLE_MREC.getWidth(), VUNGLE_MREC.getHeight()));
+//
+//    AdSize closestSize = MediationUtils.findClosestSize(context, adSize, potentials);
+//    if (closestSize == null) {
+//      Log.i(TAG, "Not found closest ad size: " + adSize);
+//      return false;
+//    }
+//    Log.i(TAG, "Found closest ad size: " + closestSize + " for requested ad size: " + adSize);
+//
+//    if (closestSize.getWidth() == BANNER_SHORT.getWidth()
+//        && closestSize.getHeight() == BANNER_SHORT.getHeight()) {
+//      adConfig.setAdSize(BANNER_SHORT);
+//    } else if (closestSize.getWidth() == BANNER.getWidth()
+//        && closestSize.getHeight() == BANNER.getHeight()) {
+//      adConfig.setAdSize(BANNER);
+//    } else if (closestSize.getWidth() == BANNER_LEADERBOARD.getWidth()
+//        && closestSize.getHeight() == BANNER_LEADERBOARD.getHeight()) {
+//      adConfig.setAdSize(BANNER_LEADERBOARD);
+//    } else if (closestSize.getWidth() == VUNGLE_MREC.getWidth()
+//        && closestSize.getHeight() == VUNGLE_MREC.getHeight()) {
+//      adConfig.setAdSize(VUNGLE_MREC);
+//    }
 
     return true;
   }

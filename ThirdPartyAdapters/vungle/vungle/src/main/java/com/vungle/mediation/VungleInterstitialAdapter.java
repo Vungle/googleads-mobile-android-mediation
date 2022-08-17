@@ -25,11 +25,8 @@ import com.google.android.gms.ads.mediation.MediationBannerAdapter;
 import com.google.android.gms.ads.mediation.MediationBannerListener;
 import com.google.android.gms.ads.mediation.MediationInterstitialAdapter;
 import com.google.android.gms.ads.mediation.MediationInterstitialListener;
-import com.vungle.warren.AdConfig;
-import com.vungle.warren.LoadAdCallback;
-import com.vungle.warren.PlayAdCallback;
-import com.vungle.warren.Vungle;
-import com.vungle.warren.error.VungleException;
+import com.vungle.ads.AdConfig;
+
 
 /**
  * A {@link MediationInterstitialAdapter} used to load and show Vungle interstitial ads using Google
@@ -104,93 +101,93 @@ public class VungleInterstitialAdapter
   }
 
   private void loadAd() {
-    if (Vungle.canPlayAd(mPlacement)) {
-      if (mMediationInterstitialListener != null) {
-        mMediationInterstitialListener.onAdLoaded(VungleInterstitialAdapter.this);
-      }
-      return;
-    }
-
-    Vungle.loadAd(mPlacement, new LoadAdCallback() {
-      @Override
-      public void onAdLoad(String placementID) {
-        if (mMediationInterstitialListener != null) {
-          mMediationInterstitialListener.onAdLoaded(VungleInterstitialAdapter.this);
-        }
-      }
-
-      @Override
-      public void onError(String placementID, VungleException exception) {
-        AdError error = VungleMediationAdapter.getAdError(exception);
-        Log.w(TAG, error.getMessage());
-        if (mMediationInterstitialListener != null) {
-          mMediationInterstitialListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
-        }
-      }
-    });
+//    if (Vungle.canPlayAd(mPlacement)) {
+//      if (mMediationInterstitialListener != null) {
+//        mMediationInterstitialListener.onAdLoaded(VungleInterstitialAdapter.this);
+//      }
+//      return;
+//    }
+//
+//    Vungle.loadAd(mPlacement, new LoadAdCallback() {
+//      @Override
+//      public void onAdLoad(String placementID) {
+//        if (mMediationInterstitialListener != null) {
+//          mMediationInterstitialListener.onAdLoaded(VungleInterstitialAdapter.this);
+//        }
+//      }
+//
+//      @Override
+//      public void onError(String placementID, VungleException exception) {
+//        AdError error = VungleMediationAdapter.getAdError(exception);
+//        Log.w(TAG, error.getMessage());
+//        if (mMediationInterstitialListener != null) {
+//          mMediationInterstitialListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
+//        }
+//      }
+//    });
   }
 
   @Override
   public void showInterstitial() {
-    Vungle.playAd(mPlacement, mAdConfig, new PlayAdCallback() {
-
-      @Override
-      public void creativeId(String creativeId) {
-        // no-op
-      }
-
-      @Override
-      public void onAdStart(String placementID) {
-        if (mMediationInterstitialListener != null) {
-          mMediationInterstitialListener.onAdOpened(VungleInterstitialAdapter.this);
-        }
-      }
-
-      @Override
-      public void onAdEnd(String placementID, boolean completed, boolean isCTAClicked) {
-        // Deprecated, no-op.
-      }
-
-      @Override
-      public void onAdEnd(String placementID) {
-        if (mMediationInterstitialListener != null) {
-          mMediationInterstitialListener.onAdClosed(VungleInterstitialAdapter.this);
-        }
-      }
-
-      @Override
-      public void onAdClick(String placementID) {
-        if (mMediationInterstitialListener != null) {
-          mMediationInterstitialListener.onAdClicked(VungleInterstitialAdapter.this);
-        }
-      }
-
-      @Override
-      public void onAdRewarded(String placementID) {
-        // No-op for interstitial ads.
-      }
-
-      @Override
-      public void onAdLeftApplication(String placementID) {
-        if (mMediationInterstitialListener != null) {
-          mMediationInterstitialListener.onAdLeftApplication(VungleInterstitialAdapter.this);
-        }
-      }
-
-      @Override
-      public void onError(String placementID, VungleException exception) {
-        AdError error = VungleMediationAdapter.getAdError(exception);
-        Log.w(TAG, error.getMessage());
-        if (mMediationInterstitialListener != null) {
-          mMediationInterstitialListener.onAdClosed(VungleInterstitialAdapter.this);
-        }
-      }
-
-      @Override
-      public void onAdViewed(String id) {
-        // No-op.
-      }
-    });
+//    Vungle.playAd(mPlacement, mAdConfig, new PlayAdCallback() {
+//
+//      @Override
+//      public void creativeId(String creativeId) {
+//        // no-op
+//      }
+//
+//      @Override
+//      public void onAdStart(String placementID) {
+//        if (mMediationInterstitialListener != null) {
+//          mMediationInterstitialListener.onAdOpened(VungleInterstitialAdapter.this);
+//        }
+//      }
+//
+//      @Override
+//      public void onAdEnd(String placementID, boolean completed, boolean isCTAClicked) {
+//        // Deprecated, no-op.
+//      }
+//
+//      @Override
+//      public void onAdEnd(String placementID) {
+//        if (mMediationInterstitialListener != null) {
+//          mMediationInterstitialListener.onAdClosed(VungleInterstitialAdapter.this);
+//        }
+//      }
+//
+//      @Override
+//      public void onAdClick(String placementID) {
+//        if (mMediationInterstitialListener != null) {
+//          mMediationInterstitialListener.onAdClicked(VungleInterstitialAdapter.this);
+//        }
+//      }
+//
+//      @Override
+//      public void onAdRewarded(String placementID) {
+//        // No-op for interstitial ads.
+//      }
+//
+//      @Override
+//      public void onAdLeftApplication(String placementID) {
+//        if (mMediationInterstitialListener != null) {
+//          mMediationInterstitialListener.onAdLeftApplication(VungleInterstitialAdapter.this);
+//        }
+//      }
+//
+//      @Override
+//      public void onError(String placementID, VungleException exception) {
+//        AdError error = VungleMediationAdapter.getAdError(exception);
+//        Log.w(TAG, error.getMessage());
+//        if (mMediationInterstitialListener != null) {
+//          mMediationInterstitialListener.onAdClosed(VungleInterstitialAdapter.this);
+//        }
+//      }
+//
+//      @Override
+//      public void onAdViewed(String id) {
+//        // No-op.
+//      }
+//    });
   }
 
   @Override

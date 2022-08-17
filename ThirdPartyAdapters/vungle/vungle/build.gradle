@@ -31,9 +31,7 @@ android {
 }
 
 dependencies {
-    implementation ('com.vungle:publisher-sdk-android:6.12.0') {
-        transitive=true
-    }
+    implementation 'com.github.vungle.vungle-android-sdk:vungle-ads:epic-stage-7'
 
     implementation 'androidx.annotation:annotation:1.4.0'
     implementation 'com.google.android.gms:play-services-ads:21.1.0'
