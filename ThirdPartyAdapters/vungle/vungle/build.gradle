@@ -4,6 +4,7 @@ apply plugin: 'maven-publish'
 /**
  * Extra properties used by the project.
  */
+
 ext {
     // String property to store the proper name of the mediation network adapter.
     adapterName = "Vungle"
@@ -12,6 +13,19 @@ ext {
     // String property to store group id.
     stringGroupId = "com.google.ads.mediation"
 }
+
+//allprojects {
+//    repositories {
+//        maven { url 'https://jitpack.io' }
+//    }
+//}
+//
+//
+//subprojects {
+//    repositories {
+//        maven { url 'https://jitpack.io' }
+//    }
+//}
 
 android {
     compileSdkVersion 31
@@ -31,9 +45,7 @@ android {
 }
 
 dependencies {
-    implementation ('com.vungle:publisher-sdk-android:6.12.0') {
-        transitive=true
-    }
+    implementation 'com.github.vungle.vungle-android-sdk:vungle-ads:epic-stage-7'
 
     implementation 'androidx.annotation:annotation:1.4.0'
     implementation 'com.google.android.gms:play-services-ads:21.1.0'
