@@ -7,20 +7,18 @@ import android.util.Log;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import com.google.ads.mediation.vungle.VungleInitializer.VungleInitializationListener;
 import com.google.ads.mediation.vungle.rtb.VungleRtbInterstitialAd;
 import com.google.ads.mediation.vungle.rtb.VungleRtbRewardedAd;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.mediation.InitializationCompleteCallback;
 import com.google.android.gms.ads.mediation.MediationAdLoadCallback;
 import com.google.android.gms.ads.mediation.MediationConfiguration;
-import com.google.android.gms.ads.mediation.MediationNativeAdCallback;
-import com.google.android.gms.ads.mediation.MediationNativeAdConfiguration;
 import com.google.android.gms.ads.mediation.MediationInterstitialAd;
 import com.google.android.gms.ads.mediation.MediationInterstitialAdCallback;
 import com.google.android.gms.ads.mediation.MediationInterstitialAdConfiguration;
+import com.google.android.gms.ads.mediation.MediationNativeAdCallback;
+import com.google.android.gms.ads.mediation.MediationNativeAdConfiguration;
 import com.google.android.gms.ads.mediation.MediationRewardedAd;
 import com.google.android.gms.ads.mediation.MediationRewardedAdCallback;
 import com.google.android.gms.ads.mediation.MediationRewardedAdConfiguration;
@@ -31,11 +29,7 @@ import com.google.android.gms.ads.mediation.rtb.RtbSignalData;
 import com.google.android.gms.ads.mediation.rtb.SignalCallbacks;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.vungle.ads.AdConfig;
-import com.vungle.ads.BannerAd;
-import com.vungle.ads.BaseAd;
-import com.vungle.ads.BaseAdListener;
 import com.vungle.ads.InitializationListener;
-import com.vungle.ads.RewardedAd;
 import com.vungle.ads.VungleAds;
 import com.vungle.ads.VungleException;
 import com.vungle.ads.VungleSettings;
@@ -201,12 +195,10 @@ public class VungleMediationAdapter extends RtbAdapter {
 
         int count = appIDs.size();
         if (count <= 0) {
-            if (initializationCompleteCallback != null) {
-                AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS, "Missing or Invalid App ID.",
-                        ERROR_DOMAIN);
-                Log.w(TAG, error.getMessage());
-                initializationCompleteCallback.onInitializationFailed(error.getMessage());
-            }
+            AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS, "Missing or Invalid App ID.",
+                    ERROR_DOMAIN);
+            Log.w(TAG, error.getMessage());
+            initializationCompleteCallback.onInitializationFailed(error.getMessage());
             return;
         }
 
