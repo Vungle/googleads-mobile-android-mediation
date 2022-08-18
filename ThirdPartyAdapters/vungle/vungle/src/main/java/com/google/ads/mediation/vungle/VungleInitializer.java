@@ -3,48 +3,55 @@ package com.google.ads.mediation.vungle;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+
 import androidx.annotation.NonNull;
+
+import com.google.ads.mediation.vungle.util.ErrorUtil;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.RequestConfiguration;
+import com.vungle.ads.InitializationListener;
+import com.vungle.ads.VungleAds;
+import com.vungle.ads.VungleException;
+import com.vungle.ads.VungleSettings;
 import com.vungle.mediation.VungleNetworkSettings;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class VungleInitializer {
+public class VungleInitializer implements InitializationListener {
 
-  private static final VungleInitializer instance = new VungleInitializer();
-  private final AtomicBoolean mIsInitializing = new AtomicBoolean(false);
-  private final ArrayList<VungleInitializationListener> mInitListeners;
-  private final Handler mHandler = new Handler(Looper.getMainLooper());
+    private static final VungleInitializer instance = new VungleInitializer();
+    private final AtomicBoolean mIsInitializing = new AtomicBoolean(false);
+    private final ArrayList<VungleInitializationListener> mInitListeners;
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
 
-  public static VungleInitializer getInstance() {
-    return instance;
-  }
+    public static VungleInitializer getInstance() {
+        return instance;
+    }
 
-  private VungleInitializer() {
-    mInitListeners = new ArrayList<>();
+    private VungleInitializer() {
+        mInitListeners = new ArrayList<>();
 //    Plugin.addWrapperInfo(
 //        VungleApiClient.WrapperFramework.admob,
 //        com.vungle.mediation.BuildConfig.ADAPTER_VERSION.replace('.', '_'));
-  }
-
-  public void initialize(
-      final String appId, final Context context, VungleInitializationListener listener) {
-
-//    if (Vungle.isInitialized()) {
-//      listener.onInitializeSuccess();
-//      return;
-//    }
-
-    if (mIsInitializing.getAndSet(true)) {
-      mInitListeners.add(listener);
-      return;
     }
 
-    // Keep monitoring VungleSettings in case of any changes we need to re-init SDK to apply
-    // updated settings.
+    public void initialize(
+            final String appId, final Context context, VungleInitializationListener listener) {
+
+        if (VungleAds.isInitialized()) {
+            listener.onInitializeSuccess();
+            return;
+        }
+
+        if (mIsInitializing.getAndSet(true)) {
+            mInitListeners.add(listener);
+            return;
+        }
+
+        // Keep monitoring VungleSettings in case of any changes we need to re-init SDK to apply
+        // updated settings.
 //    VungleNetworkSettings.setVungleSettingsChangedListener(
 //        new VungleNetworkSettings.VungleSettingsChangedListener() {
 //          @Override
@@ -61,12 +68,12 @@ public class VungleInitializer {
 //          }
 //        });
 
-    updateCoppaStatus(MobileAds.getRequestConfiguration().getTagForChildDirectedTreatment());
+        updateCoppaStatus(MobileAds.getRequestConfiguration().getTagForChildDirectedTreatment());
 //
-//    VungleSettings vungleSettings = VungleNetworkSettings.getVungleSettings();
-//    Vungle.init(appId, context.getApplicationContext(), VungleInitializer.this, vungleSettings);
-//    mInitListeners.add(listener);
-  }
+        VungleSettings vungleSettings = VungleNetworkSettings.getVungleSettings();
+        VungleAds.Companion.init(context, appId, VungleInitializer.this, vungleSettings);
+        mInitListeners.add(listener);
+    }
 //
 //  @Override
 //  public void onSuccess() {
@@ -104,7 +111,7 @@ public class VungleInitializer {
 //    // Unused
 //  }
 
-  public void updateCoppaStatus(int configuration) {
+    public void updateCoppaStatus(int configuration) {
 //    switch (configuration) {
 //      case RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE:
 //        Vungle.updateUserCoppaStatus(true);
@@ -120,13 +127,36 @@ public class VungleInitializer {
 //        // Dashboard whether your app is directed toward children under age 13.
 //        break;
 //    }
-  }
+    }
 
-  public interface VungleInitializationListener {
+    @Override
+    public void onError(@NonNull VungleException e) {
+        final AdError error = ErrorUtil.getAdError(e);
+        mHandler.post(() -> {
+            for (VungleInitializationListener listener : mInitListeners) {
+                listener.onInitializeError(error);
+            }
+            mInitListeners.clear();
+        });
+        mIsInitializing.set(false);
+    }
 
-    void onInitializeSuccess();
+    @Override
+    public void onSuccess() {
+        mHandler.post(() -> {
+            for (VungleInitializationListener listener : mInitListeners) {
+                listener.onInitializeSuccess();
+            }
+            mInitListeners.clear();
+        });
+        mIsInitializing.set(false);
+    }
 
-    void onInitializeError(AdError error);
+    public interface VungleInitializationListener {
 
-  }
+        void onInitializeSuccess();
+
+        void onInitializeError(AdError error);
+
+    }
 }
