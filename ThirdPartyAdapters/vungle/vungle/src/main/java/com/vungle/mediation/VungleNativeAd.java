@@ -1,17 +1,11 @@
 package com.vungle.mediation;
 
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.TAG;
-
 import android.content.Context;
-import android.util.Log;
-import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.gms.ads.nativead.MediaView;
-import com.google.android.gms.ads.nativead.NativeAd;
 import com.vungle.ads.AdConfig;
-import com.vungle.ads.NativeAdLayout;
 import com.vungle.ads.NativeAdListener;
 
 /**

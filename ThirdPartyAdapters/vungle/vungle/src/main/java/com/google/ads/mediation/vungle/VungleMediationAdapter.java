@@ -169,9 +169,9 @@ public class VungleMediationAdapter extends RtbAdapter {
     @Override
     public void collectSignals(@NonNull RtbSignalData rtbSignalData,
                                @NonNull SignalCallbacks signalCallbacks) {
-//        String token = Vungle.getAvailableBidTokens(rtbSignalData.getContext());
-//        Log.d(TAG, "token=" + token);
-//        signalCallbacks.onSuccess(token);
+        String token = VungleAds.getBidTokens();
+        Log.d(TAG, "token=" + token);
+        signalCallbacks.onSuccess(token);
     }
 
     @Override
@@ -215,7 +215,6 @@ public class VungleMediationAdapter extends RtbAdapter {
                 context,
                 appID,
                 new InitializationListener() {
-
                     @Override
                     public void onSuccess() {
                         initializationCompleteCallback.onInitializationSucceeded();

@@ -9,11 +9,14 @@ import androidx.annotation.NonNull;
 import com.google.ads.mediation.vungle.util.ErrorUtil;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.MobileAds;
+import com.vungle.ads.internal.network.Plugin;
 import com.google.android.gms.ads.RequestConfiguration;
 import com.vungle.ads.InitializationListener;
 import com.vungle.ads.VungleAds;
 import com.vungle.ads.VungleException;
 import com.vungle.ads.VungleSettings;
+import com.vungle.ads.internal.network.Plugin;
+import com.vungle.ads.internal.network.VungleApiClient;
 import com.vungle.mediation.VungleNetworkSettings;
 
 import java.util.ArrayList;
@@ -31,10 +34,12 @@ public class VungleInitializer implements InitializationListener {
     }
 
     private VungleInitializer() {
+        Plugin.addWrapperInfo(
+                VungleApiClient.WrapperFramework.admob,
+                com.vungle.mediation.BuildConfig.ADAPTER_VERSION.replace('.', '_')
+        );
         mInitListeners = new ArrayList<>();
-//    Plugin.addWrapperInfo(
-//        VungleApiClient.WrapperFramework.admob,
-//        com.vungle.mediation.BuildConfig.ADAPTER_VERSION.replace('.', '_'));
+
     }
 
     public void initialize(
@@ -49,6 +54,12 @@ public class VungleInitializer implements InitializationListener {
             mInitListeners.add(listener);
             return;
         }
+//        VungleNetworkSettings.setVungleSettingsChangedListener(new VungleNetworkSettings.VungleSettingsChangedListener() {
+//            @Override
+//            public void onVungleSettingsChanged(@NonNull VungleSettings vungleSettings) {
+//
+//            }
+//        });
 
         // Keep monitoring VungleSettings in case of any changes we need to re-init SDK to apply
         // updated settings.
@@ -71,45 +82,10 @@ public class VungleInitializer implements InitializationListener {
         updateCoppaStatus(MobileAds.getRequestConfiguration().getTagForChildDirectedTreatment());
 //
         VungleSettings vungleSettings = VungleNetworkSettings.getVungleSettings();
-        VungleAds.Companion.init(context, appId, VungleInitializer.this, vungleSettings);
+        VungleAds.init(context, appId, VungleInitializer.this, vungleSettings);
         mInitListeners.add(listener);
     }
-//
-//  @Override
-//  public void onSuccess() {
-//    mHandler.post(
-//        new Runnable() {
-//          @Override
-//          public void run() {
-//            for (VungleInitializationListener listener : mInitListeners) {
-//              listener.onInitializeSuccess();
-//            }
-//            mInitListeners.clear();
-//          }
-//        });
-//    mIsInitializing.set(false);
-//  }
 
-//  @Override
-//  public void onError(final VungleException exception) {
-//    final AdError error = VungleMediationAdapter.getAdError(exception);
-//    mHandler.post(
-//        new Runnable() {
-//          @Override
-//          public void run() {
-//            for (VungleInitializationListener listener : mInitListeners) {
-//              listener.onInitializeError(error);
-//            }
-//            mInitListeners.clear();
-//          }
-//        });
-//    mIsInitializing.set(false);
-//  }
-//
-//  @Override
-//  public void onAutoCacheAdAvailable(String placementId) {
-//    // Unused
-//  }
 
     public void updateCoppaStatus(int configuration) {
 //    switch (configuration) {

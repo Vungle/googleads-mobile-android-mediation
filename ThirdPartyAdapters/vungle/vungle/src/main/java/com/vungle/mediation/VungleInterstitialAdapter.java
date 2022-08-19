@@ -19,7 +19,6 @@ import androidx.annotation.Nullable;
 
 import com.google.ads.mediation.vungle.VungleBannerAd;
 import com.google.ads.mediation.vungle.VungleInitializer;
-import com.google.ads.mediation.vungle.VungleMediationAdapter;
 import com.google.ads.mediation.vungle.util.ErrorUtil;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdSize;
@@ -58,7 +57,6 @@ public class VungleInterstitialAdapter
                                       @NonNull MediationInterstitialListener mediationInterstitialListener,
                                       @NonNull Bundle serverParameters, @NonNull MediationAdRequest mediationAdRequest,
                                       @Nullable Bundle mediationExtras) {
-
         String appID = serverParameters.getString(KEY_APP_ID);
         if (TextUtils.isEmpty(appID)) {
             AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS,
