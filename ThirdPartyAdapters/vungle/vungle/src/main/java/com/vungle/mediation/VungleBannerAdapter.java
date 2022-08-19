@@ -76,10 +76,6 @@ public class VungleBannerAdapter implements BaseAdListener {
      */
     private boolean mPendingRequestBanner = false;
 
-    /**
-     * Indicates the Vungle banner ad's visibility.
-     */
-    private boolean mVisibility = true;
 
     VungleBannerAdapter(@NonNull String placementId, @NonNull String uniqueRequestId,
                         @NonNull AdConfig adConfig, @NonNull MediationBannerAdapter mediationBannerAdapter) {
@@ -90,17 +86,8 @@ public class VungleBannerAdapter implements BaseAdListener {
         this.mediationAdapter = mediationBannerAdapter;
     }
 
-    @Nullable
-    public String getUniqueRequestId() {
-        return uniqueRequestId;
-    }
-
     public FrameLayout getAdLayout() {
         return adLayout;
-    }
-
-    public boolean isRequestPending() {
-        return mPendingRequestBanner;
     }
 
     void requestBannerAd(@NonNull Context context, @NonNull String appId, @NonNull AdSize adSize,
@@ -163,7 +150,6 @@ public class VungleBannerAdapter implements BaseAdListener {
 
     void destroy() {
         Log.d(TAG, "Vungle banner adapter destroy:" + this);
-        mVisibility = false;
         mVungleManager.removeActiveBannerAd(placementId, vungleBannerAd);
         if (vungleBannerAd != null) {
             vungleBannerAd.detach();
@@ -177,8 +163,6 @@ public class VungleBannerAdapter implements BaseAdListener {
         if (vungleBannerAd == null) {
             return;
         }
-
-        this.mVisibility = visible;
         if (vungleBannerAd.getVungleBanner() != null) {
             int visibility;
             if (visible) {
@@ -189,30 +173,6 @@ public class VungleBannerAdapter implements BaseAdListener {
             vungleBannerAd.getVungleBanner().setVisibility(visibility);
         }
     }
-
-//    private final LoadAdCallback mAdLoadCallback =
-//            new LoadAdCallback() {
-//                @Override
-//                public void onAdLoad(String id) {
-//                    createBanner();
-//                }
-//
-//                @Override
-//                public void onError(String id, VungleException exception) {
-//                    mVungleManager.removeActiveBannerAd(placementId, vungleBannerAd);
-//
-//                    if (!mPendingRequestBanner) {
-//                        Log.w(TAG, "No banner request fired.");
-//                        return;
-//                    }
-//                    if (mediationAdapter != null && mediationListener != null) {
-//                        AdError error = VungleMediationAdapter.getAdError(exception);
-//                        Log.w(TAG, error.getMessage());
-//                        mediationListener.onAdFailedToLoad(mediationAdapter, error);
-//                        return;
-//                    }
-//                }
-//            };
 
     private void loadBanner() {
         Log.d(TAG, "loadBanner: " + this);
@@ -226,12 +186,10 @@ public class VungleBannerAdapter implements BaseAdListener {
         if (!mPendingRequestBanner) {
             return;
         }
-
-        FrameLayout.LayoutParams adParams =
-                new FrameLayout.LayoutParams(
-                        FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-
-        vungleBannerAd.setVungleBanner((BannerView) bannerAd.getBannerView());
+        FrameLayout.LayoutParams adParams = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+        );
         adLayout.addView(bannerAd.getBannerView(), adParams);
     }
 
@@ -279,9 +237,6 @@ public class VungleBannerAdapter implements BaseAdListener {
 
     @Override
     public void adLoaded(@NonNull BaseAd baseAd) {
-//        if (mediationAdapter != null && mediationListener != null) {
-//            mediationListener.onAdLoaded(mediationAdapter);
-//        }
         mediationListener.onAdLoaded(mediationAdapter);
         BannerAd bannerAd = (BannerAd) baseAd;
         createBanner(bannerAd);
@@ -307,6 +262,4 @@ public class VungleBannerAdapter implements BaseAdListener {
             mediationListener.onAdLeftApplication(mediationAdapter);
         }
     }
-
-
 }

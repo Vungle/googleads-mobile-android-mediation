@@ -9,61 +9,59 @@ import com.vungle.ads.VungleSettings;
  */
 public class VungleNetworkSettings {
 
-  private static final long MEGABYTE = 1024 * 1024;
-  private static long minimumSpaceForInit = 50 * MEGABYTE;
-  private static long minimumSpaceForAd = 51 * MEGABYTE;
-  private static boolean androidIdOptedOut;
-  private static VungleSettings vungleSettings;
-  private static VungleSettingsChangedListener vungleSettingsChangedListener;
+    private static final long MEGABYTE = 1024 * 1024;
+    private static long minimumSpaceForInit = 50 * MEGABYTE;
+    private static long minimumSpaceForAd = 51 * MEGABYTE;
+    private static boolean androidIdOptedOut;
+    private static VungleSettings vungleSettings;
+    private static VungleSettingsChangedListener vungleSettingsChangedListener;
 
-  public static void setMinSpaceForInit(long spaceForInit) {
-    minimumSpaceForInit = spaceForInit;
-    applySettings();
-  }
-
-  public static void setMinSpaceForAdLoad(long spaceForAd) {
-    minimumSpaceForAd = spaceForAd;
-    applySettings();
-  }
-
-  public static void setAndroidIdOptOut(boolean isOptedOut) {
-    androidIdOptedOut = isOptedOut;
-    applySettings();
-  }
-
-  /**
-   * To pass Vungle network setting to SDK. this method must be called before first loadAd. if
-   * called after first loading an ad, settings will not be applied.
-   */
-  private static void applySettings() {
-    vungleSettings = new VungleSettings();
-//        new VungleSettings.Builder()
-//            .setMinimumSpaceForInit(minimumSpaceForInit)
-//            .setMinimumSpaceForAd(minimumSpaceForAd)
-//            .setAndroidIdOptOut(androidIdOptedOut)
-//            .disableBannerRefresh()
-//            .build();
-    if (vungleSettingsChangedListener != null) {
-      vungleSettingsChangedListener.onVungleSettingsChanged(vungleSettings);
+    public static void setMinSpaceForInit(long spaceForInit) {
+        minimumSpaceForInit = spaceForInit;
+        applySettings();
     }
-  }
 
-  @NonNull
-  public static VungleSettings getVungleSettings() {
-    if (vungleSettings == null) {
-      vungleSettings = new VungleSettings();
-//      vungleSettings = new VungleSettings.Builder().disableBannerRefresh().build();
+    public static void setMinSpaceForAdLoad(long spaceForAd) {
+        minimumSpaceForAd = spaceForAd;
+        applySettings();
     }
-    return vungleSettings;
-  }
 
-  public static void setVungleSettingsChangedListener(
-      VungleSettingsChangedListener settingsChangedListener) {
-    vungleSettingsChangedListener = settingsChangedListener;
-  }
+    public static void setAndroidIdOptOut(boolean isOptedOut) {
+        androidIdOptedOut = isOptedOut;
+        applySettings();
+    }
 
-  public interface VungleSettingsChangedListener {
+    /**
+     * To pass Vungle network setting to SDK. this method must be called before first loadAd. if
+     * called after first loading an ad, settings will not be applied.
+     */
+    private static void applySettings() {
+        vungleSettings = new VungleSettings();
+        vungleSettings.setMinimumSpaceForAd(minimumSpaceForAd);
+        vungleSettings.setBannerRefreshDisabled(true);
+        // .setMinimumSpaceForInit(minimumSpaceForInit)
+        // .setAndroidIdOptOut(androidIdOptedOut)
+        if (vungleSettingsChangedListener != null) {
+            vungleSettingsChangedListener.onVungleSettingsChanged(vungleSettings);
+        }
+    }
 
-    void onVungleSettingsChanged(@NonNull VungleSettings vungleSettings);
-  }
+    @NonNull
+    public static VungleSettings getVungleSettings() {
+        if (vungleSettings == null) {
+            vungleSettings = new VungleSettings();
+            vungleSettings.setBannerRefreshDisabled(true);
+        }
+        return vungleSettings;
+    }
+
+    public static void setVungleSettingsChangedListener(
+            VungleSettingsChangedListener settingsChangedListener) {
+        vungleSettingsChangedListener = settingsChangedListener;
+    }
+
+    public interface VungleSettingsChangedListener {
+
+        void onVungleSettingsChanged(@NonNull VungleSettings vungleSettings);
+    }
 }
