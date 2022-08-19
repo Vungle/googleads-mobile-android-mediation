@@ -227,52 +227,12 @@ public class VungleBannerAdapter implements BaseAdListener {
             return;
         }
 
-        FrameLayout.LayoutParams adParams = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-//        adParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-//        adParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        adLayout.addView(bannerAd.getBannerView(), adParams);
+        FrameLayout.LayoutParams adParams =
+                new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
 
-//        vungleBannerAd = mVungleManager.getVungleBannerAd(placementId);
-////        VunglePlayAdCallback playAdCallback = new VunglePlayAdCallback(VungleBannerAdapter.this,
-////                VungleBannerAdapter.this, vungleBannerAd);
-//
-//        if (isBannerAdSize(mAdConfig.getAdSize())) {
-//            VungleBanner vungleBanner = Banners
-//                    .getBanner(placementId, new BannerAdConfig(mAdConfig), playAdCallback);
-//            if (vungleBanner != null) {
-//                Log.d(TAG, "display banner:" + vungleBanner.hashCode() + this);
-//                if (vungleBannerAd != null) {
-//                    vungleBannerAd.setVungleBanner(vungleBanner);
-//                }
-//
-//                updateVisibility(mVisibility);
-//                vungleBanner.setLayoutParams(adParams);
-//                // Don't add to parent here.
-//                if (mediationAdapter != null && mediationListener != null) {
-//                    mediationListener.onAdLoaded(mediationAdapter);
-//                }
-//            } else {
-//                AdError error = new AdError(
-//                        ERROR_VUNGLE_BANNER_NULL,
-//                        "Vungle SDK returned a successful load callback, but Banners.getBanner() or "
-//                                + "Vungle.getNativeAd() returned null.",
-//                        ERROR_DOMAIN);
-//                Log.d(TAG, error.getMessage());
-//                if (mediationAdapter != null && mediationListener != null) {
-//                    mediationListener.onAdFailedToLoad(mediationAdapter, error);
-//                }
-//            }
-//        } else {
-//            AdError error = new AdError(ERROR_VUNGLE_BANNER_NULL,
-//                    "Vungle SDK returned a successful load callback, but Banners.getBanner() or "
-//                            + "Vungle.getNativeAd() returned null.",
-//                    ERROR_DOMAIN);
-//            Log.d(TAG, error.getMessage());
-//            if (mediationAdapter != null && mediationListener != null) {
-//                mediationListener.onAdFailedToLoad(mediationAdapter, error);
-//            }
-//        }
+        vungleBannerAd.setVungleBanner((BannerView) bannerAd.getBannerView());
+        adLayout.addView(bannerAd.getBannerView(), adParams);
     }
 
     @NonNull
@@ -322,6 +282,7 @@ public class VungleBannerAdapter implements BaseAdListener {
 //        if (mediationAdapter != null && mediationListener != null) {
 //            mediationListener.onAdLoaded(mediationAdapter);
 //        }
+        mediationListener.onAdLoaded(mediationAdapter);
         BannerAd bannerAd = (BannerAd) baseAd;
         createBanner(bannerAd);
     }

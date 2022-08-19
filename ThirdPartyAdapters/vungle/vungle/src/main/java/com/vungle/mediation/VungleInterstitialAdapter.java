@@ -22,6 +22,7 @@ import com.google.ads.mediation.vungle.VungleInitializer;
 import com.google.ads.mediation.vungle.util.ErrorUtil;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.MediationUtils;
 import com.google.android.gms.ads.mediation.MediationAdRequest;
 import com.google.android.gms.ads.mediation.MediationBannerAdapter;
 import com.google.android.gms.ads.mediation.MediationBannerListener;
@@ -32,6 +33,8 @@ import com.vungle.ads.BaseAd;
 import com.vungle.ads.BaseAdListener;
 import com.vungle.ads.InterstitialAd;
 import com.vungle.ads.VungleException;
+
+import java.util.ArrayList;
 
 
 /**
@@ -156,13 +159,10 @@ public class VungleInterstitialAdapter
         config = AdapterParametersParser.parse(appID, mediationExtras);
 
         if (TextUtils.isEmpty(appID)) {
-
-            if (mediationBannerListener != null) {
-                AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS,
-                        "Failed to load ad from Vungle. Missing or invalid app ID.", ERROR_DOMAIN);
-                Log.w(TAG, error.getMessage());
-                mediationBannerListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
-            }
+            AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS,
+                    "Failed to load ad from Vungle. Missing or invalid app ID.", ERROR_DOMAIN);
+            Log.w(TAG, error.getMessage());
+            mediationBannerListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
             return;
         }
 
@@ -185,8 +185,7 @@ public class VungleInterstitialAdapter
         }
 
         AdConfig adConfig = VungleExtrasBuilder.adConfigWithNetworkExtras(mediationExtras, true);
-        if (!mVungleManager.hasBannerSizeAd(context, adSize, adConfig)) {
-
+        if (!hasBannerSizeAd(context, adSize, adConfig)) {
             AdError error = new AdError(ERROR_BANNER_SIZE_MISMATCH,
                     "Failed to load ad from Vungle. Invalid banner size.", ERROR_DOMAIN);
             Log.w(TAG, error.getMessage());
@@ -272,5 +271,40 @@ public class VungleInterstitialAdapter
         if (mMediationInterstitialListener != null) {
             mMediationInterstitialListener.onAdLeftApplication(VungleInterstitialAdapter.this);
         }
+    }
+
+    public boolean hasBannerSizeAd(Context context, AdSize adSize, AdConfig adConfig) {
+        ArrayList<AdSize> potentials = new ArrayList<>();
+        com.vungle.ads.AdSize[] sizes = new com.vungle.ads.AdSize[] {
+                com.vungle.ads.AdSize.VUNGLE_MREC,
+                com.vungle.ads.AdSize.BANNER,
+                com.vungle.ads.AdSize.BANNER_SHORT,
+                com.vungle.ads.AdSize.BANNER_LEADERBOARD
+        };
+
+        for (com.vungle.ads.AdSize size : sizes) {
+            potentials.add(new AdSize(size.getWidth(), size.getHeight()));
+        }
+        AdSize closestSize = MediationUtils.findClosestSize(context, adSize, potentials);
+        if (closestSize == null) {
+            Log.i(TAG, "Not found closest ad size: " + adSize);
+            return false;
+        }
+        Log.i(TAG, "Found closest ad size: " + closestSize + " for requested ad size: " + adSize);
+
+        if (closestSize.getWidth() == com.vungle.ads.AdSize.BANNER_SHORT.getWidth()
+                && closestSize.getHeight() == com.vungle.ads.AdSize.BANNER_SHORT.getHeight()) {
+            adConfig.setAdSize(com.vungle.ads.AdSize.BANNER_SHORT);
+        } else if (closestSize.getWidth() == com.vungle.ads.AdSize.BANNER.getWidth()
+                && closestSize.getHeight() == com.vungle.ads.AdSize.BANNER.getHeight()) {
+            adConfig.setAdSize(com.vungle.ads.AdSize.BANNER);
+        } else if (closestSize.getWidth() == com.vungle.ads.AdSize.BANNER_LEADERBOARD.getWidth()
+                && closestSize.getHeight() == com.vungle.ads.AdSize.BANNER_LEADERBOARD.getHeight()) {
+            adConfig.setAdSize(com.vungle.ads.AdSize.BANNER_LEADERBOARD);
+        } else if (closestSize.getWidth() == com.vungle.ads.AdSize.VUNGLE_MREC.getWidth()
+                && closestSize.getHeight() == com.vungle.ads.AdSize.VUNGLE_MREC.getHeight()) {
+            adConfig.setAdSize(com.vungle.ads.AdSize.VUNGLE_MREC);
+        }
+        return true;
     }
 }

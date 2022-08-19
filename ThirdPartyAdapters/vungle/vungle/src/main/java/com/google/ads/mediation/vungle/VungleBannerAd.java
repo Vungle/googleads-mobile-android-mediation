@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.vungle.ads.BannerAd;
 import com.vungle.ads.BannerView;
 import com.vungle.mediation.VungleBannerAdapter;
 
