@@ -196,21 +196,13 @@ public class VungleInterstitialAdapter
         // Adapter does not support multiple Banner instances playing for same placement except for
         // refresh.
         String uniqueRequestId = config.getRequestUniqueId();
-        if (!mVungleManager.canRequestBannerAd(placement, uniqueRequestId)) {
-            AdError error = new AdError(ERROR_AD_ALREADY_LOADED,
-                    "Vungle adapter does not support multiple banner instances for same placement.",
-                    ERROR_DOMAIN);
-            Log.w(TAG, error.getMessage());
-            mMediationBannerListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
-            return;
-        }
+
 
         vungleBannerAdapter = new VungleBannerAdapter(placement, uniqueRequestId, adConfig,
                 VungleInterstitialAdapter.this);
         Log.d(TAG, "New banner adapter: " + vungleBannerAdapter + "; size: " + adConfig.getAdSize());
 
         VungleBannerAd vungleBanner = new VungleBannerAd(placement, vungleBannerAdapter);
-        mVungleManager.registerBannerAd(placement, vungleBanner);
 
         Log.d(TAG, "Requesting banner with ad size: " + adConfig.getAdSize());
         vungleBannerAdapter

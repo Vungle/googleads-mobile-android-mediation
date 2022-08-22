@@ -138,7 +138,6 @@ public class VungleBannerAdapter implements BaseAdListener {
 
                             @Override
                             public void onInitializeError(AdError error) {
-                                mVungleManager.removeActiveBannerAd(placementId, vungleBannerAd);
                                 if (mPendingRequestBanner && mediationAdapter != null
                                         && mediationListener != null) {
                                     Log.w(TAG, error.getMessage());
@@ -150,7 +149,6 @@ public class VungleBannerAdapter implements BaseAdListener {
 
     void destroy() {
         Log.d(TAG, "Vungle banner adapter destroy:" + this);
-        mVungleManager.removeActiveBannerAd(placementId, vungleBannerAd);
         if (vungleBannerAd != null) {
             vungleBannerAd.detach();
             vungleBannerAd.destroyAd();
