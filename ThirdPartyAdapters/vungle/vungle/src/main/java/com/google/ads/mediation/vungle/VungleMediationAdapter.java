@@ -329,6 +329,7 @@ public class VungleMediationAdapter extends RtbAdapter {
     public void loadRtbInterstitialAd(
             @NonNull MediationInterstitialAdConfiguration mediationInterstitialAdConfiguration,
             @NonNull MediationAdLoadCallback<MediationInterstitialAd, MediationInterstitialAdCallback> mediationAdLoadCallback) {
+        // TODO: Needs testing. Can't win bid.
         Log.d(TAG, "loadRtbInterstitialAd()...");
         VungleInitializer.getInstance()
                 .updateCoppaStatus(mediationInterstitialAdConfiguration.taggedForChildDirectedTreatment());
