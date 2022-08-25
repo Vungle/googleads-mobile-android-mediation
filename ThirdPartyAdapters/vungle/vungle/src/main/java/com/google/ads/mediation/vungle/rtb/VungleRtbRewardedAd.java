@@ -26,7 +26,7 @@ import com.vungle.ads.RewardedAd;
 import com.vungle.ads.VungleAds;
 import com.vungle.ads.VungleException;
 import com.vungle.mediation.VungleExtrasBuilder;
-import com.vungle.mediation.VungleManager;
+import com.vungle.mediation.PlacementFinder;
 
 public class VungleRtbRewardedAd implements MediationRewardedAd, BaseAdListener {
 
@@ -62,9 +62,7 @@ public class VungleRtbRewardedAd implements MediationRewardedAd, BaseAdListener 
             return;
         }
 
-        String placement = VungleManager
-                .getInstance()
-                .findPlacement(mediationExtras, serverParameters);
+        String placement = PlacementFinder.findPlacement(mediationExtras, serverParameters);
         if (TextUtils.isEmpty(placement)) {
             AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS,
                     "Failed to load ad from Vungle. Missing or invalid Placement ID.", ERROR_DOMAIN);

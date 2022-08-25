@@ -1,6 +1,5 @@
 package com.vungle.mediation;
 
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_AD_ALREADY_LOADED;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_BANNER_SIZE_MISMATCH;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_DOMAIN;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_INVALID_SERVER_PARAMETERS;
@@ -46,12 +45,9 @@ public class VungleInterstitialAdapter
         implements MediationInterstitialAdapter, MediationBannerAdapter, BaseAdListener {
 
     private MediationInterstitialListener mMediationInterstitialListener;
-    private VungleManager mVungleManager;
     private AdConfig mAdConfig;
     private String mPlacement;
 
-    // banner/MREC
-    private MediationBannerListener mMediationBannerListener;
     private VungleBannerAdapter vungleBannerAdapter;
     private InterstitialAd ad;
 
@@ -70,8 +66,7 @@ public class VungleInterstitialAdapter
         }
 
         mMediationInterstitialListener = mediationInterstitialListener;
-        mVungleManager = VungleManager.getInstance();
-        mPlacement = mVungleManager.findPlacement(mediationExtras, serverParameters);
+        mPlacement = PlacementFinder.findPlacement(mediationExtras, serverParameters);
         if (TextUtils.isEmpty(mPlacement)) {
             AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS,
                     "Failed to load ad from Vungle. Missing or Invalid Placement ID.", ERROR_DOMAIN);
@@ -153,7 +148,7 @@ public class VungleInterstitialAdapter
                                 @NonNull final MediationBannerListener mediationBannerListener,
                                 @NonNull Bundle serverParameters, @NonNull AdSize adSize,
                                 @NonNull MediationAdRequest mediationAdRequest, @Nullable Bundle mediationExtras) {
-        mMediationBannerListener = mediationBannerListener;
+        // banner/MREC
         String appID = serverParameters.getString(KEY_APP_ID);
         AdapterParametersParser.Config config;
         config = AdapterParametersParser.parse(appID, mediationExtras);
@@ -169,9 +164,8 @@ public class VungleInterstitialAdapter
         VungleInitializer.getInstance()
                 .updateCoppaStatus(mediationAdRequest.taggedForChildDirectedTreatment());
 
-        mVungleManager = VungleManager.getInstance();
 
-        String placement = mVungleManager.findPlacement(mediationExtras, serverParameters);
+        String placement = PlacementFinder.findPlacement(mediationExtras, serverParameters);
         Log.d(TAG,
                 "requestBannerAd for Placement: " + placement + " ### Adapter instance: " + this
                         .hashCode());
@@ -180,7 +174,7 @@ public class VungleInterstitialAdapter
             AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS,
                     "Failed to load ad from Vungle. Missing or Invalid placement ID.", ERROR_DOMAIN);
             Log.w(TAG, error.getMessage());
-            mMediationBannerListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
+            mediationBannerListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
             return;
         }
 
@@ -189,7 +183,7 @@ public class VungleInterstitialAdapter
             AdError error = new AdError(ERROR_BANNER_SIZE_MISMATCH,
                     "Failed to load ad from Vungle. Invalid banner size.", ERROR_DOMAIN);
             Log.w(TAG, error.getMessage());
-            mMediationBannerListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
+            mediationBannerListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
             return;
         }
 
@@ -206,7 +200,7 @@ public class VungleInterstitialAdapter
 
         Log.d(TAG, "Requesting banner with ad size: " + adConfig.getAdSize());
         vungleBannerAdapter
-                .requestBannerAd(context, config.getAppId(), adSize, mMediationBannerListener);
+                .requestBannerAd(context, config.getAppId(), adSize, mediationBannerListener);
     }
 
     @NonNull
@@ -267,7 +261,7 @@ public class VungleInterstitialAdapter
 
     public boolean hasBannerSizeAd(Context context, AdSize adSize, AdConfig adConfig) {
         ArrayList<AdSize> potentials = new ArrayList<>();
-        com.vungle.ads.AdSize[] sizes = new com.vungle.ads.AdSize[] {
+        com.vungle.ads.AdSize[] sizes = new com.vungle.ads.AdSize[]{
                 com.vungle.ads.AdSize.VUNGLE_MREC,
                 com.vungle.ads.AdSize.BANNER,
                 com.vungle.ads.AdSize.BANNER_SHORT,

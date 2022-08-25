@@ -77,7 +77,7 @@ public class VungleNativeAdapter extends UnifiedNativeAdMapper {
       return;
     }
 
-    placementId = VungleManager.getInstance().findPlacement(mediationExtras, serverParameters);
+    placementId = PlacementFinder.findPlacement(mediationExtras, serverParameters);
     if (TextUtils.isEmpty(placementId)) {
       AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS,
           "Failed to load ad from Vungle. Missing or Invalid placement ID.", ERROR_DOMAIN);

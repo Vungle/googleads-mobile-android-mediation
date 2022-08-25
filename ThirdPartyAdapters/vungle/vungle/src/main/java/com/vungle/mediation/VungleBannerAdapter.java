@@ -1,6 +1,5 @@
 package com.vungle.mediation;
 
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_VUNGLE_BANNER_NULL;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.TAG;
 
 import android.content.Context;
@@ -18,13 +17,11 @@ import com.google.android.gms.ads.mediation.MediationBannerAdapter;
 import com.google.android.gms.ads.mediation.MediationBannerListener;
 import com.vungle.ads.AdConfig;
 import com.vungle.ads.BannerAd;
-import com.vungle.ads.BannerView;
 import com.vungle.ads.BaseAd;
 import com.vungle.ads.BaseAdListener;
 import com.vungle.ads.VungleException;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 public class VungleBannerAdapter implements BaseAdListener {
 
@@ -65,11 +62,6 @@ public class VungleBannerAdapter implements BaseAdListener {
      */
     private FrameLayout adLayout;
 
-    /**
-     * Manager to handle Vungle banner ad requests.
-     */
-    @NonNull
-    private final VungleManager mVungleManager;
 
     /**
      * Indicates whether a Vungle banner ad request is in progress.
@@ -79,7 +71,6 @@ public class VungleBannerAdapter implements BaseAdListener {
 
     VungleBannerAdapter(@NonNull String placementId, @NonNull String uniqueRequestId,
                         @NonNull AdConfig adConfig, @NonNull MediationBannerAdapter mediationBannerAdapter) {
-        mVungleManager = VungleManager.getInstance();
         this.placementId = placementId;
         this.uniqueRequestId = uniqueRequestId;
         this.mAdConfig = adConfig;

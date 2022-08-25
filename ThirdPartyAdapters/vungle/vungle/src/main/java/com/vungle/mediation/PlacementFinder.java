@@ -20,30 +20,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * A helper class to load and show Vungle ads and keep track of {@link VungleBannerAd} instances.
- */
-public class VungleManager {
+public class PlacementFinder {
 
     private static final String PLAYING_PLACEMENT = "placementID";
 
-    private static VungleManager sInstance;
-
-    private final ConcurrentHashMap<String, VungleNativeAd> mVungleNativeAds;
-
-    public static synchronized VungleManager getInstance() {
-        if (sInstance == null) {
-            sInstance = new VungleManager();
-        }
-        return sInstance;
-    }
-
-    private VungleManager() {
-        mVungleNativeAds = new ConcurrentHashMap<>();
-    }
-
     @Nullable
-    public String findPlacement(Bundle networkExtras, Bundle serverParameters) {
+    public static String findPlacement(Bundle networkExtras, Bundle serverParameters) {
         String placement = null;
         if (networkExtras != null
                 && networkExtras.containsKey(VungleExtrasBuilder.EXTRA_PLAY_PLACEMENT)) {
@@ -62,25 +44,5 @@ public class VungleManager {
             Log.e(TAG, "placementID not provided from serverParameters.");
         }
         return placement;
-    }
-
-
-    public void removeActiveNativeAd(@NonNull String placementId,
-                                     @Nullable VungleNativeAd activeNativeAd) {
-        Log.d(TAG, "try to removeActiveNativeAd: " + placementId);
-
-        boolean didRemove = mVungleNativeAds.remove(placementId, activeNativeAd);
-        if (didRemove && activeNativeAd != null) {
-            Log.d(TAG, "removeActiveNativeAd: " + activeNativeAd + "; size=" + mVungleNativeAds.size());
-//      activeNativeAd.destroyAd();
-        }
-    }
-
-    public void registerNativeAd(@NonNull String placementId, @NonNull VungleNativeAd instance) {
-        removeActiveNativeAd(placementId, mVungleNativeAds.get(placementId));
-        if (!mVungleNativeAds.containsKey(placementId)) {
-            mVungleNativeAds.put(placementId, instance);
-            Log.d(TAG, "registerNativeAd: " + instance + "; size=" + mVungleNativeAds.size());
-        }
     }
 }
