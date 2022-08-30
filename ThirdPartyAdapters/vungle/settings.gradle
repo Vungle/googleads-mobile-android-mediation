@@ -1,12 +1,17 @@
-include ':vungle'
+include ':testapp'
 
-// For Vungle SDK dependency configure
-//If gradle graph reached here means that this adapter will be build separately without host QA testApp gradle context.
-//Although in most cases we don't need to care about the following configuration but it can help us build out adapter
-//aar based on our sdk's feature branch easily and quickly.
+//For Vungle AdMob Adapter configure
+def vungleAdMobAdapterProjectDir = '../googleads-mobile-android-mediation/ThirdPartyAdapters/vungle'
+if (file(vungleAdMobAdapterProjectDir).exists()) {
+    include ':vungle-admob-adapter'
+    project(':vungle-admob-adapter').projectDir = new File(settingsDir, vungleAdMobAdapterProjectDir)
+    include ':vungle-admob-adapter:vungle'
+}
+
+// For Vungle SDK configure
 def dependOnVungleSdkProject = hasProperty("SdkSrcDependency") ? "$SdkSrcDependency".toBoolean() : false
 gradle.ext.dependOnVungleSdkProject = dependOnVungleSdkProject
-def vungleSdkProjectDir = '../../../vungle-android-sdk'
+def vungleSdkProjectDir = '../vungle-android-sdk'
 if (file(vungleSdkProjectDir).exists() && dependOnVungleSdkProject) {
     include ':vungle-android-sdk'
     project(':vungle-android-sdk').projectDir = new File(settingsDir, vungleSdkProjectDir)
