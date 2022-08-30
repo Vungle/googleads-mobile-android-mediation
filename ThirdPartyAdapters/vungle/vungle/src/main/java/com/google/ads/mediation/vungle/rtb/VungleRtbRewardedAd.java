@@ -42,7 +42,8 @@ public class VungleRtbRewardedAd implements MediationRewardedAd, BaseAdListener 
 
     public VungleRtbRewardedAd(
             @NonNull MediationRewardedAdConfiguration mediationRewardedAdConfiguration,
-            @NonNull MediationAdLoadCallback<MediationRewardedAd, MediationRewardedAdCallback> mediationAdLoadCallback) {
+            @NonNull MediationAdLoadCallback<MediationRewardedAd, MediationRewardedAdCallback> mediationAdLoadCallback
+    ) {
         this.mediationRewardedAdConfiguration = mediationRewardedAdConfiguration;
         this.mediationAdLoadCallback = mediationAdLoadCallback;
     }

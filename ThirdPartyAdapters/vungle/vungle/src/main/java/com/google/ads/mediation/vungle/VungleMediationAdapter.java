@@ -53,20 +53,12 @@ public class VungleMediationAdapter extends RtbAdapter {
     public static final String TAG = VungleMediationAdapter.class.getSimpleName();
     public static final String KEY_APP_ID = "appid";
 
-    private VungleRtbInterstitialAd rtbInterstitialAd;
-    private VungleRtbRewardedAd rtbRewardedAd;
-    private VungleRtbRewardedAd rtbRewardedInterstitialAd;
-
-    private AdConfig mAdConfig;
-    private String mUserID;
-    private String mPlacement;
-
-    private static final HashMap<String, WeakReference<VungleMediationAdapter>> mPlacementsInUse =
+    private static final HashMap<String, WeakReference<VungleMediationAdapter>> placementsInUse =
             new HashMap<>();
 
     private MediationAdLoadCallback<MediationRewardedAd, MediationRewardedAdCallback>
-            mMediationAdLoadCallback;
-    private MediationRewardedAdCallback mMediationRewardedAdCallback;
+            mediationAdLoadCallback;
+    private MediationRewardedAdCallback mediationRewardedAdCallback;
 
     /**
      * Vungle adapter error domain.
@@ -235,14 +227,12 @@ public class VungleMediationAdapter extends RtbAdapter {
             @NonNull MediationRewardedAdConfiguration mediationRewardedAdConfiguration,
             @NonNull MediationAdLoadCallback<MediationRewardedAd, MediationRewardedAdCallback>
                     mediationAdLoadCallback) {
-        mMediationAdLoadCallback = mediationAdLoadCallback;
+        this.mediationAdLoadCallback = mediationAdLoadCallback;
 
         Bundle mediationExtras = mediationRewardedAdConfiguration.getMediationExtras();
         Bundle serverParameters = mediationRewardedAdConfiguration.getServerParameters();
 
-        mUserID = mediationExtras.getString(VungleExtrasBuilder.EXTRA_USER_ID);
-
-        mPlacement = PlacementFinder.findPlacement(mediationExtras, serverParameters);
+        String mPlacement = PlacementFinder.findPlacement(mediationExtras, serverParameters);
         if (TextUtils.isEmpty(mPlacement)) {
             AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS,
                     "Failed to load ad from Vungle. Missing or invalid Placement ID.", ERROR_DOMAIN);
@@ -251,8 +241,8 @@ public class VungleMediationAdapter extends RtbAdapter {
             return;
         }
 
-        if (mPlacementsInUse.containsKey(mPlacement)
-                && mPlacementsInUse.get(mPlacement).get() != null) {
+        if (placementsInUse.containsKey(mPlacement)
+                && placementsInUse.get(mPlacement).get() != null) {
             AdError error = new AdError(ERROR_AD_ALREADY_LOADED,
                     "Only a maximum of one ad can be loaded per placement.", ERROR_DOMAIN);
             Log.w(TAG, error.getMessage());
@@ -268,10 +258,6 @@ public class VungleMediationAdapter extends RtbAdapter {
             mediationAdLoadCallback.onFailure(error);
             return;
         }
-
-        // Unmute full-screen ads by default.
-        mAdConfig = VungleExtrasBuilder.adConfigWithNetworkExtras(mediationExtras, false);
-
         VungleRtbRewardedAd ad = new VungleRtbRewardedAd(
                 mediationRewardedAdConfiguration,
                 mediationAdLoadCallback
@@ -320,7 +306,7 @@ public class VungleMediationAdapter extends RtbAdapter {
         Log.d(TAG, "loadRtbRewardedAd()...");
         VungleInitializer.getInstance()
                 .updateCoppaStatus(mediationRewardedAdConfiguration.taggedForChildDirectedTreatment());
-        rtbRewardedAd = new VungleRtbRewardedAd(
+        VungleRtbRewardedAd rtbRewardedAd = new VungleRtbRewardedAd(
                 mediationRewardedAdConfiguration, mediationAdLoadCallback);
         rtbRewardedAd.render();
     }
@@ -333,7 +319,7 @@ public class VungleMediationAdapter extends RtbAdapter {
         Log.d(TAG, "loadRtbInterstitialAd()...");
         VungleInitializer.getInstance()
                 .updateCoppaStatus(mediationInterstitialAdConfiguration.taggedForChildDirectedTreatment());
-        rtbInterstitialAd = new VungleRtbInterstitialAd(
+        VungleRtbInterstitialAd rtbInterstitialAd = new VungleRtbInterstitialAd(
                 mediationInterstitialAdConfiguration, mediationAdLoadCallback);
         rtbInterstitialAd.render();
     }
@@ -355,7 +341,7 @@ public class VungleMediationAdapter extends RtbAdapter {
         Log.d(TAG, "loadRtbRewardedInterstitialAd()...");
         VungleInitializer.getInstance()
                 .updateCoppaStatus(adConfiguration.taggedForChildDirectedTreatment());
-        rtbRewardedInterstitialAd = new VungleRtbRewardedAd(adConfiguration, callback);
+        VungleRtbRewardedAd rtbRewardedInterstitialAd = new VungleRtbRewardedAd(adConfiguration, callback);
         rtbRewardedInterstitialAd.render();
     }
 

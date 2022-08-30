@@ -10,15 +10,12 @@ import com.google.ads.mediation.vungle.util.ErrorUtil;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.RequestConfiguration;
-import com.vungle.ads.internal.model.RtbTokens;
-import com.vungle.ads.internal.network.Plugin;
 import com.vungle.ads.InitializationListener;
+import com.vungle.ads.Plugin;
 import com.vungle.ads.VungleAds;
 import com.vungle.ads.VungleException;
 import com.vungle.ads.VungleSettings;
 import com.vungle.ads.internal.network.VungleApiClient;
-import com.vungle.ads.internal.privacy.PrivacyConsent;
-import com.vungle.ads.internal.privacy.PrivacyManager;
 import com.vungle.mediation.VungleNetworkSettings;
 
 import java.util.ArrayList;
@@ -76,10 +73,10 @@ public class VungleInitializer implements InitializationListener {
     public void updateCoppaStatus(int configuration) {
         switch (configuration) {
             case RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE:
-                PrivacyManager.updateCOPPAConsent(PrivacyConsent.OPT_IN);
+                VungleAds.updateUserCoppaStatus(true);
                 break;
             case RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_FALSE:
-                PrivacyManager.updateCOPPAConsent(PrivacyConsent.OPT_OUT);
+                VungleAds.updateUserCoppaStatus(false);
                 break;
             case RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_UNSPECIFIED:
             default:

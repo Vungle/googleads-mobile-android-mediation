@@ -60,6 +60,7 @@ public class VungleNativeAd {
         return mediaView;
     }
 
+    // TODO: this method isn't being called
     public void destroyAd() {
         if (nativeAdLayout != null) {
             nativeAdLayout.removeAllViews();
