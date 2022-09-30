@@ -83,8 +83,7 @@ public class VungleInterstitialAdapter
 
     VungleInitializer.getInstance()
         .initialize(
-            appID,
-            context.getApplicationContext(),
+            appID, context,
             new VungleInitializer.VungleInitializationListener() {
               @Override
               public void onInitializeSuccess() {
@@ -227,8 +226,7 @@ public class VungleInterstitialAdapter
 
     VungleInitializer.getInstance()
         .initialize(
-            appID,
-            context.getApplicationContext(),
+            appID, context,
             new VungleInitializer.VungleInitializationListener() {
               @Override
               public void onInitializeSuccess() {
@@ -243,7 +241,7 @@ public class VungleInterstitialAdapter
                         adLayoutHeight);
                 bannerLayout.setLayoutParams(adViewLayoutParams);
 
-                bannerAd = new BannerAd(placement, adConfig);
+                bannerAd = new BannerAd(context, placement, adConfig);
                 bannerAd.setAdListener(new VungleBannerListener());
 
                 bannerAd.load();

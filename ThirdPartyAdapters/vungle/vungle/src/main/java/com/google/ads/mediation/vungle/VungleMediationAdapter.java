@@ -209,8 +209,7 @@ public class VungleMediationAdapter extends RtbAdapter
 
     VungleInitializer.getInstance()
         .initialize(
-            appID,
-            context.getApplicationContext(),
+            appID, context,
             new VungleInitializationListener() {
               @Override
               public void onInitializeSuccess() {

@@ -54,7 +54,7 @@ public class VungleInitializer implements InitializationListener {
     updateCoppaStatus(MobileAds.getRequestConfiguration().getTagForChildDirectedTreatment());
 
     VungleSettings vungleSettings = VungleNetworkSettings.getVungleSettings();
-    VungleAds.init(context.getApplicationContext(), appId,VungleInitializer.this, vungleSettings);
+    VungleAds.init(context, appId,VungleInitializer.this, vungleSettings);
     initListeners.add(listener);
   }
 

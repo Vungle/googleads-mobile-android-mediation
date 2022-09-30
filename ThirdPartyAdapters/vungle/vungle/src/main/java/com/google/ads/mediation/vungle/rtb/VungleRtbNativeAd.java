@@ -86,7 +86,7 @@ public class VungleRtbNativeAd extends UnifiedNativeAdMapper implements NativeAd
     VungleInitializer.getInstance()
         .initialize(
             appID,
-            context.getApplicationContext(),
+            context,
             new VungleInitializer.VungleInitializationListener() {
               @Override
               public void onInitializeSuccess() {
