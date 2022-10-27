@@ -2,6 +2,7 @@
 
 #### Version 6.12.1.0
 - Added bidding support for Banner/MREC format.
+- Added new API to update CCPA.
 
 Built and tested with:
 - Google Mobile Ads SDK version 21.2.0.
