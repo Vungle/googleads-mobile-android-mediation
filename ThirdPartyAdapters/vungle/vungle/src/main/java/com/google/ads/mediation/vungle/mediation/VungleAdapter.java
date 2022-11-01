@@ -1,7 +1,7 @@
-package com.vungle.mediation;
+package com.google.ads.mediation.vungle.mediation;
 
 import androidx.annotation.Keep;
-import com.google.ads.mediation.vungle.VungleMediationAdapter;
+
 import com.google.android.gms.ads.mediation.MediationAdapter;
 
 /**

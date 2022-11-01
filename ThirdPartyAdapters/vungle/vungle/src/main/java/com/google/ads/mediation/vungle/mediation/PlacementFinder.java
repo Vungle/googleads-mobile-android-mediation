@@ -1,9 +1,11 @@
-package com.vungle.mediation;
+package com.google.ads.mediation.vungle.mediation;
 
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.TAG;
+
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.TAG;
 
 import android.os.Bundle;
 import android.util.Log;
+
 import androidx.annotation.Nullable;
 
 public class PlacementFinder {

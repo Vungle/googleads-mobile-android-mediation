@@ -1,9 +1,11 @@
-package com.google.ads.mediation.vungle;
+package com.google.ads.mediation.vungle.mediation;
 
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.RequestConfiguration;
@@ -12,8 +14,8 @@ import com.vungle.ads.Plugin;
 import com.vungle.ads.VungleAds;
 import com.vungle.ads.VungleException;
 import com.vungle.ads.VungleSettings;
-import com.vungle.ads.internal.network.VungleApiClient;
-import com.vungle.mediation.VungleNetworkSettings;
+import com.vungle.mediation.BuildConfig;
+
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -32,8 +34,8 @@ public class VungleInitializer implements InitializationListener {
   private VungleInitializer() {
     initListeners = new ArrayList<>();
     Plugin.addWrapperInfo(
-        VungleApiClient.WrapperFramework.admob,
-        com.vungle.mediation.BuildConfig.ADAPTER_VERSION.replace('.', '_'));
+        Plugin.WrapperFramework.admob,
+        BuildConfig.ADAPTER_VERSION.replace('.', '_'));
   }
 
   public void initialize(
@@ -54,7 +56,7 @@ public class VungleInitializer implements InitializationListener {
     updateCoppaStatus(MobileAds.getRequestConfiguration().getTagForChildDirectedTreatment());
 
     VungleSettings vungleSettings = VungleNetworkSettings.getVungleSettings();
-    VungleAds.init(context, appId,VungleInitializer.this, vungleSettings);
+    VungleAds.init(context, appId, VungleInitializer.this, vungleSettings);
     initListeners.add(listener);
   }
 

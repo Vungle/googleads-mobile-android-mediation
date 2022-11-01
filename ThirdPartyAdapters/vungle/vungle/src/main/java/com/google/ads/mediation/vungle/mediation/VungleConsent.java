@@ -1,4 +1,4 @@
-package com.vungle.mediation;
+package com.google.ads.mediation.vungle.mediation;
 
 import com.vungle.ads.VungleAds;
 import com.vungle.ads.internal.privacy.PrivacyConsent;

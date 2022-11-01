@@ -1,9 +1,9 @@
-package com.google.ads.mediation.vungle.rtb;
+package com.google.ads.mediation.vungle.mediation.rtb;
 
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_DOMAIN;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_INVALID_SERVER_PARAMETERS;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.KEY_APP_ID;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.TAG;
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.*;
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.ERROR_DOMAIN;
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.ERROR_INVALID_SERVER_PARAMETERS;
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.KEY_APP_ID;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -15,9 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
-import com.google.ads.mediation.vungle.VungleInitializer;
-import com.google.ads.mediation.vungle.VungleMediationAdapter;
+
+import com.google.ads.mediation.vungle.mediation.PlacementFinder;
+import com.google.ads.mediation.vungle.mediation.VungleExtrasBuilder;
+import com.google.ads.mediation.vungle.mediation.VungleInitializer;
+import com.google.ads.mediation.vungle.mediation.VungleMediationAdapter;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.formats.NativeAd.Image;
 import com.google.android.gms.ads.mediation.MediationAdLoadCallback;
@@ -32,8 +36,7 @@ import com.vungle.ads.NativeAd;
 import com.vungle.ads.NativeAdListener;
 import com.vungle.ads.VungleException;
 import com.vungle.ads.internal.ui.view.MediaView;
-import com.vungle.mediation.PlacementFinder;
-import com.vungle.mediation.VungleExtrasBuilder;
+
 import java.util.ArrayList;
 import java.util.Map;
 

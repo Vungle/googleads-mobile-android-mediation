@@ -1,14 +1,16 @@
-package com.google.ads.mediation.vungle;
+package com.google.ads.mediation.vungle.mediation;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
-import com.google.ads.mediation.vungle.VungleInitializer.VungleInitializationListener;
-import com.google.ads.mediation.vungle.rtb.VungleRtbInterstitialAd;
-import com.google.ads.mediation.vungle.rtb.VungleRtbNativeAd;
-import com.google.ads.mediation.vungle.rtb.VungleRtbRewardedAd;
+
+import com.google.ads.mediation.vungle.mediation.VungleInitializer.VungleInitializationListener;
+import com.google.ads.mediation.vungle.mediation.rtb.VungleRtbInterstitialAd;
+import com.google.ads.mediation.vungle.mediation.rtb.VungleRtbNativeAd;
+import com.google.ads.mediation.vungle.mediation.rtb.VungleRtbRewardedAd;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.mediation.InitializationCompleteCallback;
 import com.google.android.gms.ads.mediation.MediationAdLoadCallback;
@@ -34,8 +36,7 @@ import com.vungle.ads.RewardedAdListener;
 import com.vungle.ads.VungleAds;
 import com.vungle.ads.VungleException;
 import com.vungle.mediation.BuildConfig;
-import com.vungle.mediation.PlacementFinder;
-import com.vungle.mediation.VungleExtrasBuilder;
+
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.HashSet;

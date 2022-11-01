@@ -1,8 +1,10 @@
-package com.vungle.mediation;
+package com.google.ads.mediation.vungle.mediation;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.Size;
+
 import com.google.android.gms.ads.nativead.NativeAdOptions;
 import com.vungle.ads.AdConfig;
 

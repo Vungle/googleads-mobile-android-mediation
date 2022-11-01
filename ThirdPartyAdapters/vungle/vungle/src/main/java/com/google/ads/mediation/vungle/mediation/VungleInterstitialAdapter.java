@@ -1,11 +1,10 @@
-package com.vungle.mediation;
+package com.google.ads.mediation.vungle.mediation;
 
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_BANNER_SIZE_MISMATCH;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_DOMAIN;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_INVALID_SERVER_PARAMETERS;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_VUNGLE_BANNER_NULL;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.KEY_APP_ID;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.TAG;
+
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.*;
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.ERROR_DOMAIN;
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.ERROR_INVALID_SERVER_PARAMETERS;
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.KEY_APP_ID;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,11 +12,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
+
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.google.ads.mediation.vungle.VungleInitializer;
-import com.google.ads.mediation.vungle.VungleMediationAdapter;
+
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.MediationUtils;
@@ -33,6 +32,7 @@ import com.vungle.ads.BaseAd;
 import com.vungle.ads.InterstitialAd;
 import com.vungle.ads.InterstitialAdListener;
 import com.vungle.ads.VungleException;
+
 import java.util.ArrayList;
 
 /**
@@ -148,7 +148,7 @@ public class VungleInterstitialAdapter
 
     @Override
     public void error(@NonNull BaseAd baseAd, @NonNull VungleException e) {
-      AdError error = VungleMediationAdapter.getAdError(e);
+      AdError error = getAdError(e);
       Log.w(TAG, error.toString());
       if (mediationInterstitialListener != null) {
         mediationInterstitialListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
@@ -288,7 +288,7 @@ public class VungleInterstitialAdapter
 
     @Override
     public void error(@NonNull BaseAd baseAd, @NonNull VungleException e) {
-      AdError error = VungleMediationAdapter.getAdError(e);
+      AdError error = getAdError(e);
       Log.w(TAG, error.toString());
       if (mediationBannerListener != null) {
         mediationBannerListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);

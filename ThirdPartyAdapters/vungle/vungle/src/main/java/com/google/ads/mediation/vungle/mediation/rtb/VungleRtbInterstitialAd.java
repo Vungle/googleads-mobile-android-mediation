@@ -1,18 +1,23 @@
-package com.google.ads.mediation.vungle.rtb;
+package com.google.ads.mediation.vungle.mediation.rtb;
 
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_DOMAIN;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_INVALID_SERVER_PARAMETERS;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.KEY_APP_ID;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.TAG;
+
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.*;
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.ERROR_DOMAIN;
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.ERROR_INVALID_SERVER_PARAMETERS;
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.KEY_APP_ID;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.google.ads.mediation.vungle.VungleInitializer;
-import com.google.ads.mediation.vungle.VungleMediationAdapter;
+
+import com.google.ads.mediation.vungle.mediation.PlacementFinder;
+import com.google.ads.mediation.vungle.mediation.VungleExtrasBuilder;
+import com.google.ads.mediation.vungle.mediation.VungleInitializer;
+import com.google.ads.mediation.vungle.mediation.VungleMediationAdapter;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.mediation.MediationAdLoadCallback;
 import com.google.android.gms.ads.mediation.MediationInterstitialAd;
@@ -23,8 +28,6 @@ import com.vungle.ads.BaseAd;
 import com.vungle.ads.InterstitialAd;
 import com.vungle.ads.InterstitialAdListener;
 import com.vungle.ads.VungleException;
-import com.vungle.mediation.VungleExtrasBuilder;
-import com.vungle.mediation.PlacementFinder;
 
 public class VungleRtbInterstitialAd implements MediationInterstitialAd, InterstitialAdListener {
 

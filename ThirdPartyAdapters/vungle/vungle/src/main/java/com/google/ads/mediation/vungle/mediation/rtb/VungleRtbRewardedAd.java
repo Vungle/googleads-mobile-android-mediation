@@ -1,19 +1,24 @@
-package com.google.ads.mediation.vungle.rtb;
+package com.google.ads.mediation.vungle.mediation.rtb;
 
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_DOMAIN;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_INVALID_SERVER_PARAMETERS;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.KEY_APP_ID;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.TAG;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.google.ads.mediation.vungle.VungleInitializer;
-import com.google.ads.mediation.vungle.VungleInitializer.VungleInitializationListener;
-import com.google.ads.mediation.vungle.VungleMediationAdapter;
+
+
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.*;
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.ERROR_DOMAIN;
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.ERROR_INVALID_SERVER_PARAMETERS;
+import static com.google.ads.mediation.vungle.mediation.VungleMediationAdapter.KEY_APP_ID;
+import com.google.ads.mediation.vungle.mediation.PlacementFinder;
+import com.google.ads.mediation.vungle.mediation.VungleExtrasBuilder;
+import com.google.ads.mediation.vungle.mediation.VungleInitializer;
+import com.google.ads.mediation.vungle.mediation.VungleInitializer.VungleInitializationListener;
+import com.google.ads.mediation.vungle.mediation.VungleMediationAdapter;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.mediation.MediationAdLoadCallback;
 import com.google.android.gms.ads.mediation.MediationRewardedAd;
@@ -24,8 +29,6 @@ import com.vungle.ads.BaseAd;
 import com.vungle.ads.RewardedAd;
 import com.vungle.ads.RewardedAdListener;
 import com.vungle.ads.VungleException;
-import com.vungle.mediation.PlacementFinder;
-import com.vungle.mediation.VungleExtrasBuilder;
 
 public class VungleRtbRewardedAd implements MediationRewardedAd, RewardedAdListener {
 
