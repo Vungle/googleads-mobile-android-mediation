@@ -49,7 +49,8 @@ public class VungleBannerAdapter implements PlayAdCallback {
   /**
    * Unique Vungle banner request ID.
    */
-  private final String uniqueRequestId;
+  @Nullable
+  private String uniqueRequestId;
 
   /**
    * Mediation Banner Adapter instance to receive callbacks.
@@ -112,11 +113,10 @@ public class VungleBannerAdapter implements PlayAdCallback {
     this.mediationAdapter = mediationBannerAdapter;
   }
 
-  public VungleBannerAdapter(@NonNull String placementId, @NonNull String uniqueRequestId,
+  public VungleBannerAdapter(@NonNull String placementId,
       @NonNull AdConfig adConfig, @NonNull MediationBannerAd mediationBannerAd) {
     vungleManager = VungleManager.getInstance();
     this.placementId = placementId;
-    this.uniqueRequestId = uniqueRequestId;
     this.adConfig = adConfig;
     this.mediationBannerAd = mediationBannerAd;
   }

@@ -83,23 +83,11 @@ public class VungleRtbBannerAd implements MediationBannerAd {
     }
 
     AdapterParametersParser.Config config = AdapterParametersParser.parse(appID, mediationExtras);
-    // Adapter does not support multiple Banner instances playing for same placement except for
-    // refresh.
-    String uniqueRequestId = config.getRequestUniqueId();
-    if (!VungleManager.getInstance().canRequestBannerAd(placementForPlay, uniqueRequestId)) {
-      AdError error = new AdError(ERROR_AD_ALREADY_LOADED,
-          "Vungle adapter does not support multiple banner instances for same placement.",
-          ERROR_DOMAIN);
-      Log.e(TAG, error.getMessage());
-      mediationAdLoadCallback.onFailure(error);
-      return;
-    }
 
     String adMarkup = mediationBannerAdConfiguration.getBidResponse();
     Log.d(TAG, "Render banner mAdMarkup=" + adMarkup);
 
-    vungleBannerAdapter = new VungleBannerAdapter(placementForPlay, uniqueRequestId, adConfig,
-        VungleRtbBannerAd.this);
+    vungleBannerAdapter = new VungleBannerAdapter(placementForPlay, adConfig, VungleRtbBannerAd.this);
     Log.d(TAG, "New banner adapter: " + vungleBannerAdapter + "; size: " + adConfig.getAdSize());
 
     VungleBannerAd vungleBanner = new VungleBannerAd(placementForPlay, vungleBannerAdapter);
