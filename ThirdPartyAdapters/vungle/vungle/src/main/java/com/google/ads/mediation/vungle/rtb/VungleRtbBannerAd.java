@@ -26,6 +26,7 @@ import com.vungle.ads.AdConfig;
 import com.vungle.ads.BannerAd;
 import com.vungle.ads.BannerAdListener;
 import com.vungle.ads.BaseAd;
+import com.vungle.ads.VungleAdsExtras;
 import com.vungle.ads.VungleException;
 import com.vungle.mediation.PlacementFinder;
 import com.vungle.mediation.VungleExtrasBuilder;
@@ -108,7 +109,12 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
 
                 bannerAd = new BannerAd(context, placementForPlay, adConfig);
                 bannerAd.setAdListener(VungleRtbBannerAd.this);
-
+                String watermark = mediationBannerAdConfiguration.getWatermark();
+                if (!watermark.isEmpty()) {
+                  VungleAdsExtras extras = new VungleAdsExtras();
+                  extras.setWatermark(watermark);
+                  bannerAd.setExtras(extras);
+                }
                 bannerAd.load(adMarkup);
               }
 

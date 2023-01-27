@@ -23,6 +23,7 @@ import com.vungle.ads.AdConfig;
 import com.vungle.ads.BaseAd;
 import com.vungle.ads.RewardedAd;
 import com.vungle.ads.RewardedAdListener;
+import com.vungle.ads.VungleAdsExtras;
 import com.vungle.ads.VungleException;
 import com.vungle.mediation.PlacementFinder;
 import com.vungle.mediation.VungleExtrasBuilder;
@@ -97,7 +98,12 @@ public class VungleRtbRewardedAd implements MediationRewardedAd, RewardedAdListe
                 if (!TextUtils.isEmpty(userId)) {
                   rewardedAd.setUserId(userId);
                 }
-
+                String watermark = mediationRewardedAdConfiguration.getWatermark();
+                if (!watermark.isEmpty()) {
+                  VungleAdsExtras extras = new VungleAdsExtras();
+                  extras.setWatermark(watermark);
+                  rewardedAd.setExtras(extras);
+                }
                 rewardedAd.load(adMarkup);
               }
 

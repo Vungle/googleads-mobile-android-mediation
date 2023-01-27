@@ -22,6 +22,7 @@ import com.vungle.ads.AdConfig;
 import com.vungle.ads.BaseAd;
 import com.vungle.ads.InterstitialAd;
 import com.vungle.ads.InterstitialAdListener;
+import com.vungle.ads.VungleAdsExtras;
 import com.vungle.ads.VungleException;
 import com.vungle.mediation.VungleExtrasBuilder;
 import com.vungle.mediation.PlacementFinder;
@@ -88,7 +89,12 @@ public class VungleRtbInterstitialAd implements MediationInterstitialAd, Interst
               public void onInitializeSuccess() {
                 interstitialAd = new InterstitialAd(context, placement, adConfig);
                 interstitialAd.setAdListener(VungleRtbInterstitialAd.this);
-
+                String watermark = mediationInterstitialAdConfiguration.getWatermark();
+                if (!watermark.isEmpty()) {
+                  VungleAdsExtras extras = new VungleAdsExtras();
+                  extras.setWatermark(watermark);
+                  interstitialAd.setExtras(extras);
+                }
                 interstitialAd.load(adMarkup);
               }
 

@@ -30,6 +30,7 @@ import com.vungle.ads.AdConfig;
 import com.vungle.ads.BaseAd;
 import com.vungle.ads.NativeAd;
 import com.vungle.ads.NativeAdListener;
+import com.vungle.ads.VungleAdsExtras;
 import com.vungle.ads.VungleException;
 import com.vungle.ads.internal.ui.view.MediaView;
 import com.vungle.mediation.PlacementFinder;
@@ -93,7 +94,12 @@ public class VungleRtbNativeAd extends UnifiedNativeAdMapper implements NativeAd
                 nativeAd = new NativeAd(context, placementId, adConfig);
                 nativeAd.setAdListener(VungleRtbNativeAd.this);
                 mediaView = new MediaView(context);
-
+                String watermark = adConfiguration.getWatermark();
+                if (!watermark.isEmpty()) {
+                  VungleAdsExtras extras = new VungleAdsExtras();
+                  extras.setWatermark(watermark);
+                  nativeAd.setExtras(extras);
+                }
                 nativeAd.load(adMarkup);
               }
 
