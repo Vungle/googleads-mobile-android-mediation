@@ -5,7 +5,6 @@ import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_DOMAI
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_INVALID_SERVER_PARAMETERS;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_VUNGLE_BANNER_NULL;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.KEY_APP_ID;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.TAG;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,7 +12,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
+
 import androidx.annotation.NonNull;
+
 import com.google.ads.mediation.vungle.VungleInitializer;
 import com.google.ads.mediation.vungle.VungleMediationAdapter;
 import com.google.android.gms.ads.AdError;
@@ -26,7 +27,6 @@ import com.vungle.ads.AdConfig;
 import com.vungle.ads.BannerAd;
 import com.vungle.ads.BannerAdListener;
 import com.vungle.ads.BaseAd;
-import com.vungle.ads.VungleAdsExtras;
 import com.vungle.ads.VungleException;
 import com.vungle.mediation.PlacementFinder;
 import com.vungle.mediation.VungleExtrasBuilder;
@@ -110,10 +110,8 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
                 bannerAd = new BannerAd(context, placementForPlay, adConfig);
                 bannerAd.setAdListener(VungleRtbBannerAd.this);
                 String watermark = mediationBannerAdConfiguration.getWatermark();
-                if (!watermark.isEmpty()) {
-                  VungleAdsExtras extras = new VungleAdsExtras();
-                  extras.setWatermark(watermark);
-                  bannerAd.setExtras(extras);
+                if (!TextUtils.isEmpty(watermark)) {
+                  adConfig.setWatermark(watermark);
                 }
                 bannerAd.load(adMarkup);
               }

@@ -9,8 +9,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.google.ads.mediation.vungle.VungleInitializer;
 import com.google.ads.mediation.vungle.VungleInitializer.VungleInitializationListener;
 import com.google.ads.mediation.vungle.VungleMediationAdapter;
@@ -23,7 +25,6 @@ import com.vungle.ads.AdConfig;
 import com.vungle.ads.BaseAd;
 import com.vungle.ads.RewardedAd;
 import com.vungle.ads.RewardedAdListener;
-import com.vungle.ads.VungleAdsExtras;
 import com.vungle.ads.VungleException;
 import com.vungle.mediation.PlacementFinder;
 import com.vungle.mediation.VungleExtrasBuilder;
@@ -99,10 +100,8 @@ public class VungleRtbRewardedAd implements MediationRewardedAd, RewardedAdListe
                   rewardedAd.setUserId(userId);
                 }
                 String watermark = mediationRewardedAdConfiguration.getWatermark();
-                if (!watermark.isEmpty()) {
-                  VungleAdsExtras extras = new VungleAdsExtras();
-                  extras.setWatermark(watermark);
-                  rewardedAd.setExtras(extras);
+                if (!TextUtils.isEmpty(watermark)) {
+                  adConfig.setWatermark(watermark);
                 }
                 rewardedAd.load(adMarkup);
               }
