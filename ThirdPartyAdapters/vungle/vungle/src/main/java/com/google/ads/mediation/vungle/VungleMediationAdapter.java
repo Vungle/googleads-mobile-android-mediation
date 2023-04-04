@@ -11,6 +11,7 @@ import com.google.ads.mediation.vungle.rtb.VungleRtbInterstitialAd;
 import com.google.ads.mediation.vungle.rtb.VungleRtbNativeAd;
 import com.google.ads.mediation.vungle.rtb.VungleRtbRewardedAd;
 import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.VersionInfo;
 import com.google.android.gms.ads.mediation.InitializationCompleteCallback;
 import com.google.android.gms.ads.mediation.MediationAdLoadCallback;
 import com.google.android.gms.ads.mediation.MediationBannerAd;
@@ -26,7 +27,6 @@ import com.google.android.gms.ads.mediation.MediationRewardedAd;
 import com.google.android.gms.ads.mediation.MediationRewardedAdCallback;
 import com.google.android.gms.ads.mediation.MediationRewardedAdConfiguration;
 import com.google.android.gms.ads.mediation.UnifiedNativeAdMapper;
-import com.google.android.gms.ads.mediation.VersionInfo;
 import com.google.android.gms.ads.mediation.rtb.RtbAdapter;
 import com.google.android.gms.ads.mediation.rtb.RtbSignalData;
 import com.google.android.gms.ads.mediation.rtb.SignalCallbacks;
@@ -83,11 +83,6 @@ public class VungleMediationAdapter extends RtbAdapter implements MediationRewar
    * The requested ad size does not match a Vungle supported banner size.
    */
   public static final int ERROR_BANNER_SIZE_MISMATCH = 102;
-
-  /**
-   * Vungle requires an {@link android.app.Activity} context to request ads.
-   */
-  public static final int ERROR_REQUIRES_ACTIVITY_CONTEXT = 103;
 
   /**
    * Vungle SDK failed to initialize.

@@ -131,7 +131,6 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
     return bannerLayout;
   }
 
-  //region VungleBannerAdListener
   @Override
   public void onAdClicked(@NonNull BaseAd baseAd) {
     if (mediationBannerAdCallback != null) {
@@ -182,7 +181,6 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
       mediationBannerAdCallback.onAdLeftApplication();
     }
   }
-  //endregion
 
   private void createBanner() {
     RelativeLayout.LayoutParams adParams = new RelativeLayout.LayoutParams(
