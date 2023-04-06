@@ -8,7 +8,7 @@ import com.google.android.gms.ads.RequestConfiguration;
 import com.vungle.ads.InitializationListener;
 import com.vungle.ads.VungleAds;
 import com.vungle.ads.VungleAds.WrapperFramework;
-import com.vungle.ads.VungleException;
+import com.vungle.ads.VungleError;
 import com.vungle.ads.VunglePrivacySettings;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -62,8 +62,8 @@ public class VungleInitializer implements InitializationListener {
   }
 
   @Override
-  public void onError(@NonNull final VungleException exception) {
-    final AdError error = VungleMediationAdapter.getAdError(exception);
+  public void onError(@NonNull final VungleError e) {
+    final AdError error = VungleMediationAdapter.getAdError(e);
     for (VungleInitializationListener listener : initListeners) {
       listener.onInitializeError(error);
     }

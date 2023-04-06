@@ -36,7 +36,7 @@ import com.vungle.ads.BaseAd;
 import com.vungle.ads.RewardedAd;
 import com.vungle.ads.RewardedAdListener;
 import com.vungle.ads.VungleAds;
-import com.vungle.ads.VungleException;
+import com.vungle.ads.VungleError;
 import com.vungle.mediation.BuildConfig;
 import com.vungle.mediation.PlacementFinder;
 import java.util.HashSet;
@@ -85,6 +85,11 @@ public class VungleMediationAdapter extends RtbAdapter implements MediationRewar
   public static final int ERROR_BANNER_SIZE_MISMATCH = 102;
 
   /**
+   * Vungle requires an {@link android.app.Activity} context to request ads.
+   */
+  public static final int ERROR_REQUIRES_ACTIVITY_CONTEXT = 103;
+
+  /**
    * Vungle SDK failed to initialize.
    */
   public static final int ERROR_INITIALIZATION_FAILURE = 105;
@@ -101,11 +106,11 @@ public class VungleMediationAdapter extends RtbAdapter implements MediationRewar
   public static final int ERROR_CANNOT_PLAY_AD = 107;
 
   /**
-   * Convert the given Vungle exception into the appropriate custom error code.
+   * Convert the given Vungle error into the appropriate custom error code.
    */
   @NonNull
-  public static AdError getAdError(@NonNull VungleException exception) {
-    return new AdError(exception.getExceptionCode(), exception.getLocalizedMessage(),
+  public static AdError getAdError(@NonNull VungleError error) {
+    return new AdError(error.getCode(), error.getErrorMessage(),
         VUNGLE_SDK_ERROR_DOMAIN);
   }
 
@@ -316,7 +321,7 @@ public class VungleMediationAdapter extends RtbAdapter implements MediationRewar
   }
 
   @Override
-  public void onAdFailedToPlay(@NonNull BaseAd baseAd, @NonNull VungleException e) {
+  public void onAdFailedToPlay(@NonNull BaseAd baseAd, @NonNull VungleError e) {
     AdError error = getAdError(e);
     Log.w(TAG, error.toString());
     if (mediationRewardedAdCallback != null) {
@@ -325,7 +330,7 @@ public class VungleMediationAdapter extends RtbAdapter implements MediationRewar
   }
 
   @Override
-  public void onAdFailedToLoad(@NonNull BaseAd baseAd, @NonNull VungleException e) {
+  public void onAdFailedToLoad(@NonNull BaseAd baseAd, @NonNull VungleError e) {
     AdError error = getAdError(e);
     Log.w(TAG, error.toString());
     if (mediationAdLoadCallback != null) {
