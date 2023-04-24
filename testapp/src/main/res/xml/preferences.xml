@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_user_id"
+        android:key="pref_key_user_id"
+        android:title="@string/pref_title_user_id" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="pref_key_key_android_id_opted_out"
+        android:title="@string/pref_title_android_id_opted_out" />
+    <ListPreference
+        android:defaultValue="2"
+        android:entries="@array/adOrientationArray"
+        android:entryValues="@array/adOrientationValueArray"
+        android:key="pref_key_ad_orientation"
+        android:title="@string/pref_title_ad_orientation" />
+    <ListPreference
+      android:entries="@array/adOptionsPositionArray"
+      android:defaultValue="1"
+      android:key="@string/pref_key_options_position"
+      android:entryValues="@array/adOptionsPositionValueArray"
+      android:title="@string/pref_title_ad_options_position" />
+
+</PreferenceScreen>

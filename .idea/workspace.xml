@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a9d50aa1-b178-4a01-a062-5034d8de5151" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/checksums.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/7.4/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/7.4/dependencies-accessors/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/7.4/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/7.4/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/googleads-mobile-android-mediation.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jitpack.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/AdDialogFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/AdProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/AdUnit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/AddUnitDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/BannerActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/DefaultActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/LoginActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/NativeAdActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/SettingsActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/UnitsAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/Util.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/banner/AdMobBannerAdAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/banner/BannerAdFeedActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/data/DataSource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/nativeads/AdmobNativeAdAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/nativeads/DemoDataAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/nativeads/MenuItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/nativeads/NativeAdFeedActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/nativeads/RecyclerViewAdapterWrapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/nativeads/advanced/NativeAdAdvancedAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/nativeads/advanced/NativeAdFeedAdvancedActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/nativeads/advanced/NativeAdTemplate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/java/com/google/android/vungle/ui/settings/PrivacySettingsFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/drawable/admob_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/drawable/dribbble.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/drawable/ic_play_arrow_black_24dp.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/drawable/vungle_logo.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/activity_banner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/activity_banner_feed.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/activity_default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/activity_login.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/activity_native.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/activity_native_feed.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/admob_native_ad.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/banner_ad_container.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/banner_cell_layout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/dialog_ad.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/dialog_add_adunit.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/fragment_loading_screen.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/fragment_recycler_view.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/item_adunit.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/item_adunit_banner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/item_banner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/item_log.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/menu_item_container.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/native_ad_container.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/native_ad_view_advanced.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/privacy_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/store_cell_layout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/menu/menu_main.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/raw/menu_items_json.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/values-sw600dp/bools.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/values/arrays.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/values/bools.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/values/colors.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/values/dimens.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/values/strings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/values/styles.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/xml/network_security_config.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/res/xml/preferences.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/resources/localServer/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/resources/localServer/admob_config.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/resources/localServer/admob_mock-resp1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/resources/localServer/admob_mock-resp2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/resources/localServer/admob_mock-resp3.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/resources/localServer/admob_mock-resp4.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testapp/src/main/resources/localServer/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CONTRIBUTING.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/adapter/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/testapp/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/adapter/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/adapter/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/adapter/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/adapter/src/main/java/com/google/ads/mediation/sample/adapter/SampleAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/adapter/src/main/java/com/google/ads/mediation/sample/adapter/SampleMediaViewEventForwarder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/adapter/src/main/java/com/google/ads/mediation/sample/adapter/SampleMediationBannerEventForwarder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/adapter/src/main/java/com/google/ads/mediation/sample/adapter/SampleMediationInterstitialEventForwarder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/adapter/src/main/java/com/google/ads/mediation/sample/adapter/SampleMediationRewardedAdEventForwarder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/adapter/src/main/java/com/google/ads/mediation/sample/adapter/SampleNativeMappedImage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/adapter/src/main/java/com/google/ads/mediation/sample/adapter/SampleNativeMediationEventForwarder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/adapter/src/main/java/com/google/ads/mediation/sample/adapter/SampleRewardItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/adapter/src/main/java/com/google/ads/mediation/sample/adapter/SampleUnifiedNativeAdMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/vungle/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app/src/main/java/com/google/ads/mediation/sample/mediationsample/MainActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app/src/main/res/layout/activity_main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app/src/main/res/layout/native_ad.xml" beforeDir="false" afterPath="$PROJECT_DIR$/testapp/src/main/res/layout/native_ad_view.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/testapp/src/main/res/mipmap-hdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/testapp/src/main/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/testapp/src/main/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/testapp/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app/src/main/res/values-w820dp/dimens.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app/src/main/res/values/dimens.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app/src/main/res/values/strings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app/src/main/res/values/styles.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/app/src/main/res/xml/network_security_config.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/customevent/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/customevent/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/customevent/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/customevent/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/customevent/src/main/java/com/google/ads/mediation/sample/customevent/SampleBannerCustomEventLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/customevent/src/main/java/com/google/ads/mediation/sample/customevent/SampleCustomEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/customevent/src/main/java/com/google/ads/mediation/sample/customevent/SampleCustomEventError.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/customevent/src/main/java/com/google/ads/mediation/sample/customevent/SampleInterstitialCustomEventLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/customevent/src/main/java/com/google/ads/mediation/sample/customevent/SampleNativeCustomEventLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/customevent/src/main/java/com/google/ads/mediation/sample/customevent/SampleNativeMappedImage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/customevent/src/main/java/com/google/ads/mediation/sample/customevent/SampleRewardedCustomEventLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/customevent/src/main/java/com/google/ads/mediation/sample/customevent/SampleUnifiedNativeAdMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/java/com/google/ads/mediation/sample/sdk/SampleAdListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/java/com/google/ads/mediation/sample/sdk/SampleAdRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/java/com/google/ads/mediation/sample/sdk/SampleAdSize.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/java/com/google/ads/mediation/sample/sdk/SampleAdView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/java/com/google/ads/mediation/sample/sdk/SampleErrorCode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/java/com/google/ads/mediation/sample/sdk/SampleInterstitial.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/java/com/google/ads/mediation/sample/sdk/SampleMediaView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/java/com/google/ads/mediation/sample/sdk/SampleMediaViewListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/java/com/google/ads/mediation/sample/sdk/SampleNativeAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/java/com/google/ads/mediation/sample/sdk/SampleNativeAdListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/java/com/google/ads/mediation/sample/sdk/SampleNativeAdLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/java/com/google/ads/mediation/sample/sdk/SampleNativeAdRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/java/com/google/ads/mediation/sample/sdk/SampleRewardedAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/java/com/google/ads/mediation/sample/sdk/SampleRewardedAdListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/java/com/google/ads/mediation/sample/sdk/activities/SampleSDKAdsActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/java/com/google/ads/mediation/sample/sdk/package-info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/res/drawable/ic_info_outline_black_24px.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/res/drawable/sample_app_icon.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/res/drawable/sample_app_image.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/res/drawable/sample_content_ad_image.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/res/drawable/sample_content_logo.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/sdk/src/main/res/layout/activity_sample_sdk_ads.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/adcolony/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/adcolony/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/adcolony/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/adcolony/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/adcolony/src/main/java/com/google/ads/mediation/adcolony/AdColonyAdapterUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/adcolony/src/main/java/com/google/ads/mediation/adcolony/AdColonyBannerRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/adcolony/src/main/java/com/google/ads/mediation/adcolony/AdColonyInterstitialRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/adcolony/src/main/java/com/google/ads/mediation/adcolony/AdColonyMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/adcolony/src/main/java/com/google/ads/mediation/adcolony/AdColonyReward.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/adcolony/src/main/java/com/google/ads/mediation/adcolony/AdColonyRewardedEventForwarder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/adcolony/src/main/java/com/google/ads/mediation/adcolony/AdColonyRewardedRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/adcolony/src/main/java/com/jirbo/adcolony/AdColonyAdListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/adcolony/src/main/java/com/jirbo/adcolony/AdColonyAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/adcolony/src/main/java/com/jirbo/adcolony/AdColonyBannerAdListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/adcolony/src/main/java/com/jirbo/adcolony/AdColonyBundleBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/adcolony/src/main/java/com/jirbo/adcolony/AdColonyManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/adcolony/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/applovin/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/applovin/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/applovin/proguard-rules.pro" beforeDir="false" afterPath="$PROJECT_DIR$/vungle/proguard-rules.pro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/applovin/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/applovin/src/main/java/com/applovin/mediation/AppLovinBannerAdListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/applovin/src/main/java/com/applovin/mediation/AppLovinExtras.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/applovin/src/main/java/com/applovin/mediation/AppLovinInterstitialAdListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/applovin/src/main/java/com/applovin/mediation/AppLovinUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/applovin/src/main/java/com/applovin/mediation/ApplovinAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/applovin/src/main/java/com/applovin/mediation/rtb/AppLovinRtbInterstitialRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/applovin/src/main/java/com/applovin/mediation/rtb/AppLovinRtbRewardedRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/applovin/src/main/java/com/google/ads/mediation/applovin/AppLovinInitializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/applovin/src/main/java/com/google/ads/mediation/applovin/AppLovinMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/applovin/src/main/java/com/google/ads/mediation/applovin/AppLovinRewardItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/applovin/src/main/java/com/google/ads/mediation/applovin/AppLovinRewardedRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/applovin/src/main/java/com/google/ads/mediation/applovin/AppLovinWaterfallRewardedRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/applovin/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/chartboost/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/chartboost/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/chartboost/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/chartboost/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/chartboost/src/main/java/com/google/ads/mediation/chartboost/ChartboostAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/chartboost/src/main/java/com/google/ads/mediation/chartboost/ChartboostAdapterUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/chartboost/src/main/java/com/google/ads/mediation/chartboost/ChartboostBannerAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/chartboost/src/main/java/com/google/ads/mediation/chartboost/ChartboostConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/chartboost/src/main/java/com/google/ads/mediation/chartboost/ChartboostInitializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/chartboost/src/main/java/com/google/ads/mediation/chartboost/ChartboostInterstitialAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/chartboost/src/main/java/com/google/ads/mediation/chartboost/ChartboostMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/chartboost/src/main/java/com/google/ads/mediation/chartboost/ChartboostParams.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/chartboost/src/main/java/com/google/ads/mediation/chartboost/ChartboostRewardedAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/chartboost/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/dtexchange/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/dtexchange/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/dtexchange/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/dtexchange/dtexchange/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/dtexchange/dtexchange/proguard-rules.pro" beforeDir="false" afterPath="$PROJECT_DIR$/testapp/proguard-rules.pro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/dtexchange/dtexchange/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/dtexchange/dtexchange/src/main/java/com/google/ads/mediation/fyber/FyberAdapterUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/dtexchange/dtexchange/src/main/java/com/google/ads/mediation/fyber/FyberMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/dtexchange/dtexchange/src/main/java/com/google/ads/mediation/fyber/FyberRewardedVideoRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/dtexchange/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/dtexchange/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/dtexchange/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/dtexchange/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/dtexchange/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/fyber/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/fyber/fyber/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/fyber/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/imobile/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/imobile/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/imobile/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/imobile/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/imobile/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/imobile/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/imobile/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/imobile/imobile/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/imobile/imobile/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/imobile/imobile/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/imobile/imobile/src/main/java/com/google/ads/mediation/imobile/AdapterHelper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/imobile/imobile/src/main/java/com/google/ads/mediation/imobile/Constants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/imobile/imobile/src/main/java/com/google/ads/mediation/imobile/IMobileAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/imobile/imobile/src/main/java/com/google/ads/mediation/imobile/IMobileMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/imobile/imobile/src/main/java/com/google/ads/mediation/imobile/IMobileUnifiedNativeAdMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/imobile/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/ClickInterceptorRelativeLayout.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/ImageDownloaderAsyncTask.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/InMobiAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/InMobiAdapterUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/InMobiBannerAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/InMobiConsent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/InMobiConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/InMobiInitializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/InMobiInterstitialAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/InMobiMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/InMobiMemoryCache.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/InMobiNativeAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/InMobiNativeMappedImage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/InMobiNetworkKeys.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/InMobiNetworkValues.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/InMobiRewardedAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/inmobi/src/main/java/com/google/ads/mediation/inmobi/InMobiUnifiedNativeAdMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/inmobi/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/ironsource/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/ironsource/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/ironsource/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/ironsource/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/ironsource/src/main/java/com/google/ads/mediation/ironsource/IronSourceAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/ironsource/src/main/java/com/google/ads/mediation/ironsource/IronSourceAdapterListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/ironsource/src/main/java/com/google/ads/mediation/ironsource/IronSourceAdapterUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/ironsource/src/main/java/com/google/ads/mediation/ironsource/IronSourceManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/ironsource/src/main/java/com/google/ads/mediation/ironsource/IronSourceMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/ironsource/src/main/java/com/google/ads/mediation/ironsource/IronSourceRewardedAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/ironsource/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/maio/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/maio/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/maio/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/maio/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/maio/src/main/java/com/google/ads/mediation/maio/MaioAdsManagerListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/maio/src/main/java/com/google/ads/mediation/maio/MaioMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/maio/src/main/java/jp/maio/sdk/android/mediation/admob/adapter/Interstitial.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/maio/src/main/java/jp/maio/sdk/android/mediation/admob/adapter/MaioAdsManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/maio/src/main/java/jp/maio/sdk/android/mediation/admob/adapter/Rewarded.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/maio/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/meta/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/meta/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/meta/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/meta/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/meta/src/main/java/com/google/ads/mediation/facebook/FacebookInitializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/meta/src/main/java/com/google/ads/mediation/facebook/FacebookMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/meta/src/main/java/com/google/ads/mediation/facebook/FacebookReward.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/meta/src/main/java/com/google/ads/mediation/facebook/FacebookRewardedAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/meta/src/main/java/com/google/ads/mediation/facebook/FacebookRewardedInterstitialAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/meta/src/main/java/com/google/ads/mediation/facebook/rtb/FacebookRtbBannerAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/meta/src/main/java/com/google/ads/mediation/facebook/rtb/FacebookRtbInterstitialAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/meta/src/main/java/com/google/ads/mediation/facebook/rtb/FacebookRtbNativeAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/meta/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/MintegralConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/MintegralExtras.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/MintegralMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/MintegralUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/mediation/MintegralBannerAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/mediation/MintegralInterstitialAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/mediation/MintegralNativeAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/mediation/MintegralNativeAdListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/mediation/MintegralRewardedAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/rtb/MintegralRtbBannerAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/rtb/MintegralRtbInterstitialAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/rtb/MintegralRtbNativeAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/rtb/MintegralRtbRewardedAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/waterfall/MintegralWaterfallBannerAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/waterfall/MintegralWaterfallInterstitialAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/waterfall/MintegralWaterfallNativeAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/mintegral/src/main/java/com/google/ads/mediation/mintegral/waterfall/MintegralWaterfallRewardedAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mintegral/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/mytarget/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/mytarget/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/mytarget/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/mytarget/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/mytarget/src/main/java/com/google/ads/mediation/mytarget/MyTargetAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/mytarget/src/main/java/com/google/ads/mediation/mytarget/MyTargetMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/mytarget/src/main/java/com/google/ads/mediation/mytarget/MyTargetNativeAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/mytarget/src/main/java/com/google/ads/mediation/mytarget/MyTargetRewardedAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/mytarget/src/main/java/com/google/ads/mediation/mytarget/MyTargetTools.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/mytarget/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/nend/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/nend/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/nend/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/nend/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/nend/src/main/java/com/google/ads/mediation/nend/NativeAdLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/nend/src/main/java/com/google/ads/mediation/nend/NativeVideoAdLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/nend/src/main/java/com/google/ads/mediation/nend/NendAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/nend/src/main/java/com/google/ads/mediation/nend/NendExtrasBundleBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/nend/src/main/java/com/google/ads/mediation/nend/NendMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/nend/src/main/java/com/google/ads/mediation/nend/NendMediationRewardItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/nend/src/main/java/com/google/ads/mediation/nend/NendNativeAdForwarder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/nend/src/main/java/com/google/ads/mediation/nend/NendNativeMappedImage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/nend/src/main/java/com/google/ads/mediation/nend/NendRewardedAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/nend/src/main/java/com/google/ads/mediation/nend/NendUnifiedNativeAdMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/nend/src/main/java/com/google/ads/mediation/nend/NendUnifiedNativeNormalAdMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/nend/src/main/java/com/google/ads/mediation/nend/NendUnifiedNativeVideoAdMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/nend/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/pangle/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/pangle/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/pangle/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/pangle/src/main/java/com/google/ads/mediation/pangle/PAGInitWrapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/pangle/src/main/java/com/google/ads/mediation/pangle/PangleAdapterUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/pangle/src/main/java/com/google/ads/mediation/pangle/PangleBannerAdLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/pangle/src/main/java/com/google/ads/mediation/pangle/PangleConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/pangle/src/main/java/com/google/ads/mediation/pangle/PangleExtras.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/pangle/src/main/java/com/google/ads/mediation/pangle/PangleInitializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/pangle/src/main/java/com/google/ads/mediation/pangle/PangleMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/pangle/src/main/java/com/google/ads/mediation/pangle/rtb/PangleRtbBannerAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/pangle/src/main/java/com/google/ads/mediation/pangle/rtb/PangleRtbInterstitialAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/pangle/src/main/java/com/google/ads/mediation/pangle/rtb/PangleRtbNativeAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/pangle/src/main/java/com/google/ads/mediation/pangle/rtb/PangleRtbRewardedAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/pangle/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/tapjoy/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/tapjoy/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/tapjoy/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/tapjoy/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/tapjoy/src/main/java/com/google/ads/mediation/tapjoy/TapjoyAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/tapjoy/src/main/java/com/google/ads/mediation/tapjoy/TapjoyInitializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/tapjoy/src/main/java/com/google/ads/mediation/tapjoy/TapjoyMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/tapjoy/src/main/java/com/google/ads/mediation/tapjoy/TapjoyRewardedRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/tapjoy/tapjoy/src/main/java/com/google/ads/mediation/tapjoy/rtb/TapjoyRtbInterstitialRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity-ads-aar/PLACE_UNITY_ADS_AAR_FILE_HERE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity-ads-aar/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity/src/main/java/com/google/ads/mediation/unity/UnityAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity/src/main/java/com/google/ads/mediation/unity/UnityAdsAdapterUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity/src/main/java/com/google/ads/mediation/unity/UnityBannerAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity/src/main/java/com/google/ads/mediation/unity/UnityInitializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity/src/main/java/com/google/ads/mediation/unity/UnityMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity/src/main/java/com/google/ads/mediation/unity/UnityReward.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity/src/main/java/com/google/ads/mediation/unity/UnityRewardedAd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity/src/main/java/com/google/ads/mediation/unity/eventadapters/IUnityEventAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity/src/main/java/com/google/ads/mediation/unity/eventadapters/UnityBannerEventAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity/src/main/java/com/google/ads/mediation/unity/eventadapters/UnityInterstitialEventAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/unity/unity/src/main/java/com/google/ads/mediation/unity/eventadapters/UnityRewardedEventAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/vungle/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/vungle/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/vungle/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/vungle/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/vungle/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/vungle/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/vungle/src/main/java/com/google/ads/mediation/vungle/VungleInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/vungle/src/main/java/com/google/ads/mediation/vungle/VungleInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/vungle/src/main/java/com/google/ads/mediation/vungle/VungleMediationAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/vungle/src/main/java/com/google/ads/mediation/vungle/VungleMediationAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/vungle/src/main/java/com/google/ads/mediation/vungle/rtb/VungleRtbBannerAd.java" beforeDir="false" afterPath="$PROJECT_DIR$/vungle/src/main/java/com/google/ads/mediation/vungle/rtb/VungleRtbBannerAd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/vungle/src/main/java/com/google/ads/mediation/vungle/rtb/VungleRtbInterstitialAd.java" beforeDir="false" afterPath="$PROJECT_DIR$/vungle/src/main/java/com/google/ads/mediation/vungle/rtb/VungleRtbInterstitialAd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/vungle/src/main/java/com/google/ads/mediation/vungle/rtb/VungleRtbNativeAd.java" beforeDir="false" afterPath="$PROJECT_DIR$/vungle/src/main/java/com/google/ads/mediation/vungle/rtb/VungleRtbNativeAd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/vungle/src/main/java/com/google/ads/mediation/vungle/rtb/VungleRtbRewardedAd.java" beforeDir="false" afterPath="$PROJECT_DIR$/vungle/src/main/java/com/google/ads/mediation/vungle/rtb/VungleRtbRewardedAd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/vungle/src/main/java/com/vungle/mediation/PlacementFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/vungle/src/main/java/com/vungle/mediation/PlacementFinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/vungle/src/main/java/com/vungle/mediation/VungleAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/vungle/src/main/java/com/vungle/mediation/VungleAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/vungle/src/main/java/com/vungle/mediation/VungleConsent.java" beforeDir="false" afterPath="$PROJECT_DIR$/vungle/src/main/java/com/vungle/mediation/VungleConsent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/vungle/vungle/src/main/java/com/vungle/mediation/VungleInterstitialAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/vungle/src/main/java/com/vungle/mediation/VungleInterstitialAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/yahoo/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/yahoo/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/yahoo/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/yahoo/src/main/java/com/google/ads/mediation/verizon/VerizonMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/yahoo/src/main/java/com/google/ads/mediation/yahoo/AdapterNativeMappedImage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/yahoo/src/main/java/com/google/ads/mediation/yahoo/AdapterUnifiedNativeAdMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/yahoo/src/main/java/com/google/ads/mediation/yahoo/YahooAdapterUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/yahoo/src/main/java/com/google/ads/mediation/yahoo/YahooBannerRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/yahoo/src/main/java/com/google/ads/mediation/yahoo/YahooInterstitialRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/yahoo/src/main/java/com/google/ads/mediation/yahoo/YahooMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/yahoo/src/main/java/com/google/ads/mediation/yahoo/YahooNativeRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/yahoo/yahoo/src/main/java/com/google/ads/mediation/yahoo/YahooRewardedRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/zucks/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/zucks/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/zucks/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/zucks/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/zucks/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/zucks/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/zucks/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/zucks/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/zucks/zucks/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/zucks/zucks/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/zucks/zucks/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/zucks/zucks/src/main/java/com/google/ads/mediation/zucks/ZucksMediationAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/zucks/zucks/src/main/java/com/google/ads/mediation/zucks/ZucksRewardedLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ThirdPartyAdapters/zucks/zucks/src/main/java/com/google/android/gms/ads/mediation/ZucksAdapter.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[HT82T1A02898]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="googleads-mobile-android-mediation" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2OrxtiA20qt3sF3sK81iMYConqr" />
+  <component name="ProjectViewState">
+    <option name="flattenPackages" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "/Users/fangshuai.hu/Documents/vungle/vungleAdapters/admob-adapter-testapp-android/googleads-mobile-android-mediation"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="testapp" type="AndroidRunConfigurationType" factoryName="Android App">
+      <module name="googleads-mobile-android-mediation.testapp.main" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a9d50aa1-b178-4a01-a062-5034d8de5151" name="Changes" comment="" />
+      <created>1682332719102</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1682332719102</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
