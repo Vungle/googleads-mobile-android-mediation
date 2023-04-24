@@ -2,4 +2,4 @@ jdk:
   - openjdk11
 
 install:
-  - ./gradlew clean -xtest -xlint publishAdapterPublicationsPublicationToMavenLocal
+  - ./gradlew clean -xtest -xlint publishVungleSDKPublicationToMavenLocal
