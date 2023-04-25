@@ -39,8 +39,6 @@ configurations.all {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.github.vungle:vng-android-sdk:7.0.0-early1-RC8'
-
     // AdMob Vungle Adapter
     implementation project(':vungle')
 
