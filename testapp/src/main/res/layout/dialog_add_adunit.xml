@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <RadioGroup
+        android:id="@+id/adTypeRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/interstitialButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:padding="10dp"
+            android:text="@string/interstitial" />
+
+        <RadioButton
+            android:id="@+id/rewardedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/rewardedAd" />
+
+        <RadioButton
+          android:id="@+id/rewardedInterstitialButton"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:padding="10dp"
+          android:text="@string/rewardedAd_interstitial" />
+
+        <RadioButton
+            android:id="@+id/bannerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/banner" />
+
+        <RadioButton
+            android:id="@+id/mrecButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/mrec" />
+
+        <RadioButton
+          android:id="@+id/nativeButton"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:padding="10dp"
+          android:text="@string/native_type" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/enter_unit_id" />
+
+    <EditText
+        android:id="@+id/itemId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/unit_id_placeholder" />
+
+    <CheckBox
+      android:id="@+id/is_openbidding_check"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:checked="false"
+      android:text="Open Bidding Unit" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right">
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/add"
+            android:textAllCaps="false" />
+    </LinearLayout>
+</LinearLayout>

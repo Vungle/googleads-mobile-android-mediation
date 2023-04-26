@@ -1,0 +1,2 @@
+include ':googleads-mobile-android-mediation'
+include ':testapp'

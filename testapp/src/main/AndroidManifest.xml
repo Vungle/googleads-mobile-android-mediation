@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.google.android.vungle">
+
+  <application
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:name="androidx.multidex.MultiDexApplication"
+    android:networkSecurityConfig="@xml/network_security_config"
+    android:theme="@style/AppTheme">
+    <activity
+      android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+      android:launchMode="singleTop"
+      android:exported="true"
+      android:name=".LoginActivity"
+      android:theme="@style/AppTheme.NoActionBar">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <activity android:name=".nativeads.NativeAdFeedActivity" />
+    <activity android:name=".banner.BannerAdFeedActivity" />
+    <activity
+      android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+      android:label="@string/app_name"
+      android:launchMode="singleTop"
+      android:name=".DefaultActivity" />
+    <activity
+      android:label="@string/title_activity_options"
+      android:name=".SettingsActivity">
+      <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value="com.google.android.vungle.DefaultActivity" />
+    </activity>
+
+    <activity
+      android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+      android:name="com.google.android.gms.ads.AdActivity"
+      android:theme="@android:style/Theme.Translucent" />
+    <activity
+      android:configChanges="orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+      android:name=".BannerActivity" />
+    <activity
+      android:configChanges="orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+      android:name=".NativeAdActivity" />
+    <activity
+      android:configChanges="orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+      android:name=".nativeads.advanced.NativeAdFeedAdvancedActivity" />
+    <meta-data
+      android:name="com.google.android.gms.version"
+      android:value="@integer/google_play_services_version" />
+    <meta-data
+      android:name="com.google.android.gms.ads.APPLICATION_ID"
+      android:value="ca-app-pub-6614121354918432~7606733872" />   <!-- ca-app-pub-7319269804560504~9322123265 -->  <!--ca-app-pub-6614121354918432~7606733872-->
+  </application>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+  <uses-permission android:name="android.permission.VIBRATE" />
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+  <uses-permission android:name="android.permission.INTERNET" />
+
+</manifest>

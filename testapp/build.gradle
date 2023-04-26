@@ -1,0 +1,78 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 33
+
+    lintOptions {
+        abortOnError false
+    }
+    defaultConfig {
+        applicationId "com.google.android.vungle"
+        minSdkVersion 19
+        targetSdkVersion 33
+        versionCode 70000
+        versionName "7.0.0"
+        versionNameSuffix "-RC4"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dexOptions {
+        javaMaxHeapSize "2g"
+    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+}
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // AdMob Vungle Adapter
+    implementation project(':googleads-mobile-android-mediation')
+
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+    implementation 'com.google.android.gms:play-services-ads:22.0.0'
+
+    constraints {
+        implementation('androidx.work:work-runtime:2.7.0') {
+            because '''androidx.work:work-runtime:2.1.0 pulled from
+      play-services-ads has a bug using PendingIntent without
+      FLAG_IMMUTABLE or FLAG_MUTABLE and will fail in Apps
+      targeting S+.'''
+        }
+    }
+
+    implementation 'com.google.android.gms:play-services-base:18.2.0'
+    implementation 'com.google.code.gson:gson:2.9.0'
+
+    implementation 'com.google.android.ads:mediation-test-suite:3.0.0'
+
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    implementation "com.google.android.gms:play-services-tasks:18.0.2"
+
+    implementation 'com.google.android.gms:play-services-appset:16.0.2'
+
+    implementation "com.squareup.okhttp3:okhttp:4.10.0"
+
+    testImplementation 'junit:junit:4.13.2'
+
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+}
