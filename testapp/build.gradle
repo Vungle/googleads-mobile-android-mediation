@@ -41,6 +41,7 @@ dependencies {
 
     // AdMob Vungle Adapter
     implementation project(':googleads-mobile-android-mediation')
+//    implementation 'com.github.vungle:googleads-mobile-android-mediation:9e94f58fd9'
 
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.appcompat:appcompat:1.4.2'
