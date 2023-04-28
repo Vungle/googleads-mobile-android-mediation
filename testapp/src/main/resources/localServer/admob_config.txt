@@ -1,0 +1,80 @@
+{
+	"endpoints": {
+		"new": "https://api.vungle.com/api/v5/new",
+		"ads": "http://192.168.31.21:9090/admob/ads",
+		"will_play_ad": "https://api.vungle.com/api/v5/will_play_ad",
+		"report_ad": "https://api.vungle.com/api/v5/report_ad",
+		"log": "https://logs.api.vungle.com/sdk",
+		"ri": "https://events.api.vungle.com/api/v5/ri",
+		"cache_bust": "https://api.vungle.com/api/v5/cache_bust",
+		"sdk_bi": "https://logs.api.vungle.com/api/v5/sdk_bi"
+	},
+	"placements": [{
+		"id": "6167aa7e73bb3c97cf3c3621",
+		"reference_id": "NHB_NATIVE_TEST1-8834690",
+		"is_auto_cached": false,
+		"is_incentivized": false,
+		"supported_template_types": ["native"],
+		"supported_ad_formats": ["third_party", "vungle_mraid"]
+	}],
+	"config": {
+		"refresh_time": 86400000
+	},
+	"will_play_ad": {
+		"enabled": false,
+		"request_timeout": 300
+	},
+	"playback": {
+		"buffer_timeout": 500
+	},
+	"viewability": {
+		"moat": true,
+		"om": true
+	},
+	"exception_reporting": true,
+	"logging": {
+		"enabled": false
+	},
+	"crash_report": {
+		"max_send_amount": 10,
+		"enabled": true,
+		"collect_filter": "*.vungle.com"
+	},
+	"vduid": "",
+	"gdpr": {
+		"is_country_data_protected": false,
+		"consent_title": "Personalized Ads",
+		"consent_message": "Ads are personalized. Denying would disable it",
+		"consent_message_version": "0.0",
+		"button_accept": "Accept",
+		"button_deny": "Deny"
+	},
+	"ri": {
+		"enabled": false
+	},
+	"vision": {
+		"enabled": true,
+		"aggregation_filters": ["creative_details", "campaign_details", "advertiser_details"],
+		"aggregation_time_windows": [1, 45],
+		"view_limit": {
+			"device": 1000,
+			"wifi": 100,
+			"mobile": 50
+		}
+	},
+	"session": {
+		"enabled": false,
+		"timeout": 900,
+		"limit": 0
+	},
+	"skadnetwork": {},
+	"cache_bust": {
+		"enabled": false,
+		"interval": 3600
+	},
+	"ad_load_optimization": {
+		"enabled": false
+	},
+	"config_extension": "",
+	"disable_ad_id_if_coppa": false
+}

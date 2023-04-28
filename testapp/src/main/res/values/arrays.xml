@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="adOrientationArray">
+        <item>PORTRAIT(0)</item>
+        <item>LANDSCAPE(1)</item>
+        <item>AUTO_ROTATE(2)</item>
+    </string-array>
+    <string-array name="adOrientationValueArray">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="list_api_endpoints">
+        <item>https://config.ads.vungle.com/api/v5/</item>
+        <item>https://config.ads-qa.vungle.com/api/v5/</item>
+    </string-array>
+    <string-array name="adOptionsPositionArray">
+        <item>TOP_LEFT(0)</item>
+        <item>TOP_RIGHT(1)</item>
+        <item>BOTTOM_RIGHT(2)</item>
+        <item>BOTTOM_LEFT(3)</item>
+    </string-array>
+    <string-array name="adOptionsPositionValueArray">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+</resources>

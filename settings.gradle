@@ -1,0 +1,4 @@
+rootProject.name = "Vungle AdMob Mediation Jitpack Publish"
+
+include ':testapp'
+include ':googleads-mobile-android-mediation'

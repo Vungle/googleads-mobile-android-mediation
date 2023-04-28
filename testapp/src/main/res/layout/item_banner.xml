@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <LinearLayout
+    android:id="@+id/ad_control_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_below="@id/adsize_change_container"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/btn_play_ad"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:layout_marginRight="8dp"
+      android:text="Play Ad"
+      android:textAllCaps="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+      android:id="@+id/btn_finish_banner_ad"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:layout_marginLeft="8dp"
+      android:text="Destroy Ad"
+      android:textAllCaps="false" />
+  </LinearLayout>
+
+  <RelativeLayout
+    android:id="@+id/adsize_change_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_below="@id/unitIdTV">
+
+    <Button
+      android:id="@+id/changeSizeBtn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:paddingLeft="8dp"
+      android:paddingRight="8dp"
+      android:background="@color/colorPrimary"
+      android:text="Change Ad Size"
+      android:textAllCaps="false"
+      android:textColor="@android:color/white" />
+
+    <TextView
+      android:id="@+id/adSizeTV"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:hint="AdMob AdSize" />
+
+  </RelativeLayout>
+  <RelativeLayout
+    android:id="@+id/rl_container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_below="@id/ad_control_container"
+    android:layout_centerHorizontal="true"
+    android:background="@android:color/darker_gray">
+
+    <ProgressBar
+      android:id="@+id/pb_load"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true" />
+  </RelativeLayout>
+
+  <TextView
+    android:id="@+id/unitIdTV"
+    android:textStyle="normal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:hint="unit id"
+    android:textColor="?android:attr/textColorSecondary"
+    android:textSize="14sp" />
+
+  <TextView
+    android:id="@+id/text_log"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_below="@id/rl_container"
+    android:hint="logs"
+    android:scrollbars="vertical" />
+</RelativeLayout>

@@ -1,0 +1,73 @@
+{
+	"ads": [{
+		"placement_reference_id": "NHB_NATIVE_TEST1-8834690",
+		"ad_markup": {
+			"id": "1111e58f7aae9e9178f8dabe",
+			"campaign": "591007e887faec9f44000018|574351a9740cf4426b30d030|dsp-rtb_id|1111e58f7aad9e8078f8dabe",
+			"app_id": "$0${\"app_id\":\"604fcbc8aaa387b21dd1c682\",\"eventID\":\"6191e58f7aad9e8078f8dabe\"}",
+			"expiry": 3636958639,
+			"tpat": {
+				"moat": {
+					"is_enabled": false,
+					"extra_vast": ""
+				},
+				"clickUrl": ["https://events.api.vungle.com/api/v5/tpat?adv=4ee19fb8121ae61a03000022\u0026cid=591007e887faec9f44000018\u0026crid=574351a9740cf4426b30d030\u0026event_id=6191e58f7aad9e8078f8dabe\u0026event_type=click\u0026hb=false\u0026ic=true\u0026int=true\u0026os=android\u0026pid=60dc340767cd2159fd2d32b2\u0026pub=60dc33bf67cd2159fd2d32ad\u0026test=true\u0026vid=349c5b0b-d5f7-4ef0-8b40-10ca1ad1abe1\u0026vid_type=IFA"],
+				"checkpoint.0": ["https://events.api.vungle.com/api/v5/tpat?adv=4ee19fb8121ae61a03000022\u0026cid=591007e887faec9f44000018\u0026crid=574351a9740cf4426b30d030\u0026event_id=6191e58f7aad9e8078f8dabe\u0026event_type=start\u0026ext=5c2ddb24f81e93c024053645fe463b21bfd910a3f46ae1ff8966df9a86e7c3e68e3ff9d288aed44edc97684b47c88cedaaefd26affe0d8e9840bfec0e651db171e74d037b70315bdd5b7858e6dab2ce96223ecfedc013f55b4491c9327782f47ba0380a2361f997b4aa20ec5ff2624fd2c80a95382fd7c0a96b67cc61596604c7d8a09c0f3ff37b6ac597e81412423c52f0fb2d58403260f8b01657e54a880824c5cbf37c97f\u0026hb=false\u0026ic=true\u0026int=true\u0026os=android\u0026pid=60dc340767cd2159fd2d32b2\u0026pub=60dc33bf67cd2159fd2d32ad\u0026test=true\u0026vid=349c5b0b-d5f7-4ef0-8b40-10ca1ad1abe1\u0026vid_type=IFA"],
+				"checkpoint.25": ["https://events.api.vungle.com/api/v5/tpat?adv=4ee19fb8121ae61a03000022\u0026cid=591007e887faec9f44000018\u0026crid=574351a9740cf4426b30d030\u0026event_id=6191e58f7aad9e8078f8dabe\u0026event_type=firstQuartile\u0026hb=false\u0026ic=true\u0026int=true\u0026os=android\u0026pid=60dc340767cd2159fd2d32b2\u0026pub=60dc33bf67cd2159fd2d32ad\u0026test=true\u0026vid=349c5b0b-d5f7-4ef0-8b40-10ca1ad1abe1\u0026vid_type=IFA"],
+				"checkpoint.50": ["https://events.api.vungle.com/api/v5/tpat?adv=4ee19fb8121ae61a03000022\u0026cid=591007e887faec9f44000018\u0026crid=574351a9740cf4426b30d030\u0026event_id=6191e58f7aad9e8078f8dabe\u0026event_type=midpoint\u0026hb=false\u0026ic=true\u0026int=true\u0026os=android\u0026pid=60dc340767cd2159fd2d32b2\u0026pub=60dc33bf67cd2159fd2d32ad\u0026test=true\u0026vid=349c5b0b-d5f7-4ef0-8b40-10ca1ad1abe1\u0026vid_type=IFA"],
+				"checkpoint.75": ["https://events.api.vungle.com/api/v5/tpat?adv=4ee19fb8121ae61a03000022\u0026cid=591007e887faec9f44000018\u0026crid=574351a9740cf4426b30d030\u0026event_id=6191e58f7aad9e8078f8dabe\u0026event_type=thirdQuartile\u0026hb=false\u0026ic=true\u0026int=true\u0026os=android\u0026pid=60dc340767cd2159fd2d32b2\u0026pub=60dc33bf67cd2159fd2d32ad\u0026test=true\u0026vid=349c5b0b-d5f7-4ef0-8b40-10ca1ad1abe1\u0026vid_type=IFA"],
+				"checkpoint.100": ["https://events.api.vungle.com/api/v5/tpat?adv=4ee19fb8121ae61a03000022\u0026cid=591007e887faec9f44000018\u0026crid=574351a9740cf4426b30d030\u0026event_id=6191e58f7aad9e8078f8dabe\u0026event_type=complete\u0026hb=false\u0026ic=true\u0026int=true\u0026os=android\u0026pid=60dc340767cd2159fd2d32b2\u0026pub=60dc33bf67cd2159fd2d32ad\u0026test=true\u0026vid=349c5b0b-d5f7-4ef0-8b40-10ca1ad1abe1\u0026vid_type=IFA"],
+				"postroll.view": ["https://events.api.vungle.com/api/v5/tpat?adv=4ee19fb8121ae61a03000022\u0026cid=591007e887faec9f44000018\u0026crid=574351a9740cf4426b30d030\u0026event_id=6191e58f7aad9e8078f8dabe\u0026event_type=endCardView\u0026hb=false\u0026ic=true\u0026int=true\u0026os=android\u0026pid=60dc340767cd2159fd2d32b2\u0026pub=60dc33bf67cd2159fd2d32ad\u0026test=true\u0026vid=349c5b0b-d5f7-4ef0-8b40-10ca1ad1abe1\u0026vid_type=IFA"],
+				"video.close": ["https://events.api.vungle.com/api/v5/tpat?adv=4ee19fb8121ae61a03000022\u0026cid=591007e887faec9f44000018\u0026crid=574351a9740cf4426b30d030\u0026event_id=6191e58f7aad9e8078f8dabe\u0026event_type=videoClose\u0026hb=false\u0026ic=true\u0026int=true\u0026os=android\u0026pid=60dc340767cd2159fd2d32b2\u0026pub=60dc33bf67cd2159fd2d32ad\u0026test=true\u0026vid=349c5b0b-d5f7-4ef0-8b40-10ca1ad1abe1\u0026vid_type=IFA"],
+				"video.unmute": ["https://events.api.vungle.com/api/v5/tpat?adv=4ee19fb8121ae61a03000022\u0026cid=591007e887faec9f44000018\u0026crid=574351a9740cf4426b30d030\u0026event_id=6191e58f7aad9e8078f8dabe\u0026event_type=unmute\u0026hb=false\u0026ic=true\u0026int=true\u0026os=android\u0026pid=60dc340767cd2159fd2d32b2\u0026pub=60dc33bf67cd2159fd2d32ad\u0026test=true\u0026vid=349c5b0b-d5f7-4ef0-8b40-10ca1ad1abe1\u0026vid_type=IFA"],
+				"video.mute": ["https://events.api.vungle.com/api/v5/tpat?adv=4ee19fb8121ae61a03000022\u0026cid=591007e887faec9f44000018\u0026crid=574351a9740cf4426b30d030\u0026event_id=6191e58f7aad9e8078f8dabe\u0026event_type=mute\u0026hb=false\u0026ic=true\u0026int=true\u0026os=android\u0026pid=60dc340767cd2159fd2d32b2\u0026pub=60dc33bf67cd2159fd2d32ad\u0026test=true\u0026vid=349c5b0b-d5f7-4ef0-8b40-10ca1ad1abe1\u0026vid_type=IFA"]
+			},
+			"delay": 0,
+			"showClose": 0,
+			"showCloseIncentivized": 0,
+			"countdown": 0,
+			"url": "",
+			"videoWidth": 0,
+			"videoHeight": 0,
+			"adType": "vungle_mraid",
+			"templateURL": "mock-url",
+			"templateSettings": {
+				"normal_replacements": {
+					"START_MUTED": "false",
+					"APP_NAME": "Cats in Time - Relaxing Puzzle Game",
+					"APP_DESCRIPTION": "My name is Professor Tim Edger, and I'm the inventor of the time machine and an avid cat lover! Sadly, I have a problem, and maybe YOU can help me.",
+					"CTA_BUTTON_TEXT": "Install",
+					"CTA_BUTTON_URL": "https://play.google.com/store/apps/details?id=com.pinestudio.buildings",
+					"APP_RATING_VALUE": "4.5",
+					"VUNGLE_PRIVACY_URL": "https://vungle.com/privacy/",
+					"CLOSE_BUTTON_DELAY_SECONDS": "6",
+					"SPONSORED_BY": "PINE STUDIO"
+				},
+				"cacheable_replacements": {
+					"VUNGLE_PRIVACY_ICON_URL": {
+						"url": "https://cdn-lb.vungle.com/assets/5a00f577e6b03e6e68003076/icon.png",
+						"extension": "png"
+					},
+					"APP_ICON": {
+						"url": "https://play-lh.googleusercontent.com/Br3HhBn7w67rnjJODF-zoVrLitfQmKgZ5ZmXlkzUTz4ZRgG6NdsrQEMFfJMlrkrP4Q=s360-rw",
+						"extension": "png"
+					},
+					"MAIN_IMAGE": {
+						"url": "https://tpc.googlesyndication.com/simgad/5234415473580248409",
+						"extension": "png"
+					},
+					"MAIN_VIDEO": {
+						"url": "https://cdn-lb.vungle.com/zen/7ce54a65ad3f5cf232530266c41bcc16.mp4-720x1280-h264-Q2.mp4",
+						"extension": "mp4"
+					}
+				}
+			},
+			"templateId": "6088b9c76267db393dba74dd",
+			"template_type": "native",
+			"ad_market_id": "bundleid",
+			"ad_token": "eyJjYW1wYWlnbiI6IjU5MTAwN2U4ODdmYWVjOWY0NDAwMDAxOHw1NzQzNTFhOTc0MGNmNDQyNmIzMGQwMzB8ZHNwLXJ0Yl9pZHw2MTkxZTU4ZjdhYWQ5ZTgwNzhmOGRhYmUifQ==",
+			"requires_sideloading": false,
+			"timestamp": 1636951439
+		}
+	}]
+}
