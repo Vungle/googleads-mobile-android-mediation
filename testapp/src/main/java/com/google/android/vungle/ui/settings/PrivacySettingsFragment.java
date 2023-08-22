@@ -5,14 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.google.android.vungle.R;
+import com.google.android.vungle.Util;
 import com.google.android.vungle.data.DataSource;
 import com.vungle.mediation.VungleConsent;
 
@@ -25,11 +24,11 @@ public class PrivacySettingsFragment extends DialogFragment {
         USER_NOT_COPPA
     }
 
-    @BindView(R.id.ccpa_spinner)
     Spinner ccpaConsentOptions;
 
-    @BindView(R.id.coppa_spinner_admob)
     Spinner coppaConsentOptionsAdmob;
+
+    Button gdprPrompt, gdprReset;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,12 +39,28 @@ public class PrivacySettingsFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.privacy_settings, container, false);
+        View view = inflater.inflate(R.layout.privacy_settings, container, false);
+        ccpaConsentOptions=view.findViewById( R.id.ccpa_spinner );
+        coppaConsentOptionsAdmob=view.findViewById( R.id.coppa_spinner_admob );
+        view.findViewById( R.id.cancel ).setOnClickListener( new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                onCancelClicked();
+            }
+        } );
+        view.findViewById( R.id.save ).setOnClickListener( new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                onSaveClicked();
+            }
+        } );
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        ButterKnife.bind(this, view);
         ccpaConsentOptions.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item,
                 new String[]{"Not-set", "opted_in", "opted_out"}));
 
@@ -60,15 +75,21 @@ public class PrivacySettingsFragment extends DialogFragment {
             ccpaSelection = 2;
         }
         ccpaConsentOptions.setSelection(ccpaSelection);
+
+        gdprPrompt = view.findViewById(R.id.google_gdpr_prompt);
+        gdprPrompt.setOnClickListener(theView -> {
+            Util.promptGoogleGdpr(getContext(), getActivity());
+        });
+        gdprReset = view.findViewById(R.id.google_gdpr_reset);
+        gdprReset.setOnClickListener(theView -> {
+            Util.resetGoogleGdpr(getContext());
+        });
     }
 
-
-    @OnClick(R.id.cancel)
     public void onCancelClicked() {
         dismiss();
     }
 
-    @OnClick(R.id.save)
     public void onSaveClicked() {
         String ccpaConsent = (String) ccpaConsentOptions.getSelectedItem();
         if ("opted_in".equals(ccpaConsent)) {

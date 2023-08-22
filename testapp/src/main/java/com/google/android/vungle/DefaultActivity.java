@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.ads.mediationtestsuite.MediationTestSuite;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.RequestConfiguration;
@@ -18,6 +20,7 @@ import com.google.android.vungle.data.DataSource;
 import com.google.android.vungle.nativeads.NativeAdFeedActivity;
 import com.google.android.vungle.nativeads.advanced.NativeAdFeedAdvancedActivity;
 import com.vungle.mediation.VungleConsent;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -160,6 +163,12 @@ public class DefaultActivity extends AppCompatActivity {
         } else if (id == R.id.action_multiple_banner_ad) {
             startActivity(new Intent(this, BannerAdFeedActivity.class));
             return true;
+        } else if (id == R.id.google_gdpr_prompt) {
+            Util.promptGoogleGdpr(this, this);
+            return true;
+        } else if (id == R.id.google_gdpr_reset) {
+            Util.resetGoogleGdpr(this);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -244,5 +253,4 @@ public class DefaultActivity extends AppCompatActivity {
         adapter.getUnits().addAll(units);
         adapter.notifyDataSetChanged();
     }
-
 }

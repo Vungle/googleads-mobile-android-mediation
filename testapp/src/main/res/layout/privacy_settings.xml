@@ -47,6 +47,41 @@
         app:layout_constraintStart_toEndOf="@+id/coppa_tv"
         app:layout_constraintTop_toTopOf="@+id/coppa_tv" />
 
+    <TextView
+        android:id="@+id/google_gdpr"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/google_gdpr_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coppa_spinner_admob" />
+
+    <Button
+        android:id="@+id/google_gdpr_reset"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/google_gpdr_reset"
+        app:layout_constraintBottom_toBottomOf="@+id/google_gdpr_prompt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/google_gdpr_prompt"
+        app:layout_constraintTop_toBottomOf="@+id/coppa_spinner_admob"
+        />
+
+    <Button
+        android:id="@+id/google_gdpr_prompt"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/google_gdpr_prompt"
+        app:layout_constraintStart_toEndOf="@+id/google_gdpr"
+        app:layout_constraintEnd_toStartOf="@+id/google_gdpr_reset"
+        app:layout_constraintTop_toTopOf="@+id/google_gdpr_reset"
+        />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/cancel"
         style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
@@ -58,7 +93,7 @@
         app:layout_constraintEnd_toStartOf="@id/save"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/coppa_spinner_admob" />
+        app:layout_constraintTop_toBottomOf="@id/google_gdpr" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/save"

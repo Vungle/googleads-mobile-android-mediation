@@ -1,5 +1,7 @@
 package com.google.android.vungle;
 
+import static java.lang.Math.ceil;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -9,6 +11,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.ump.ConsentDebugSettings;
+import com.google.android.ump.ConsentForm;
+import com.google.android.ump.ConsentInformation;
+import com.google.android.ump.ConsentRequestParameters;
+import com.google.android.ump.UserMessagingPlatform;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.vungle.mediation.BuildConfig;
@@ -20,14 +27,16 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.ceil;
-
 /**
  * Created by andrey on 6/15/17.
  */
 
 public class Util {
     private static String TAG = Util.class.getSimpleName();
+
+    // Google GDPR objects
+    private static ConsentInformation consentInformation;
+    private static ConsentForm consentForm;
 
     static public String adUnitsToJsonString(List<AdUnit> object) {
         return new Gson().toJson(object);
@@ -141,5 +150,64 @@ public class Util {
     public static int px2dip(Context context, float pxValue) {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) ceil((pxValue / scale));
+    }
+
+    public static void promptGoogleGdpr(Context context, Activity activity) {
+        ConsentDebugSettings debugSettings = new ConsentDebugSettings.Builder(context)
+                .setDebugGeography(ConsentDebugSettings.DebugGeography.DEBUG_GEOGRAPHY_EEA)
+                .addTestDeviceHashedId(Util.getDeviceID(context))
+                .build();
+
+        ConsentRequestParameters params = new ConsentRequestParameters
+                .Builder()
+                .setConsentDebugSettings(debugSettings)
+                .build();
+
+        consentInformation = UserMessagingPlatform.getConsentInformation(context);
+        consentInformation.requestConsentInfoUpdate(
+                activity,
+                params,
+                () -> {
+                    // The consent information state was updated.
+                    // You are now ready to check if a form is available.
+                    if (consentInformation.isConsentFormAvailable()) {
+                        loadForm(context, activity);
+                    }
+                },
+                formError -> {
+                    // Handle the error.
+                    Log.e("gdpr-request", formError.getMessage());
+                });
+    }
+
+    private static void loadForm(Context context, Activity activity) {
+        // Loads a consent form. Must be called on the main thread.
+        UserMessagingPlatform.loadConsentForm(
+                context,
+                form -> {
+                    consentForm = form;
+                    if (consentInformation.getConsentStatus() == ConsentInformation.ConsentStatus.REQUIRED) {
+                        consentForm.show(
+                                activity,
+                                formError -> {
+                                    if (consentInformation.getConsentStatus() == ConsentInformation.ConsentStatus.OBTAINED) {
+                                        // App can start requesting ads.
+                                        Log.d("gdpr-form", "Obtained consent.");
+                                    }
+                                });
+                    }
+                },
+                formError -> {
+                    // Handle Error.
+                    Log.e("gdpr-form", formError.getMessage());
+                }
+        );
+    }
+
+    public static void resetGoogleGdpr(Context context) {
+        if (consentInformation == null) {
+            consentInformation = UserMessagingPlatform.getConsentInformation(context);
+        }
+        consentInformation.reset();
     }
 }

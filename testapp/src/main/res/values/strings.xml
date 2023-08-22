@@ -59,6 +59,9 @@
   <string name="yes">Yes</string>
   <string name="no">No</string>
   <string name="native_type">Native</string>
+  <string name="google_gdpr_label">Google Gdpr</string>
+  <string name="google_gdpr_prompt">Prompt</string>
+  <string name="google_gpdr_reset">Reset</string>
 
   <string name="load_error">Load error</string>
   <string name="ad_closed">onAdClosed</string>

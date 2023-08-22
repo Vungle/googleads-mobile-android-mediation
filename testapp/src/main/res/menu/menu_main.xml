@@ -17,4 +17,8 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_test" android:title="@string/test_suite"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/google_gdpr_prompt" android:title="Google Gdpr Prompt"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/google_gdpr_reset" android:title="Google Gdpr Reset"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

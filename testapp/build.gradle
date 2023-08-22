@@ -12,7 +12,7 @@ android {
         targetSdkVersion 33
         versionCode 70000
         versionName "7.0.0"
-        versionNameSuffix "-RC5"
+        versionNameSuffix ""
         multiDexEnabled true
     }
     buildTypes {
@@ -47,7 +47,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.cardview:cardview:1.0.0'
 
-    implementation 'com.google.android.gms:play-services-ads:22.0.0'
+    implementation 'com.google.android.gms:play-services-ads:22.2.0'
 
     constraints {
         implementation('androidx.work:work-runtime:2.7.0') {
@@ -73,6 +73,6 @@ dependencies {
 
     testImplementation 'junit:junit:4.13.2'
 
-    implementation 'com.jakewharton:butterknife:10.2.3'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+//    implementation "com.jakewharton:butterknife:10.2.3"
+//    annotationProcessor "com.jakewharton:butterknife-compiler:10.2.3"
 }
