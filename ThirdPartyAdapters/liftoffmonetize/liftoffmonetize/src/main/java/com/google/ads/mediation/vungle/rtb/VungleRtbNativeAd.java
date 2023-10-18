@@ -257,7 +257,6 @@ public class VungleRtbNativeAd extends UnifiedNativeAdMapper implements NativeAd
       setIcon(new VungleNativeMappedImage(Uri.parse(iconUrl)));
     }
 
-    setOverrideImpressionRecording(true);
     setOverrideClickHandling(true);
   }
 
