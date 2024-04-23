@@ -416,39 +416,24 @@ public class VungleInterstitialAdapter
   }
 
   public static BannerAdSize getVungleBannerAdSizeFromGoogleAdSize(Context context, AdSize adSize) {
-    ArrayList<AdSize> potentials = new ArrayList<>();
-    potentials.add(new AdSize(BannerAdSize.BANNER_SHORT.getWidth(),
-        BannerAdSize.BANNER_SHORT.getHeight()));
-    potentials.add(new AdSize(BannerAdSize.BANNER.getWidth(),
-        BannerAdSize.BANNER.getHeight()));
-    potentials.add(new AdSize(BannerAdSize.BANNER_LEADERBOARD.getWidth(),
-        BannerAdSize.BANNER_LEADERBOARD.getHeight()));
-    potentials.add(new AdSize(BannerAdSize.VUNGLE_MREC.getWidth(),
-        BannerAdSize.VUNGLE_MREC.getHeight()));
-
-    AdSize closestSize = MediationUtils.findClosestSize(context, adSize, potentials);
-    if (closestSize == null) {
-      return null;
-    }
-    Log.d(TAG,
-        "Found closest Liftoff Monetize banner ad size: " + closestSize + " for requested ad size: "
-            + adSize);
-
-    if (closestSize.getWidth() == BannerAdSize.BANNER_SHORT.getWidth()
-        && closestSize.getHeight() == BannerAdSize.BANNER_SHORT.getHeight()) {
-      return BannerAdSize.BANNER_SHORT;
-    } else if (closestSize.getWidth() == BannerAdSize.BANNER.getWidth()
-        && closestSize.getHeight() == BannerAdSize.BANNER.getHeight()) {
-      return BannerAdSize.BANNER;
-    } else if (closestSize.getWidth() == BannerAdSize.BANNER_LEADERBOARD.getWidth()
-        && closestSize.getHeight() == BannerAdSize.BANNER_LEADERBOARD.getHeight()) {
-      return BannerAdSize.BANNER_LEADERBOARD;
-    } else if (closestSize.getWidth() == BannerAdSize.VUNGLE_MREC.getWidth()
-        && closestSize.getHeight() == BannerAdSize.VUNGLE_MREC.getHeight()) {
-      return BannerAdSize.VUNGLE_MREC;
+    Log.d(TAG, "The requested ad size: " + adSize);
+    if (adSize.getWidth() == BannerAdSize.getBANNER_SHORT().getWidth()
+        && adSize.getHeight() == BannerAdSize.getBANNER_SHORT().getHeight()) {
+      return BannerAdSize.getBANNER_SHORT();
+    } else if (adSize.getWidth() == BannerAdSize.getBANNER().getWidth()
+        && adSize.getHeight() == BannerAdSize.getBANNER().getHeight()) {
+      return BannerAdSize.getBANNER();
+    } else if (adSize.getWidth() == BannerAdSize.getBANNER_LEADERBOARD().getWidth()
+        && adSize.getHeight() == BannerAdSize.getBANNER_LEADERBOARD().getHeight()) {
+      return BannerAdSize.getBANNER_LEADERBOARD();
+    } else if (adSize.getWidth() == BannerAdSize.getVUNGLE_MREC().getWidth()
+        && adSize.getHeight() == BannerAdSize.getVUNGLE_MREC().getHeight()) {
+      return BannerAdSize.getVUNGLE_MREC();
+    } else {
+      Log.d(TAG, "The requested ad size is not a standard banner, try to use adaptive banner size");
+      return BannerAdSize.getInlineAdaptiveBannerAdSize(adSize.getWidth(), adSize.getHeight());
     }
 
-    return null;
   }
 
 }
