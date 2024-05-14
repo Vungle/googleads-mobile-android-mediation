@@ -58,7 +58,6 @@ import com.google.common.truth.Truth.assertThat
 import com.vungle.ads.AdConfig
 import com.vungle.ads.AdConfig.Companion.LANDSCAPE
 import com.vungle.ads.BannerAd
-import com.vungle.ads.BannerAdSize
 import com.vungle.ads.InterstitialAd
 import com.vungle.ads.NativeAd
 import com.vungle.ads.NativeAd.Companion.BOTTOM_LEFT
@@ -66,6 +65,7 @@ import com.vungle.ads.NativeAd.Companion.BOTTOM_RIGHT
 import com.vungle.ads.NativeAd.Companion.TOP_LEFT
 import com.vungle.ads.NativeAd.Companion.TOP_RIGHT
 import com.vungle.ads.RewardedAd
+import com.vungle.ads.VungleAdSize
 import com.vungle.ads.VungleError
 import org.junit.Before
 import org.junit.Test
@@ -963,7 +963,7 @@ class VungleMediationAdapterTest {
     }
 
     verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), eq(context), any())
-    verify(vungleFactory).createBannerAd(context, TEST_PLACEMENT_ID, BannerAdSize.BANNER)
+    verify(vungleFactory).createBannerAd(context, TEST_PLACEMENT_ID, VungleAdSize.BANNER)
     verify(vungleBannerAd).load(TEST_BID_RESPONSE)
     val bannerAdCaptor = argumentCaptor<VungleRtbBannerAd>()
     verify(vungleBannerAd).adListener = bannerAdCaptor.capture()

@@ -36,7 +36,6 @@ import com.google.ads.mediation.vungle.VungleInitializer;
 import com.google.ads.mediation.vungle.VungleMediationAdapter;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.MediationUtils;
 import com.google.android.gms.ads.mediation.MediationAdRequest;
 import com.google.android.gms.ads.mediation.MediationBannerAdapter;
 import com.google.android.gms.ads.mediation.MediationBannerListener;
@@ -45,12 +44,11 @@ import com.google.android.gms.ads.mediation.MediationInterstitialListener;
 import com.vungle.ads.AdConfig;
 import com.vungle.ads.BannerAd;
 import com.vungle.ads.BannerAdListener;
-import com.vungle.ads.BannerAdSize;
 import com.vungle.ads.BaseAd;
 import com.vungle.ads.InterstitialAd;
 import com.vungle.ads.InterstitialAdListener;
+import com.vungle.ads.VungleAdSize;
 import com.vungle.ads.VungleError;
-import java.util.ArrayList;
 
 /**
  * A {@link MediationInterstitialAdapter} used to load and show Liftoff Monetize interstitial ads
@@ -242,7 +240,7 @@ public class VungleInterstitialAdapter
       return;
     }
 
-    BannerAdSize bannerAdSize = getVungleBannerAdSizeFromGoogleAdSize(context, adSize);
+    VungleAdSize bannerAdSize = getVungleBannerAdSizeFromGoogleAdSize(context, adSize);
     if (bannerAdSize == null) {
       AdError error = new AdError(ERROR_BANNER_SIZE_MISMATCH,
           "Failed to load waterfall banner ad from Liftoff Monetize. Invalid banner size.",
@@ -392,37 +390,24 @@ public class VungleInterstitialAdapter
     return bannerLayout;
   }
 
-  public static BannerAdSize getVungleBannerAdSizeFromGoogleAdSize(Context context, AdSize adSize) {
-    ArrayList<AdSize> potentials = new ArrayList<>();
-    potentials.add(new AdSize(BannerAdSize.BANNER_SHORT.getWidth(),
-        BannerAdSize.BANNER_SHORT.getHeight()));
-    potentials.add(new AdSize(BannerAdSize.BANNER.getWidth(),
-        BannerAdSize.BANNER.getHeight()));
-    potentials.add(new AdSize(BannerAdSize.BANNER_LEADERBOARD.getWidth(),
-        BannerAdSize.BANNER_LEADERBOARD.getHeight()));
-    potentials.add(new AdSize(BannerAdSize.VUNGLE_MREC.getWidth(),
-        BannerAdSize.VUNGLE_MREC.getHeight()));
+  public static VungleAdSize getVungleBannerAdSizeFromGoogleAdSize(Context context, AdSize adSize) {
+    Log.d(TAG, "The requested ad size: " + adSize);
 
-    AdSize closestSize = MediationUtils.findClosestSize(context, adSize, potentials);
-    if (closestSize == null) {
-      return null;
-    }
-    Log.d(TAG,
-        "Found closest Liftoff Monetize banner ad size: " + closestSize + " for requested ad size: "
-            + adSize);
-
-    if (closestSize.getWidth() == BannerAdSize.BANNER_SHORT.getWidth()
-        && closestSize.getHeight() == BannerAdSize.BANNER_SHORT.getHeight()) {
-      return BannerAdSize.BANNER_SHORT;
-    } else if (closestSize.getWidth() == BannerAdSize.BANNER.getWidth()
-        && closestSize.getHeight() == BannerAdSize.BANNER.getHeight()) {
-      return BannerAdSize.BANNER;
-    } else if (closestSize.getWidth() == BannerAdSize.BANNER_LEADERBOARD.getWidth()
-        && closestSize.getHeight() == BannerAdSize.BANNER_LEADERBOARD.getHeight()) {
-      return BannerAdSize.BANNER_LEADERBOARD;
-    } else if (closestSize.getWidth() == BannerAdSize.VUNGLE_MREC.getWidth()
-        && closestSize.getHeight() == BannerAdSize.VUNGLE_MREC.getHeight()) {
-      return BannerAdSize.VUNGLE_MREC;
+    if (adSize.getWidth() == VungleAdSize.BANNER_SHORT.getWidth()
+        && adSize.getHeight() == VungleAdSize.BANNER_SHORT.getHeight()) {
+      return VungleAdSize.BANNER_SHORT;
+    } else if (adSize.getWidth() == VungleAdSize.BANNER.getWidth()
+        && adSize.getHeight() == VungleAdSize.BANNER.getHeight()) {
+      return VungleAdSize.BANNER;
+    } else if (adSize.getWidth() == VungleAdSize.BANNER_LEADERBOARD.getWidth()
+        && adSize.getHeight() == VungleAdSize.BANNER_LEADERBOARD.getHeight()) {
+      return VungleAdSize.BANNER_LEADERBOARD;
+    } else if (adSize.getWidth() == VungleAdSize.VUNGLE_MREC.getWidth()
+        && adSize.getHeight() == VungleAdSize.VUNGLE_MREC.getHeight()) {
+      return VungleAdSize.VUNGLE_MREC;
+    } else if (adSize.getWidth() > 0 && adSize.getHeight() > 0) {
+      Log.d(TAG, "The requested ad size is not a standard banner, try to use adaptive banner size");
+      return VungleAdSize.getAdSizeWithWidthAndHeight(adSize.getWidth(), adSize.getHeight());
     }
 
     return null;

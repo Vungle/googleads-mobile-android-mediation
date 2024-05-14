@@ -40,8 +40,8 @@ import com.google.android.gms.ads.mediation.MediationBannerAdCallback;
 import com.google.android.gms.ads.mediation.MediationBannerAdConfiguration;
 import com.vungle.ads.BannerAd;
 import com.vungle.ads.BannerAdListener;
-import com.vungle.ads.BannerAdSize;
 import com.vungle.ads.BaseAd;
+import com.vungle.ads.VungleAdSize;
 import com.vungle.ads.VungleError;
 import com.vungle.mediation.VungleInterstitialAdapter;
 
@@ -97,7 +97,7 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
     Context context = mediationBannerAdConfiguration.getContext();
     AdSize adSize = mediationBannerAdConfiguration.getAdSize();
 
-    BannerAdSize bannerAdSize = VungleInterstitialAdapter.getVungleBannerAdSizeFromGoogleAdSize(
+    VungleAdSize bannerAdSize = VungleInterstitialAdapter.getVungleBannerAdSizeFromGoogleAdSize(
         context, adSize);
     if (bannerAdSize == null) {
       AdError error = new AdError(ERROR_BANNER_SIZE_MISMATCH,
@@ -128,7 +128,7 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
   }
 
   private void loadBanner(Context context, String placementId, AdSize gAdSize,
-      BannerAdSize bannerAdSize, String adMarkup, String watermark) {
+      VungleAdSize bannerAdSize, String adMarkup, String watermark) {
     bannerLayout = new RelativeLayout(context);
     int adLayoutHeight = gAdSize.getHeightInPixels(context);
     // If the height is 0 (e.g. for inline adaptive banner requests), use the closest supported size

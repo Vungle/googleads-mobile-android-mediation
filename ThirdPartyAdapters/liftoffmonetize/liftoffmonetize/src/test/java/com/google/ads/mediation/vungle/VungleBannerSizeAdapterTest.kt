@@ -5,7 +5,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.gms.ads.AdSize
 import com.google.common.truth.Truth.assertThat
-import com.vungle.ads.BannerAdSize
+import com.vungle.ads.VungleAdSize
 import com.vungle.mediation.VungleInterstitialAdapter
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,7 +21,7 @@ class VungleBannerSizeAdapterTest {
     val liftoffBannerSize =
       VungleInterstitialAdapter.getVungleBannerAdSizeFromGoogleAdSize(context, AdSize(300, 50))
 
-    assertThat(liftoffBannerSize).isEqualTo(BannerAdSize.BANNER_SHORT)
+    assertThat(liftoffBannerSize).isEqualTo(VungleAdSize.BANNER_SHORT)
   }
 
   @Test
@@ -29,7 +29,7 @@ class VungleBannerSizeAdapterTest {
     val liftoffBannerSize =
       VungleInterstitialAdapter.getVungleBannerAdSizeFromGoogleAdSize(context, AdSize.BANNER)
 
-    assertThat(liftoffBannerSize).isEqualTo(BannerAdSize.BANNER)
+    assertThat(liftoffBannerSize).isEqualTo(VungleAdSize.BANNER)
   }
 
   @Test
@@ -37,7 +37,7 @@ class VungleBannerSizeAdapterTest {
     val liftoffBannerSize =
       VungleInterstitialAdapter.getVungleBannerAdSizeFromGoogleAdSize(context, AdSize.LEADERBOARD)
 
-    assertThat(liftoffBannerSize).isEqualTo(BannerAdSize.BANNER_LEADERBOARD)
+    assertThat(liftoffBannerSize).isEqualTo(VungleAdSize.BANNER_LEADERBOARD)
   }
 
   @Test
@@ -48,7 +48,7 @@ class VungleBannerSizeAdapterTest {
         AdSize.MEDIUM_RECTANGLE,
       )
 
-    assertThat(liftoffBannerSize).isEqualTo(BannerAdSize.VUNGLE_MREC)
+    assertThat(liftoffBannerSize).isEqualTo(VungleAdSize.VUNGLE_MREC)
   }
 
   @Test
