@@ -79,6 +79,7 @@ import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.never
 import org.mockito.kotlin.times
 import org.mockito.kotlin.whenever
 
@@ -1042,7 +1043,7 @@ class VungleMediationAdapterTest {
       bannerAdLoadCallback,
     )
 
-    val expectedAdError =
+    val unExpectedAdError =
       AdError(
         ERROR_BANNER_SIZE_MISMATCH,
         String.format(
@@ -1051,7 +1052,7 @@ class VungleMediationAdapterTest {
         ),
         ERROR_DOMAIN,
       )
-    verify(bannerAdLoadCallback).onFailure(argThat(AdErrorMatcher(expectedAdError)))
+    verify(bannerAdLoadCallback, never()).onFailure(argThat(AdErrorMatcher(unExpectedAdError)))
   }
 
   @Test

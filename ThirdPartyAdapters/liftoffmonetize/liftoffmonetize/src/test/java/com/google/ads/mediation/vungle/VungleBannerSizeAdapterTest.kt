@@ -59,6 +59,8 @@ class VungleBannerSizeAdapterTest {
         AdSize.WIDE_SKYSCRAPER,
       )
 
-    assertThat(liftoffBannerSize).isNull()
+    assertThat(liftoffBannerSize).isNotNull()
+    assertThat(liftoffBannerSize.width).isEqualTo(AdSize.WIDE_SKYSCRAPER.width)
+    assertThat(liftoffBannerSize.height).isEqualTo(AdSize.WIDE_SKYSCRAPER.height)
   }
 }
