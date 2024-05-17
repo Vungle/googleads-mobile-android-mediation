@@ -48,7 +48,7 @@ class VungleBannerSizeAdapterTest {
         AdSize.MEDIUM_RECTANGLE,
       )
 
-    assertThat(liftoffBannerSize).isEqualTo(VungleAdSize.VUNGLE_MREC)
+    assertThat(liftoffBannerSize).isEqualTo(VungleAdSize.MREC)
   }
 
   @Test

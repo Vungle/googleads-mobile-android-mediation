@@ -116,7 +116,7 @@ task jacocoTestReport(type: JacocoReport,
 
 dependencies {
 //    implementation 'com.vungle:vungle-ads:7.3.2'
-    implementation 'com.github.Vungle:vng-android-sdk:aa72623f09' //adaptive banner support
+    implementation 'com.github.Vungle:vng-android-sdk:7827db1a01' //adaptive banner support
     implementation 'androidx.annotation:annotation:1.5.0'
     implementation 'com.google.android.gms:play-services-ads:23.0.0'
 

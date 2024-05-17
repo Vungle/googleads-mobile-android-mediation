@@ -402,15 +402,13 @@ public class VungleInterstitialAdapter
     } else if (adSize.getWidth() == VungleAdSize.BANNER_LEADERBOARD.getWidth()
         && adSize.getHeight() == VungleAdSize.BANNER_LEADERBOARD.getHeight()) {
       return VungleAdSize.BANNER_LEADERBOARD;
-    } else if (adSize.getWidth() == VungleAdSize.VUNGLE_MREC.getWidth()
-        && adSize.getHeight() == VungleAdSize.VUNGLE_MREC.getHeight()) {
-      return VungleAdSize.VUNGLE_MREC;
-    } else if (adSize.getWidth() > 0 && adSize.getHeight() > 0) {
-      Log.d(TAG, "The requested ad size is not a standard banner, try to use adaptive banner size");
-      return VungleAdSize.getAdSizeWithWidthAndHeight(adSize.getWidth(), adSize.getHeight());
+    } else if (adSize.getWidth() == VungleAdSize.MREC.getWidth()
+        && adSize.getHeight() == VungleAdSize.MREC.getHeight()) {
+      return VungleAdSize.MREC;
     }
 
-    return null;
+    Log.d(TAG, "The requested ad size is not a standard banner, try to use custom banner size");
+    return VungleAdSize.getAdSizeWithWidthAndHeight(adSize.getWidth(), adSize.getHeight());
   }
 
 }
