@@ -964,7 +964,10 @@ class VungleMediationAdapterTest {
     }
 
     verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), eq(context), any())
-    verify(vungleFactory).createBannerAd(context, TEST_PLACEMENT_ID, VungleAdSize.BANNER)
+    val vngAdSize = argumentCaptor<VungleAdSize>()
+    verify(vungleFactory).createBannerAd(eq(context), eq(TEST_PLACEMENT_ID), vngAdSize.capture())
+    assertThat(vngAdSize.firstValue.width).isEqualTo(BANNER.width)
+    assertThat(vngAdSize.firstValue.height).isEqualTo(BANNER.height)
     verify(vungleBannerAd).load(TEST_BID_RESPONSE)
     val bannerAdCaptor = argumentCaptor<VungleRtbBannerAd>()
     verify(vungleBannerAd).adListener = bannerAdCaptor.capture()

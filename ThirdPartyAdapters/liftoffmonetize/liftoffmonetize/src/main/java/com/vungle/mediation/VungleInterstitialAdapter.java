@@ -392,22 +392,10 @@ public class VungleInterstitialAdapter
 
   public static VungleAdSize getVungleBannerAdSizeFromGoogleAdSize(Context context, AdSize adSize) {
     Log.d(TAG, "The requested ad size: " + adSize);
-
-    if (adSize.getWidth() == VungleAdSize.BANNER_SHORT.getWidth()
-        && adSize.getHeight() == VungleAdSize.BANNER_SHORT.getHeight()) {
-      return VungleAdSize.BANNER_SHORT;
-    } else if (adSize.getWidth() == VungleAdSize.BANNER.getWidth()
-        && adSize.getHeight() == VungleAdSize.BANNER.getHeight()) {
-      return VungleAdSize.BANNER;
-    } else if (adSize.getWidth() == VungleAdSize.BANNER_LEADERBOARD.getWidth()
-        && adSize.getHeight() == VungleAdSize.BANNER_LEADERBOARD.getHeight()) {
-      return VungleAdSize.BANNER_LEADERBOARD;
-    } else if (adSize.getWidth() == VungleAdSize.MREC.getWidth()
-        && adSize.getHeight() == VungleAdSize.MREC.getHeight()) {
-      return VungleAdSize.MREC;
+    if (adSize.getHeight() == 0) {
+      return VungleAdSize.getAdSizeWithWidth(context, adSize.getWidth());
     }
 
-    Log.d(TAG, "The requested ad size is not a standard banner, try to use custom banner size");
     return VungleAdSize.getAdSizeWithWidthAndHeight(adSize.getWidth(), adSize.getHeight());
   }
 
