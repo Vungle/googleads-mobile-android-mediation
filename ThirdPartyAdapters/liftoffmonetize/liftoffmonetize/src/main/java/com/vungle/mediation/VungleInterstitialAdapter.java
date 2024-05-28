@@ -20,7 +20,6 @@ import static com.google.ads.mediation.vungle.VungleConstants.KEY_PLACEMENT_ID;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_BANNER_SIZE_MISMATCH;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_DOMAIN;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_INVALID_SERVER_PARAMETERS;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_VUNGLE_BANNER_NULL;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.TAG;
 
 import android.content.Context;
@@ -42,12 +41,12 @@ import com.google.android.gms.ads.mediation.MediationBannerListener;
 import com.google.android.gms.ads.mediation.MediationInterstitialAdapter;
 import com.google.android.gms.ads.mediation.MediationInterstitialListener;
 import com.vungle.ads.AdConfig;
-import com.vungle.ads.BannerAd;
 import com.vungle.ads.BannerAdListener;
 import com.vungle.ads.BaseAd;
 import com.vungle.ads.InterstitialAd;
 import com.vungle.ads.InterstitialAdListener;
 import com.vungle.ads.VungleAdSize;
+import com.vungle.ads.VungleBannerView;
 import com.vungle.ads.VungleError;
 
 /**
@@ -63,7 +62,7 @@ public class VungleInterstitialAdapter
 
   // banner/MREC
   private MediationBannerListener mediationBannerListener;
-  private BannerAd bannerAd;
+  private VungleBannerView bannerAdView;
   private RelativeLayout bannerLayout;
 
   @Override
@@ -192,10 +191,10 @@ public class VungleInterstitialAdapter
   @Override
   public void onDestroy() {
     Log.d(TAG, "onDestroy: " + hashCode());
-    if (bannerAd != null) {
+    if (bannerAdView != null) {
       bannerLayout.removeAllViews();
-      bannerAd.finishAd();
-      bannerAd = null;
+      bannerAdView.finishAd();
+      bannerAdView = null;
     }
   }
 
@@ -240,7 +239,7 @@ public class VungleInterstitialAdapter
       return;
     }
 
-    VungleAdSize bannerAdSize = getVungleBannerAdSizeFromGoogleAdSize(context, adSize);
+    VungleAdSize bannerAdSize = getVungleBannerAdSizeFromGoogleAdSize(context, adSize, placement);
     if (bannerAdSize == null) {
       AdError error = new AdError(ERROR_BANNER_SIZE_MISMATCH,
           "Failed to load waterfall banner ad from Liftoff Monetize. Invalid banner size.",
@@ -260,7 +259,8 @@ public class VungleInterstitialAdapter
             new VungleInitializer.VungleInitializationListener() {
               @Override
               public void onInitializeSuccess() {
-                bannerLayout = new RelativeLayout(context);
+                bannerAdView = new VungleBannerView(context, placement, bannerAdSize);
+
                 int adLayoutHeight = adSize.getHeightInPixels(context);
                 // If the height is 0 (e.g. for inline adaptive banner requests), use the closest supported size
                 // as the height of the adLayout wrapper.
@@ -271,12 +271,14 @@ public class VungleInterstitialAdapter
                 RelativeLayout.LayoutParams adViewLayoutParams =
                     new RelativeLayout.LayoutParams(adSize.getWidthInPixels(context),
                         adLayoutHeight);
-                bannerLayout.setLayoutParams(adViewLayoutParams);
+                bannerAdView.setLayoutParams(adViewLayoutParams);
 
-                bannerAd = new BannerAd(context, placement, bannerAdSize);
-                bannerAd.setAdListener(new VungleBannerListener());
+                bannerAdView.setAdListener(new VungleBannerListener());
 
-                bannerAd.load(null);
+                bannerLayout = new RelativeLayout(context);
+                bannerLayout.addView(bannerAdView);
+
+                bannerAdView.load(null);
               }
 
               @Override
@@ -312,7 +314,9 @@ public class VungleInterstitialAdapter
 
     @Override
     public void onAdLoaded(@NonNull BaseAd baseAd) {
-      createBanner();
+      if (mediationBannerListener != null) {
+        mediationBannerListener.onAdLoaded(VungleInterstitialAdapter.this);
+      }
     }
 
     @Override
@@ -344,45 +348,6 @@ public class VungleInterstitialAdapter
     }
   }
 
-  private void createBanner() {
-    if (bannerAd == null) {
-      AdError error = new AdError(ERROR_VUNGLE_BANNER_NULL,
-          "Try to play banner ad but the Vungle BannerAd instance not created.",
-          ERROR_DOMAIN);
-      Log.d(TAG, error.toString());
-      if (mediationBannerListener != null) {
-        mediationBannerListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
-      }
-      return;
-    }
-
-    View bannerView = bannerAd.getBannerView();
-    // The Vungle SDK performs an internal check to determine if a banner ad is playable.
-    // If the ad is not playable, such as if it has expired, the SDK will return `null` for the
-    // banner view.
-    if (bannerView == null) {
-      AdError error = new AdError(ERROR_VUNGLE_BANNER_NULL,
-          "Vungle SDK returned a successful load callback, but getBannerView() returned null.",
-          ERROR_DOMAIN);
-      Log.d(TAG, error.toString());
-      if (mediationBannerListener != null) {
-        mediationBannerListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
-      }
-      return;
-    }
-
-    // Add rules to ensure the banner ad is located at the center of the layout.
-    RelativeLayout.LayoutParams adParams = new RelativeLayout.LayoutParams(
-        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-    adParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-    adParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-    bannerView.setLayoutParams(adParams);
-    bannerLayout.addView(bannerView);
-    if (mediationBannerListener != null) {
-      mediationBannerListener.onAdLoaded(VungleInterstitialAdapter.this);
-    }
-  }
-
   @NonNull
   @Override
   public View getBannerView() {
@@ -390,13 +355,14 @@ public class VungleInterstitialAdapter
     return bannerLayout;
   }
 
-  public static VungleAdSize getVungleBannerAdSizeFromGoogleAdSize(Context context, AdSize adSize) {
-    Log.d(TAG, "The requested ad size: " + adSize);
-    if (adSize.getHeight() == 0) {
-      return VungleAdSize.getAdSizeWithWidth(context, adSize.getWidth());
-    }
-
-    return VungleAdSize.getAdSizeWithWidthAndHeight(adSize.getWidth(), adSize.getHeight());
+  public static VungleAdSize getVungleBannerAdSizeFromGoogleAdSize(Context context, AdSize adSize,
+      String placementId) {
+    VungleAdSize vngAdSize = VungleAdSize.getValidAdSizeFromSize(adSize.getWidth(),
+        adSize.getHeight(), placementId);
+    Log.d(TAG,
+        "The requested ad size: " + adSize + "; placementId=" + placementId + "; vngAdSize="
+            + vngAdSize);
+    return vngAdSize;
   }
 
 }

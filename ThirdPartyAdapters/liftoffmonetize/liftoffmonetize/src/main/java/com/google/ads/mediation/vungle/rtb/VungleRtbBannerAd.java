@@ -19,7 +19,6 @@ import static com.google.ads.mediation.vungle.VungleConstants.KEY_PLACEMENT_ID;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_BANNER_SIZE_MISMATCH;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_DOMAIN;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_INVALID_SERVER_PARAMETERS;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_VUNGLE_BANNER_NULL;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.TAG;
 
 import android.content.Context;
@@ -38,10 +37,10 @@ import com.google.android.gms.ads.mediation.MediationAdLoadCallback;
 import com.google.android.gms.ads.mediation.MediationBannerAd;
 import com.google.android.gms.ads.mediation.MediationBannerAdCallback;
 import com.google.android.gms.ads.mediation.MediationBannerAdConfiguration;
-import com.vungle.ads.BannerAd;
 import com.vungle.ads.BannerAdListener;
 import com.vungle.ads.BaseAd;
 import com.vungle.ads.VungleAdSize;
+import com.vungle.ads.VungleBannerView;
 import com.vungle.ads.VungleError;
 import com.vungle.mediation.VungleInterstitialAdapter;
 
@@ -52,7 +51,7 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
       mediationAdLoadCallback;
   private MediationBannerAdCallback mediationBannerAdCallback;
 
-  private BannerAd bannerAd;
+  private VungleBannerView bannerAdView;
   private RelativeLayout bannerLayout;
 
   private final VungleFactory vungleFactory;
@@ -98,7 +97,7 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
     AdSize adSize = mediationBannerAdConfiguration.getAdSize();
 
     VungleAdSize bannerAdSize = VungleInterstitialAdapter.getVungleBannerAdSizeFromGoogleAdSize(
-        context, adSize);
+        context, adSize, placementForPlay);
     if (bannerAdSize == null) {
       AdError error = new AdError(ERROR_BANNER_SIZE_MISMATCH,
           String.format("The requested banner size: %s is not supported by Vungle SDK.", adSize),
@@ -129,7 +128,8 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
 
   private void loadBanner(Context context, String placementId, AdSize gAdSize,
       VungleAdSize bannerAdSize, String adMarkup, String watermark) {
-    bannerLayout = new RelativeLayout(context);
+    bannerAdView = vungleFactory.createBannerAd(context, placementId, bannerAdSize);
+
     int adLayoutHeight = gAdSize.getHeightInPixels(context);
     // If the height is 0 (e.g. for inline adaptive banner requests), use the closest supported size
     // as the height of the adLayout wrapper.
@@ -140,16 +140,17 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
     RelativeLayout.LayoutParams adViewLayoutParams =
         new RelativeLayout.LayoutParams(gAdSize.getWidthInPixels(context),
             adLayoutHeight);
-    bannerLayout.setLayoutParams(adViewLayoutParams);
+    bannerAdView.setLayoutParams(adViewLayoutParams);
 
-    bannerAd = vungleFactory.createBannerAd(context, placementId, bannerAdSize);
-    bannerAd.setAdListener(VungleRtbBannerAd.this);
-
+    bannerAdView.setAdListener(VungleRtbBannerAd.this);
     if (!TextUtils.isEmpty(watermark)) {
-      bannerAd.getAdConfig().setWatermark(watermark);
+      bannerAdView.getAdConfig().setWatermark(watermark);
     }
 
-    bannerAd.load(adMarkup);
+    bannerLayout = new RelativeLayout(context);
+    bannerLayout.addView(bannerAdView);
+
+    bannerAdView.load(adMarkup);
   }
 
   @NonNull
@@ -180,7 +181,7 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
 
   @Override
   public void onAdLoaded(@NonNull BaseAd baseAd) {
-    createBanner();
+    mediationBannerAdCallback = mediationAdLoadCallback.onSuccess(this);
   }
 
   @Override
@@ -207,30 +208,6 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
     if (mediationBannerAdCallback != null) {
       mediationBannerAdCallback.onAdLeftApplication();
     }
-  }
-
-  private void createBanner() {
-    View bannerView = bannerAd.getBannerView();
-    // The Vungle SDK performs an internal check to determine if a banner ad is playable.
-    // If the ad is not playable, such as if it has expired, the SDK will return `null` for the
-    // banner view.
-    if (bannerView == null) {
-      AdError error = new AdError(ERROR_VUNGLE_BANNER_NULL,
-          "Vungle SDK returned a successful load callback, but getBannerView() returned null.",
-          ERROR_DOMAIN);
-      Log.w(TAG, error.toString());
-      mediationAdLoadCallback.onFailure(error);
-      return;
-    }
-
-    // Add rules to ensure the banner ad is located at the center of the layout.
-    RelativeLayout.LayoutParams adParams = new RelativeLayout.LayoutParams(
-        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-    adParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-    adParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-    bannerView.setLayoutParams(adParams);
-    bannerLayout.addView(bannerView);
-    mediationBannerAdCallback = mediationAdLoadCallback.onSuccess(this);
   }
 
 }

@@ -57,7 +57,6 @@ import com.google.android.gms.ads.nativead.NativeAdOptions.ADCHOICES_TOP_RIGHT
 import com.google.common.truth.Truth.assertThat
 import com.vungle.ads.AdConfig
 import com.vungle.ads.AdConfig.Companion.LANDSCAPE
-import com.vungle.ads.BannerAd
 import com.vungle.ads.InterstitialAd
 import com.vungle.ads.NativeAd
 import com.vungle.ads.NativeAd.Companion.BOTTOM_LEFT
@@ -66,6 +65,7 @@ import com.vungle.ads.NativeAd.Companion.TOP_LEFT
 import com.vungle.ads.NativeAd.Companion.TOP_RIGHT
 import com.vungle.ads.RewardedAd
 import com.vungle.ads.VungleAdSize
+import com.vungle.ads.VungleBannerView
 import com.vungle.ads.VungleError
 import org.junit.Before
 import org.junit.Test
@@ -946,7 +946,7 @@ class VungleMediationAdapterTest {
   @Test
   fun loadRtbBannerAd_loadsLiftoffBannerAdWithBidResponse() {
     stubVungleInitializerToSucceed()
-    val vungleBannerAd = mock<BannerAd> { on { adConfig } doReturn vungleAdConfig }
+    val vungleBannerAd = mock<VungleBannerView> { on { adConfig } doReturn vungleAdConfig }
     whenever(vungleFactory.createBannerAd(any(), any(), any())) doReturn vungleBannerAd
     mockStatic(VungleInitializer::class.java).use {
       whenever(getInstance()) doReturn mockVungleInitializer
@@ -971,9 +971,6 @@ class VungleMediationAdapterTest {
     verify(vungleBannerAd).load(TEST_BID_RESPONSE)
     val bannerAdCaptor = argumentCaptor<VungleRtbBannerAd>()
     verify(vungleBannerAd).adListener = bannerAdCaptor.capture()
-    val bannerLayout = bannerAdCaptor.firstValue.view
-    assertThat(bannerLayout.layoutParams.width).isEqualTo(BANNER.getWidthInPixels(context))
-    assertThat(bannerLayout.layoutParams.height).isEqualTo(BANNER.getHeightInPixels(context))
     verify(vungleAdConfig).setWatermark(TEST_WATERMARK)
   }
 
