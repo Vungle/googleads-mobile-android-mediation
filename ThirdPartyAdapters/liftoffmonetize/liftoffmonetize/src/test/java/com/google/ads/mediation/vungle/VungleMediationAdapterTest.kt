@@ -24,7 +24,6 @@ import com.google.ads.mediation.vungle.VungleConstants.KEY_PLACEMENT_ID
 import com.google.ads.mediation.vungle.VungleConstants.KEY_USER_ID
 import com.google.ads.mediation.vungle.VungleInitializer.VungleInitializationListener
 import com.google.ads.mediation.vungle.VungleInitializer.getInstance
-import com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_BANNER_SIZE_MISMATCH
 import com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_DOMAIN
 import com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_INITIALIZATION_FAILURE
 import com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_INVALID_SERVER_PARAMETERS
@@ -33,7 +32,6 @@ import com.google.ads.mediation.vungle.VungleMediationAdapter.getAdapterVersion
 import com.google.ads.mediation.vungle.rtb.VungleRtbBannerAd
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdSize.BANNER
-import com.google.android.gms.ads.AdSize.WIDE_SKYSCRAPER
 import com.google.android.gms.ads.mediation.InitializationCompleteCallback
 import com.google.android.gms.ads.mediation.MediationAdLoadCallback
 import com.google.android.gms.ads.mediation.MediationAppOpenAd
@@ -79,7 +77,6 @@ import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
-import org.mockito.kotlin.never
 import org.mockito.kotlin.times
 import org.mockito.kotlin.whenever
 
@@ -964,13 +961,13 @@ class VungleMediationAdapterTest {
     }
 
     verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), eq(context), any())
-    val vngAdSize = argumentCaptor<VungleAdSize>()
-    verify(vungleFactory).createBannerAd(eq(context), eq(TEST_PLACEMENT_ID), vngAdSize.capture())
-    assertThat(vngAdSize.firstValue.width).isEqualTo(BANNER.width)
-    assertThat(vngAdSize.firstValue.height).isEqualTo(BANNER.height)
+    verify(vungleFactory).createBannerAd(context, TEST_PLACEMENT_ID, VungleAdSize.BANNER)
     verify(vungleBannerAd).load(TEST_BID_RESPONSE)
     val bannerAdCaptor = argumentCaptor<VungleRtbBannerAd>()
     verify(vungleBannerAd).adListener = bannerAdCaptor.capture()
+    val bannerLayout = bannerAdCaptor.firstValue.view
+    assertThat(bannerLayout.layoutParams.width).isEqualTo(BANNER.getWidthInPixels(context))
+    assertThat(bannerLayout.layoutParams.height).isEqualTo(BANNER.getHeightInPixels(context))
     verify(vungleAdConfig).setWatermark(TEST_WATERMARK)
   }
 
@@ -1024,35 +1021,6 @@ class VungleMediationAdapterTest {
         ERROR_DOMAIN,
       )
     verify(bannerAdLoadCallback).onFailure(argThat(AdErrorMatcher(expectedAdError)))
-  }
-
-  @Test
-  fun loadRtbBannerAd_forUnsupportedBannerAdSize_callsLoadFailure() {
-    val bannerAdLoadCallback =
-      mock<MediationAdLoadCallback<MediationBannerAd, MediationBannerAdCallback>>()
-
-    adapter.loadRtbBannerAd(
-      createMediationBannerAdConfiguration(
-        context = context,
-        serverParameters =
-          bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-        bidResponse = TEST_BID_RESPONSE,
-        watermark = TEST_WATERMARK,
-        adSize = WIDE_SKYSCRAPER,
-      ),
-      bannerAdLoadCallback,
-    )
-
-    val unExpectedAdError =
-      AdError(
-        ERROR_BANNER_SIZE_MISMATCH,
-        String.format(
-          "The requested banner size: %s is not supported by Vungle SDK.",
-          WIDE_SKYSCRAPER,
-        ),
-        ERROR_DOMAIN,
-      )
-    verify(bannerAdLoadCallback, never()).onFailure(argThat(AdErrorMatcher(unExpectedAdError)))
   }
 
   @Test

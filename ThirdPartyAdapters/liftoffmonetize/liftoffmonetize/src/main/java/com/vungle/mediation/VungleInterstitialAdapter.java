@@ -35,6 +35,7 @@ import com.google.ads.mediation.vungle.VungleInitializer;
 import com.google.ads.mediation.vungle.VungleMediationAdapter;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.MediationUtils;
 import com.google.android.gms.ads.mediation.MediationAdRequest;
 import com.google.android.gms.ads.mediation.MediationBannerAdapter;
 import com.google.android.gms.ads.mediation.MediationBannerListener;
@@ -46,8 +47,10 @@ import com.vungle.ads.BaseAd;
 import com.vungle.ads.InterstitialAd;
 import com.vungle.ads.InterstitialAdListener;
 import com.vungle.ads.VungleAdSize;
+import com.vungle.ads.VungleAds;
 import com.vungle.ads.VungleBannerView;
 import com.vungle.ads.VungleError;
+import java.util.ArrayList;
 
 /**
  * A {@link MediationInterstitialAdapter} used to load and show Liftoff Monetize interstitial ads
@@ -240,14 +243,6 @@ public class VungleInterstitialAdapter
     }
 
     VungleAdSize bannerAdSize = getVungleBannerAdSizeFromGoogleAdSize(context, adSize, placement);
-    if (bannerAdSize == null) {
-      AdError error = new AdError(ERROR_BANNER_SIZE_MISMATCH,
-          "Failed to load waterfall banner ad from Liftoff Monetize. Invalid banner size.",
-          ERROR_DOMAIN);
-      Log.w(TAG, error.toString());
-      bannerListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
-      return;
-    }
 
     Log.d(TAG,
         "requestBannerAd for Placement: " + placement + " ### Adapter instance: " + this
@@ -259,7 +254,7 @@ public class VungleInterstitialAdapter
             new VungleInitializer.VungleInitializationListener() {
               @Override
               public void onInitializeSuccess() {
-                bannerAdView = new VungleBannerView(context, placement, bannerAdSize);
+                bannerLayout = new RelativeLayout(context);
 
                 int adLayoutHeight = adSize.getHeightInPixels(context);
                 // If the height is 0 (e.g. for inline adaptive banner requests), use the closest supported size
@@ -271,12 +266,18 @@ public class VungleInterstitialAdapter
                 RelativeLayout.LayoutParams adViewLayoutParams =
                     new RelativeLayout.LayoutParams(adSize.getWidthInPixels(context),
                         adLayoutHeight);
-                bannerAdView.setLayoutParams(adViewLayoutParams);
+                bannerLayout.setLayoutParams(adViewLayoutParams);
 
+                bannerAdView = new VungleBannerView(context, placement, bannerAdSize);
                 bannerAdView.setAdListener(new VungleBannerListener());
 
-                bannerLayout = new RelativeLayout(context);
-                bannerLayout.addView(bannerAdView);
+                // Add rules to ensure the banner ad is located at the center of the layout.
+                RelativeLayout.LayoutParams adParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+                adParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+                adParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+                bannerLayout.addView(bannerAdView, adParams);
 
                 bannerAdView.load(null);
               }
@@ -357,11 +358,18 @@ public class VungleInterstitialAdapter
 
   public static VungleAdSize getVungleBannerAdSizeFromGoogleAdSize(Context context, AdSize adSize,
       String placementId) {
-    VungleAdSize vngAdSize = VungleAdSize.getValidAdSizeFromSize(adSize.getWidth(),
-        adSize.getHeight(), placementId);
+    VungleAdSize vngAdSize;
+    if (VungleAds.isInline(placementId)) {
+      vngAdSize = VungleAdSize.getAdSizeWithWidthAndHeight(adSize.getWidth(), adSize.getHeight());
+    } else {
+      vngAdSize = VungleAdSize.getValidAdSizeFromSize(adSize.getWidth(),
+          adSize.getHeight(), placementId);
+    }
+
     Log.d(TAG,
         "The requested ad size: " + adSize + "; placementId=" + placementId + "; vngAdSize="
             + vngAdSize);
+
     return vngAdSize;
   }
 

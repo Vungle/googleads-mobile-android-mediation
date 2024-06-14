@@ -2,7 +2,11 @@ package com.google.ads.mediation.vungle.rtb
 
 import android.content.Context
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.RelativeLayout
+import android.widget.RelativeLayout.CENTER_HORIZONTAL
+import android.widget.RelativeLayout.CENTER_VERTICAL
+import android.widget.RelativeLayout.TRUE
 import androidx.core.os.bundleOf
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -21,7 +25,6 @@ import com.google.android.gms.ads.mediation.MediationBannerAd
 import com.google.android.gms.ads.mediation.MediationBannerAdCallback
 import com.google.common.truth.Truth.assertThat
 import com.vungle.ads.BaseAd
-import com.vungle.ads.VungleAdSize
 import com.vungle.ads.VungleBannerView
 import com.vungle.ads.VungleError
 import com.vungle.ads.VungleError.Companion.AD_FAILED_TO_DOWNLOAD
@@ -54,10 +57,10 @@ class VungleRtbBannerAdTest {
       on { onSuccess(any()) } doReturn bannerAdCallback
     }
   private val mockVungleInitializer = mock<VungleInitializer>()
-  private val vungleBannerAd = mock<VungleBannerView>()
+  private val vungleBannerView = mock<VungleBannerView>()
   private val baseAd = mock<BaseAd>()
   private val vungleFactory =
-    mock<VungleFactory> { on { createBannerAd(any(), any(), any()) } doReturn vungleBannerAd }
+    mock<VungleFactory> { on { createBannerAd(any(), any(), any()) } doReturn vungleBannerView }
 
   @Before
   fun setUp() {
@@ -94,13 +97,15 @@ class VungleRtbBannerAdTest {
     adapterRtbBannerAd.onAdLoaded(baseAd)
 
     val layoutParamsCaptor = argumentCaptor<RelativeLayout.LayoutParams>()
-    verify(vungleBannerAd, atLeastOnce()).layoutParams = layoutParamsCaptor.capture()
+    verify(vungleBannerView, atLeastOnce()).layoutParams = layoutParamsCaptor.capture()
     val layoutParams = layoutParamsCaptor.firstValue
-    assertThat(layoutParams.width).isEqualTo(VungleAdSize.BANNER.width)
-    assertThat(layoutParams.height).isEqualTo(VungleAdSize.BANNER.height)
+    assertThat(layoutParams.width).isEqualTo(WRAP_CONTENT)
+    assertThat(layoutParams.height).isEqualTo(WRAP_CONTENT)
+    assertThat(layoutParams.getRule(CENTER_HORIZONTAL)).isEqualTo(TRUE)
+    assertThat(layoutParams.getRule(CENTER_VERTICAL)).isEqualTo(TRUE)
     val bannerLayout = adapterRtbBannerAd.view as ViewGroup
     assertThat(bannerLayout.childCount).isEqualTo(1)
-    assertThat(bannerLayout.getChildAt(0)).isEqualTo(vungleBannerAd)
+    assertThat(bannerLayout.getChildAt(0)).isEqualTo(vungleBannerView)
     verify(bannerAdLoadCallback).onSuccess(adapterRtbBannerAd)
   }
 

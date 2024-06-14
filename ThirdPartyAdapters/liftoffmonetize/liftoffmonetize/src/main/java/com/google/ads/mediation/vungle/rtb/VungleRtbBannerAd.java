@@ -98,14 +98,6 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
 
     VungleAdSize bannerAdSize = VungleInterstitialAdapter.getVungleBannerAdSizeFromGoogleAdSize(
         context, adSize, placementForPlay);
-    if (bannerAdSize == null) {
-      AdError error = new AdError(ERROR_BANNER_SIZE_MISMATCH,
-          String.format("The requested banner size: %s is not supported by Vungle SDK.", adSize),
-          ERROR_DOMAIN);
-      Log.e(TAG, error.getMessage());
-      mediationAdLoadCallback.onFailure(error);
-      return;
-    }
 
     String adMarkup = mediationBannerAdConfiguration.getBidResponse();
     String watermark = mediationBannerAdConfiguration.getWatermark();
@@ -128,7 +120,7 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
 
   private void loadBanner(Context context, String placementId, AdSize gAdSize,
       VungleAdSize bannerAdSize, String adMarkup, String watermark) {
-    bannerAdView = vungleFactory.createBannerAd(context, placementId, bannerAdSize);
+    bannerLayout = new RelativeLayout(context);
 
     int adLayoutHeight = gAdSize.getHeightInPixels(context);
     // If the height is 0 (e.g. for inline adaptive banner requests), use the closest supported size
@@ -140,15 +132,20 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
     RelativeLayout.LayoutParams adViewLayoutParams =
         new RelativeLayout.LayoutParams(gAdSize.getWidthInPixels(context),
             adLayoutHeight);
-    bannerAdView.setLayoutParams(adViewLayoutParams);
+    bannerLayout.setLayoutParams(adViewLayoutParams);
 
+    bannerAdView = vungleFactory.createBannerAd(context, placementId, bannerAdSize);
     bannerAdView.setAdListener(VungleRtbBannerAd.this);
     if (!TextUtils.isEmpty(watermark)) {
       bannerAdView.getAdConfig().setWatermark(watermark);
     }
 
-    bannerLayout = new RelativeLayout(context);
-    bannerLayout.addView(bannerAdView);
+    // Add rules to ensure the banner ad is located at the center of the layout.
+    RelativeLayout.LayoutParams adParams = new RelativeLayout.LayoutParams(
+        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+    adParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+    adParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+    bannerLayout.addView(bannerAdView, adParams);
 
     bannerAdView.load(adMarkup);
   }
