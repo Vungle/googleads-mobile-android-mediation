@@ -242,7 +242,7 @@ public class VungleInterstitialAdapter
       return;
     }
 
-    VungleAdSize bannerAdSize = getVungleBannerAdSizeFromGoogleAdSize(context, adSize, placement);
+    VungleAdSize bannerAdSize = getVungleBannerAdSizeFromGoogleAdSize(adSize, placement);
 
     Log.d(TAG,
         "requestBannerAd for Placement: " + placement + " ### Adapter instance: " + this
@@ -255,7 +255,6 @@ public class VungleInterstitialAdapter
               @Override
               public void onInitializeSuccess() {
                 bannerLayout = new RelativeLayout(context);
-
                 int adLayoutHeight = adSize.getHeightInPixels(context);
                 // If the height is 0 (e.g. for inline adaptive banner requests), use the closest supported size
                 // as the height of the adLayout wrapper.
@@ -356,7 +355,7 @@ public class VungleInterstitialAdapter
     return bannerLayout;
   }
 
-  public static VungleAdSize getVungleBannerAdSizeFromGoogleAdSize(Context context, AdSize adSize,
+  public static VungleAdSize getVungleBannerAdSizeFromGoogleAdSize(AdSize adSize,
       String placementId) {
     VungleAdSize vngAdSize;
     if (VungleAds.isInline(placementId)) {
@@ -371,6 +370,48 @@ public class VungleInterstitialAdapter
             + vngAdSize);
 
     return vngAdSize;
+  }
+
+  // old logic
+  public static VungleAdSize getVungleBannerAdSizeFromGoogleAdSize(Context context, AdSize adSize,
+      String placementId) {
+    if (VungleAds.isInline(placementId)) {
+      return VungleAdSize.getAdSizeWithWidthAndHeight(adSize.getWidth(), adSize.getHeight());
+    }
+
+    ArrayList<AdSize> potentials = new ArrayList<>();
+    potentials.add(new AdSize(VungleAdSize.BANNER_SHORT.getWidth(),
+        VungleAdSize.BANNER_SHORT.getHeight()));
+    potentials.add(new AdSize(VungleAdSize.BANNER.getWidth(),
+        VungleAdSize.BANNER.getHeight()));
+    potentials.add(new AdSize(VungleAdSize.BANNER_LEADERBOARD.getWidth(),
+        VungleAdSize.BANNER_LEADERBOARD.getHeight()));
+    potentials.add(new AdSize(VungleAdSize.MREC.getWidth(),
+        VungleAdSize.MREC.getHeight()));
+
+    AdSize closestSize = MediationUtils.findClosestSize(context, adSize, potentials);
+    if (closestSize == null) {
+      return null;
+    }
+    Log.d(TAG,
+        "Found closest Liftoff Monetize banner ad size: " + closestSize + " for requested ad size: "
+            + adSize);
+
+    if (closestSize.getWidth() == VungleAdSize.BANNER_SHORT.getWidth()
+        && closestSize.getHeight() == VungleAdSize.BANNER_SHORT.getHeight()) {
+      return VungleAdSize.BANNER_SHORT;
+    } else if (closestSize.getWidth() == VungleAdSize.BANNER.getWidth()
+        && closestSize.getHeight() == VungleAdSize.BANNER.getHeight()) {
+      return VungleAdSize.BANNER;
+    } else if (closestSize.getWidth() == VungleAdSize.BANNER_LEADERBOARD.getWidth()
+        && closestSize.getHeight() == VungleAdSize.BANNER_LEADERBOARD.getHeight()) {
+      return VungleAdSize.BANNER_LEADERBOARD;
+    } else if (closestSize.getWidth() == VungleAdSize.MREC.getWidth()
+        && closestSize.getHeight() == VungleAdSize.MREC.getHeight()) {
+      return VungleAdSize.MREC;
+    }
+
+    return null;
   }
 
 }

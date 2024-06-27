@@ -21,7 +21,6 @@ class VungleBannerSizeAdapterTest {
   @Test
   fun getVungleBannerAdSize_forGoogleSize300By50_returnsLiftoffSizeBannerShort() {
     val liftoffBannerSize = VungleInterstitialAdapter.getVungleBannerAdSizeFromGoogleAdSize(
-        context,
         AdSize(300, 50),
         placementId
       )
@@ -32,7 +31,6 @@ class VungleBannerSizeAdapterTest {
   @Test
   fun getVungleBannerAdSize_forGoogleSizeRegularBanner_returnsLiftoffSizeRegularBanner() {
     val liftoffBannerSize = VungleInterstitialAdapter.getVungleBannerAdSizeFromGoogleAdSize(
-      context,
       AdSize.BANNER,
       placementId
     )
@@ -43,7 +41,6 @@ class VungleBannerSizeAdapterTest {
   @Test
   fun getVungleBannerAdSize_forGoogleSizeLeaderboard_returnsLiftoffSizeLeaderboard() {
     val liftoffBannerSize = VungleInterstitialAdapter.getVungleBannerAdSizeFromGoogleAdSize(
-      context,
       AdSize.LEADERBOARD,
       placementId
     )
@@ -54,7 +51,6 @@ class VungleBannerSizeAdapterTest {
   @Test
   fun getVungleBannerAdSize_forGoogleSizeMediumRectangle_returnsLiftoffSizeMediumRectangle() {
     val liftoffBannerSize = VungleInterstitialAdapter.getVungleBannerAdSizeFromGoogleAdSize(
-        context,
         AdSize.MEDIUM_RECTANGLE,
         placementId
       )
@@ -65,7 +61,6 @@ class VungleBannerSizeAdapterTest {
   @Test
   fun getVungleBannerAdSize_forUnsupportedGoogleBannerSize_returnsCustomSize() {
     val liftoffBannerSize = VungleInterstitialAdapter.getVungleBannerAdSizeFromGoogleAdSize(
-        context,
         AdSize.WIDE_SKYSCRAPER,
         placementId
       )

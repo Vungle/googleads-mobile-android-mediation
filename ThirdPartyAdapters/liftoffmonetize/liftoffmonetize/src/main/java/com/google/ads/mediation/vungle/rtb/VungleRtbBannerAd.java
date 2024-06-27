@@ -97,7 +97,7 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
     AdSize adSize = mediationBannerAdConfiguration.getAdSize();
 
     VungleAdSize bannerAdSize = VungleInterstitialAdapter.getVungleBannerAdSizeFromGoogleAdSize(
-        context, adSize, placementForPlay);
+        adSize, placementForPlay);
 
     String adMarkup = mediationBannerAdConfiguration.getBidResponse();
     String watermark = mediationBannerAdConfiguration.getWatermark();
