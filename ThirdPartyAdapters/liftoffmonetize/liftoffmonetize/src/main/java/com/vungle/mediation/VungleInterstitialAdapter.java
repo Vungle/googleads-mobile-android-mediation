@@ -17,7 +17,6 @@ package com.vungle.mediation;
 import static com.google.ads.mediation.vungle.VungleConstants.KEY_APP_ID;
 import static com.google.ads.mediation.vungle.VungleConstants.KEY_ORIENTATION;
 import static com.google.ads.mediation.vungle.VungleConstants.KEY_PLACEMENT_ID;
-import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_BANNER_SIZE_MISMATCH;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_DOMAIN;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_INVALID_SERVER_PARAMETERS;
 import static com.google.ads.mediation.vungle.VungleMediationAdapter.TAG;
@@ -357,13 +356,8 @@ public class VungleInterstitialAdapter
 
   public static VungleAdSize getVungleBannerAdSizeFromGoogleAdSize(AdSize adSize,
       String placementId) {
-    VungleAdSize vngAdSize;
-    if (VungleAds.isInline(placementId)) {
-      vngAdSize = VungleAdSize.getAdSizeWithWidthAndHeight(adSize.getWidth(), adSize.getHeight());
-    } else {
-      vngAdSize = VungleAdSize.getValidAdSizeFromSize(adSize.getWidth(),
-          adSize.getHeight(), placementId);
-    }
+    VungleAdSize vngAdSize = VungleAdSize.getValidAdSizeFromSize(adSize.getWidth(),
+        adSize.getHeight(), placementId);
 
     Log.d(TAG,
         "The requested ad size: " + adSize + "; placementId=" + placementId + "; vngAdSize="
