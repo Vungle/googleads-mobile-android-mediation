@@ -98,24 +98,9 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
           mediationExtras.getInt(KEY_ORIENTATION, AdConfig.AUTO_ROTATE));
     }
 
-    VungleInitializer.getInstance()
-        .initialize(
-            appID, context,
-            new VungleInitializer.VungleInitializationListener() {
-              @Override
-              public void onInitializeSuccess() {
-                interstitialAd = new InterstitialAd(context, placement, adConfig);
-                interstitialAd.setAdListener(new VungleInterstitialListener());
-                interstitialAd.load(null);
-              }
-
-              @Override
-              public void onInitializeError(AdError error) {
-                interstitialListener
-                    .onAdFailedToLoad(VungleInterstitialAdapter.this, error);
-                Log.w(TAG, error.toString());
-              }
-            });
+    interstitialAd = new InterstitialAd(context, placement, adConfig);
+    interstitialAd.setAdListener(new VungleInterstitialListener());
+    interstitialAd.load(null);
   }
 
   @Override
@@ -241,50 +226,33 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
         "requestBannerAd for Placement: " + placement + " ### Adapter instance: " + this
             .hashCode());
 
-    VungleInitializer.getInstance()
-        .initialize(
-            appID,
-            context,
-            new VungleInitializer.VungleInitializationListener() {
-              @Override
-              public void onInitializeSuccess() {
-                bannerLayout = new RelativeLayout(context);
-                int adLayoutHeight = adSize.getHeightInPixels(context);
-                // If the height is 0 (e.g. for inline adaptive banner requests), use the closest
-                // supported size
-                // as the height of the adLayout wrapper.
-                if (adLayoutHeight <= 0) {
-                  float density = context.getResources().getDisplayMetrics().density;
-                  adLayoutHeight = Math.round(bannerAdSize.getHeight() * density);
-                }
-                RelativeLayout.LayoutParams adViewLayoutParams =
-                    new RelativeLayout.LayoutParams(
-                        adSize.getWidthInPixels(context), adLayoutHeight);
-                bannerLayout.setLayoutParams(adViewLayoutParams);
+    bannerLayout = new RelativeLayout(context);
+    int adLayoutHeight = adSize.getHeightInPixels(context);
+    // If the height is 0 (e.g. for inline adaptive banner requests), use the closest
+    // supported size
+    // as the height of the adLayout wrapper.
+    if (adLayoutHeight <= 0) {
+      float density = context.getResources().getDisplayMetrics().density;
+      adLayoutHeight = Math.round(bannerAdSize.getHeight() * density);
+    }
+    RelativeLayout.LayoutParams adViewLayoutParams =
+        new RelativeLayout.LayoutParams(
+            adSize.getWidthInPixels(context), adLayoutHeight);
+    bannerLayout.setLayoutParams(adViewLayoutParams);
 
-                bannerAdView = new VungleBannerView(context, placement, bannerAdSize);
-                bannerAdView.setAdListener(new VungleBannerListener());
+    bannerAdView = new VungleBannerView(context, placement, bannerAdSize);
+    bannerAdView.setAdListener(new VungleBannerListener());
 
-                // Add rules to ensure the banner ad is located at the center of the layout.
-                RelativeLayout.LayoutParams adParams =
-                    new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-                adParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-                adParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-                bannerLayout.addView(bannerAdView, adParams);
+    // Add rules to ensure the banner ad is located at the center of the layout.
+    RelativeLayout.LayoutParams adParams =
+        new RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.WRAP_CONTENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT);
+    adParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+    adParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+    bannerLayout.addView(bannerAdView, adParams);
 
-                bannerAdView.load(null);
-              }
-
-              @Override
-              public void onInitializeError(AdError error) {
-                Log.w(TAG, error.toString());
-                if (mediationBannerListener != null) {
-                  mediationBannerListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
-                }
-              }
-            });
+    bannerAdView.load(null);
   }
 
   private class VungleBannerListener implements BannerAdListener {

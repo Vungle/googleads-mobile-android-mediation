@@ -310,28 +310,36 @@ public class VungleMediationAdapter extends RtbAdapter implements MediationRewar
 
     Context context = mediationRewardedAdConfiguration.getContext();
 
-    VungleInitializer.getInstance()
-        .initialize(
-            appID,
-            context,
-            new VungleInitializationListener() {
-              @Override
-              public void onInitializeSuccess() {
-                rewardedAd = vungleFactory.createRewardedAd(context, placement, adConfig);
-                rewardedAd.setAdListener(VungleMediationAdapter.this);
-                if (!TextUtils.isEmpty(userId)) {
-                  rewardedAd.setUserId(userId);
-                }
+    rewardedAd = vungleFactory.createRewardedAd(context, placement, adConfig);
+    rewardedAd.setAdListener(VungleMediationAdapter.this);
+    if (!TextUtils.isEmpty(userId)) {
+      rewardedAd.setUserId(userId);
+    }
 
-                rewardedAd.load(null);
-              }
+    rewardedAd.load(null);
 
-              @Override
-              public void onInitializeError(AdError error) {
-                Log.w(TAG, error.toString());
-                VungleMediationAdapter.this.mediationAdLoadCallback.onFailure(error);
-              }
-            });
+//    VungleInitializer.getInstance()
+//        .initialize(
+//            appID,
+//            context,
+//            new VungleInitializationListener() {
+//              @Override
+//              public void onInitializeSuccess() {
+//                rewardedAd = vungleFactory.createRewardedAd(context, placement, adConfig);
+//                rewardedAd.setAdListener(VungleMediationAdapter.this);
+//                if (!TextUtils.isEmpty(userId)) {
+//                  rewardedAd.setUserId(userId);
+//                }
+//
+//                rewardedAd.load(null);
+//              }
+//
+//              @Override
+//              public void onInitializeError(AdError error) {
+//                Log.w(TAG, error.toString());
+//                VungleMediationAdapter.this.mediationAdLoadCallback.onFailure(error);
+//              }
+//            });
   }
 
   @Override

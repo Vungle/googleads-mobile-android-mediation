@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import com.google.ads.mediation.vungle.VungleConstants
 import com.google.ads.mediation.vungle.VungleFactory
-import com.google.ads.mediation.vungle.VungleInitializer
-import com.google.ads.mediation.vungle.VungleInitializer.VungleInitializationListener
 import com.google.ads.mediation.vungle.VungleMediationAdapter
 import com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_CANNOT_PLAY_AD
 import com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_DOMAIN
@@ -75,33 +73,17 @@ abstract class VungleAppOpenAd(
 
     val context: Context = mediationAppOpenAdConfiguration.context
 
-    VungleInitializer.getInstance()
-      .initialize(
-        // Safe to access appId here since we do a null-check for appId earlier in the function and
-        // return if it's null.
-        appId!!,
-        context,
-        object : VungleInitializationListener {
-          override fun onInitializeSuccess() {
-            val adConfig = vungleFactory.createAdConfig()
-            if (mediationExtras.containsKey(VungleConstants.KEY_ORIENTATION)) {
-              adConfig.adOrientation =
-                mediationExtras.getInt(VungleConstants.KEY_ORIENTATION, AdConfig.AUTO_ROTATE)
-            }
-            maybeAddWatermarkToVungleAdConfig(adConfig, mediationAppOpenAdConfiguration)
-            // Note: Safe to access placement here since we do a null-check for placement earlier in
-            // the function and return if it's null.
-            appOpenAd = vungleFactory.createInterstitialAd(context, placement!!, adConfig)
-            appOpenAd.adListener = this@VungleAppOpenAd
-            appOpenAd.load(getAdMarkup(mediationAppOpenAdConfiguration))
-          }
-
-          override fun onInitializeError(error: AdError) {
-            Log.w(TAG, error.toString())
-            mediationAdLoadCallback.onFailure(error)
-          }
-        },
-      )
+    val adConfig = vungleFactory.createAdConfig()
+    if (mediationExtras.containsKey(VungleConstants.KEY_ORIENTATION)) {
+      adConfig.adOrientation =
+        mediationExtras.getInt(VungleConstants.KEY_ORIENTATION, AdConfig.AUTO_ROTATE)
+    }
+    maybeAddWatermarkToVungleAdConfig(adConfig, mediationAppOpenAdConfiguration)
+    // Note: Safe to access placement here since we do a null-check for placement earlier in
+    // the function and return if it's null.
+    appOpenAd = vungleFactory.createInterstitialAd(context, placement, adConfig)
+    appOpenAd.adListener = this@VungleAppOpenAd
+    appOpenAd.load(getAdMarkup(mediationAppOpenAdConfiguration))
   }
 
   /** Gets ad markup that needs to be passed in when loading Liftoff's app open ad. */

@@ -28,7 +28,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import com.google.ads.mediation.vungle.VungleFactory;
-import com.google.ads.mediation.vungle.VungleInitializer;
 import com.google.ads.mediation.vungle.VungleMediationAdapter;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdSize;
@@ -50,7 +49,6 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
       mediationAdLoadCallback;
   private MediationBannerAdCallback mediationBannerAdCallback;
 
-  private VungleBannerView bannerAdView;
   private RelativeLayout bannerLayout;
 
   private final VungleFactory vungleFactory;
@@ -101,20 +99,7 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
     String adMarkup = mediationBannerAdConfiguration.getBidResponse();
     String watermark = mediationBannerAdConfiguration.getWatermark();
 
-    VungleInitializer.getInstance()
-        .initialize(appID, context,
-            new VungleInitializer.VungleInitializationListener() {
-              @Override
-              public void onInitializeSuccess() {
-                loadBanner(context, placementForPlay, adSize, bannerAdSize, adMarkup, watermark);
-              }
-
-              @Override
-              public void onInitializeError(AdError error) {
-                Log.w(TAG, error.toString());
-                mediationAdLoadCallback.onFailure(error);
-              }
-            });
+    loadBanner(context, placementForPlay, adSize, bannerAdSize, adMarkup, watermark);
   }
 
   private void loadBanner(
@@ -137,7 +122,7 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
             adLayoutHeight);
     bannerLayout.setLayoutParams(adViewLayoutParams);
 
-    bannerAdView = vungleFactory.createBannerAd(context, placementId, bannerAdSize);
+    VungleBannerView bannerAdView = vungleFactory.createBannerAd(context, placementId, bannerAdSize);
     bannerAdView.setAdListener(VungleRtbBannerAd.this);
 
     if (!TextUtils.isEmpty(watermark)) {

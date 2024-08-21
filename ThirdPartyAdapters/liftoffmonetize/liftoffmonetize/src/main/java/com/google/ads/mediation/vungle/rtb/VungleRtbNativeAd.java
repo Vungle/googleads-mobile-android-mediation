@@ -32,7 +32,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import com.google.ads.mediation.vungle.VungleFactory;
-import com.google.ads.mediation.vungle.VungleInitializer;
 import com.google.ads.mediation.vungle.VungleMediationAdapter;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.formats.NativeAd.Image;
@@ -121,29 +120,14 @@ public class VungleRtbNativeAd extends UnifiedNativeAdMapper implements NativeAd
 
     String watermark = adConfiguration.getWatermark();
 
-    VungleInitializer.getInstance()
-        .initialize(
-            appID,
-            context,
-            new VungleInitializer.VungleInitializationListener() {
-              @Override
-              public void onInitializeSuccess() {
-                nativeAd = vungleFactory.createNativeAd(context, placementId);
-                nativeAd.setAdOptionsPosition(adOptionsPosition);
-                nativeAd.setAdListener(VungleRtbNativeAd.this);
-                mediaView = new MediaView(context);
-                if (!TextUtils.isEmpty(watermark)) {
-                  nativeAd.getAdConfig().setWatermark(watermark);
-                }
-                nativeAd.load(adMarkup);
-              }
-
-              @Override
-              public void onInitializeError(AdError error) {
-                Log.d(TAG, error.toString());
-                adLoadCallback.onFailure(error);
-              }
-            });
+    nativeAd = vungleFactory.createNativeAd(context, placementId);
+    nativeAd.setAdOptionsPosition(adOptionsPosition);
+    nativeAd.setAdListener(VungleRtbNativeAd.this);
+    mediaView = new MediaView(context);
+    if (!TextUtils.isEmpty(watermark)) {
+      nativeAd.getAdConfig().setWatermark(watermark);
+    }
+    nativeAd.load(adMarkup);
   }
 
   @Override

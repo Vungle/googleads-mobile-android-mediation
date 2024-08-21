@@ -29,7 +29,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.ads.mediation.vungle.VungleFactory;
-import com.google.ads.mediation.vungle.VungleInitializer;
 import com.google.ads.mediation.vungle.VungleMediationAdapter;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.mediation.MediationAdLoadCallback;
@@ -112,24 +111,9 @@ public class VungleRtbInterstitialAd implements MediationInterstitialAd, Interst
 
     Context context = mediationInterstitialAdConfiguration.getContext();
 
-    VungleInitializer.getInstance()
-        .initialize(
-            appID,
-            context,
-            new VungleInitializer.VungleInitializationListener() {
-              @Override
-              public void onInitializeSuccess() {
-                interstitialAd = vungleFactory.createInterstitialAd(context, placement, adConfig);
-                interstitialAd.setAdListener(VungleRtbInterstitialAd.this);
-                interstitialAd.load(adMarkup);
-              }
-
-              @Override
-              public void onInitializeError(AdError error) {
-                Log.w(TAG, error.toString());
-                mediationAdLoadCallback.onFailure(error);
-              }
-            });
+    interstitialAd = vungleFactory.createInterstitialAd(context, placement, adConfig);
+    interstitialAd.setAdListener(VungleRtbInterstitialAd.this);
+    interstitialAd.load(adMarkup);
   }
 
   @Override
