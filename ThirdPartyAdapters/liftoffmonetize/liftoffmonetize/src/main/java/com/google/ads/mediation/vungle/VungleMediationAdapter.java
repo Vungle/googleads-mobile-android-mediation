@@ -26,7 +26,6 @@ import android.util.Log;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
-import com.google.ads.mediation.vungle.VungleInitializer.VungleInitializationListener;
 import com.google.ads.mediation.vungle.rtb.VungleRtbAppOpenAd;
 import com.google.ads.mediation.vungle.rtb.VungleRtbBannerAd;
 import com.google.ads.mediation.vungle.rtb.VungleRtbInterstitialAd;
@@ -34,6 +33,7 @@ import com.google.ads.mediation.vungle.rtb.VungleRtbNativeAd;
 import com.google.ads.mediation.vungle.rtb.VungleRtbRewardedAd;
 import com.google.ads.mediation.vungle.waterfall.VungleWaterfallAppOpenAd;
 import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.VersionInfo;
 import com.google.android.gms.ads.mediation.InitializationCompleteCallback;
 import com.google.android.gms.ads.mediation.MediationAdLoadCallback;
@@ -59,6 +59,7 @@ import com.google.android.gms.ads.mediation.rtb.SignalCallbacks;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.vungle.ads.AdConfig;
 import com.vungle.ads.BaseAd;
+import com.vungle.ads.InitializationListener;
 import com.vungle.ads.RewardedAd;
 import com.vungle.ads.RewardedAdListener;
 import com.vungle.ads.VungleError;
@@ -248,18 +249,21 @@ public class VungleMediationAdapter extends RtbAdapter implements MediationRewar
       Log.w(TAG, logMessage);
     }
 
-    VungleInitializer.getInstance().initialize(appID, context, new VungleInitializationListener() {
+    VungleInitializer.getInstance()
+        .updateCoppaStatus(MobileAds.getRequestConfiguration().getTagForChildDirectedTreatment());
+
+    VungleInitializer.getInstance().initialize(appID, context, new InitializationListener() {
       @Override
-      public void onInitializeSuccess() {
+      public void onSuccess() {
         initializationCompleteCallback.onInitializationSucceeded();
       }
 
       @Override
-      public void onInitializeError(AdError error) {
+      public void onError(@NonNull VungleError vungleError) {
+        AdError error = getAdError(vungleError);
         Log.w(TAG, error.toString());
         initializationCompleteCallback.onInitializationFailed(error.toString());
       }
-
     });
   }
 

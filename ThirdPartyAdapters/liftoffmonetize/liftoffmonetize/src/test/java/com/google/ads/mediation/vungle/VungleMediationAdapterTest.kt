@@ -24,7 +24,6 @@ import com.google.ads.mediation.vungle.VungleConstants.KEY_PLACEMENT_ID
 import com.google.ads.mediation.vungle.VungleConstants.KEY_USER_ID
 import com.google.ads.mediation.vungle.VungleInitializer.getInstance
 import com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_DOMAIN
-import com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_INITIALIZATION_FAILURE
 import com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_INVALID_SERVER_PARAMETERS
 import com.google.ads.mediation.vungle.VungleMediationAdapter.getAdapterVersion
 import com.google.ads.mediation.vungle.rtb.VungleRtbBannerAd
@@ -53,6 +52,7 @@ import com.google.android.gms.ads.nativead.NativeAdOptions.ADCHOICES_TOP_RIGHT
 import com.google.common.truth.Truth.assertThat
 import com.vungle.ads.AdConfig
 import com.vungle.ads.AdConfig.Companion.LANDSCAPE
+import com.vungle.ads.InitializationListener
 import com.vungle.ads.InterstitialAd
 import com.vungle.ads.NativeAd
 import com.vungle.ads.NativeAd.Companion.BOTTOM_LEFT
@@ -60,6 +60,7 @@ import com.vungle.ads.NativeAd.Companion.BOTTOM_RIGHT
 import com.vungle.ads.NativeAd.Companion.TOP_LEFT
 import com.vungle.ads.NativeAd.Companion.TOP_RIGHT
 import com.vungle.ads.RewardedAd
+import com.vungle.ads.SdkNotInitialized
 import com.vungle.ads.VungleAdSize
 import com.vungle.ads.VungleBannerView
 import org.junit.Before
@@ -183,7 +184,7 @@ class VungleMediationAdapterTest {
   fun initialize_oneMediationConfiguration_callsOnSuccess() {
     val serverParameters = bundleOf(VungleConstants.KEY_APP_ID to TEST_APP_ID_1)
     val configs = listOf(createMediationConfiguration(serverParameters = serverParameters))
-    val listener = argumentCaptor<VungleInitializer.VungleInitializationListener>()
+    val listener = argumentCaptor<InitializationListener>()
 
     mockStatic(VungleInitializer::class.java).use {
       whenever(getInstance()) doReturn mockVungleInitializer
@@ -191,7 +192,7 @@ class VungleMediationAdapterTest {
       adapter.initialize(context, mockInitializationCompleteCallback, configs)
 
       verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), any(), listener.capture())
-      listener.firstValue.onInitializeSuccess()
+      listener.firstValue.onSuccess()
       verify(mockInitializationCompleteCallback).onInitializationSucceeded()
     }
   }
@@ -204,32 +205,33 @@ class VungleMediationAdapterTest {
         createMediationConfiguration(serverParameters = serverParameters),
         createMediationConfiguration(serverParameters = serverParameters),
       )
-    val listener = argumentCaptor<VungleInitializer.VungleInitializationListener>()
+    val listener = argumentCaptor<InitializationListener>()
 
     mockStatic(VungleInitializer::class.java).use {
       whenever(getInstance()) doReturn mockVungleInitializer
       adapter.initialize(context, mockInitializationCompleteCallback, configs)
 
       verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), any(), listener.capture())
-      listener.firstValue.onInitializeSuccess()
+      listener.firstValue.onSuccess()
       verify(mockInitializationCompleteCallback).onInitializationSucceeded()
     }
   }
 
   @Test
   fun initialize_vungleSdkInitFails_callsOnFailure() {
-    val error = AdError(ERROR_INITIALIZATION_FAILURE, "Oops.", ERROR_DOMAIN)
+    val error = SdkNotInitialized()
     val serverParameters = bundleOf(VungleConstants.KEY_APP_ID to TEST_APP_ID_1)
     val configs = listOf(createMediationConfiguration(serverParameters = serverParameters))
-    val listener = argumentCaptor<VungleInitializer.VungleInitializationListener>()
+    val listener = argumentCaptor<InitializationListener>()
 
     mockStatic(VungleInitializer::class.java).use {
       whenever(getInstance()) doReturn mockVungleInitializer
       adapter.initialize(context, mockInitializationCompleteCallback, configs)
 
       verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), any(), listener.capture())
-      listener.firstValue.onInitializeError(error)
-      verify(mockInitializationCompleteCallback).onInitializationFailed(error.toString())
+      listener.firstValue.onError(error)
+      val adError = VungleMediationAdapter.getAdError(error)
+      verify(mockInitializationCompleteCallback).onInitializationFailed(adError.toString())
     }
   }
 

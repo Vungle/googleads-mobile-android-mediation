@@ -32,12 +32,10 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argThat
-import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.never
-import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.verifyNoMoreInteractions
@@ -84,13 +82,6 @@ class VungleRtbNativeAdTest {
         nativeAdLoadCallback,
         vungleFactory
       )
-
-    doAnswer { invocation ->
-        val args: Array<Any> = invocation.arguments
-        (args[2] as VungleInitializer.VungleInitializationListener).onInitializeSuccess()
-      }
-      .whenever(vungleInitializer)
-      .initialize(any(), any(), any())
   }
 
   @Test
