@@ -232,13 +232,11 @@ public class VungleMediationAdapter extends RtbAdapter implements MediationRewar
     }
 
     int count = appIDs.size();
-    if (count <= 0) {
-      if (initializationCompleteCallback != null) {
-        AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS, "Missing or Invalid App ID.",
-            ERROR_DOMAIN);
-        Log.w(TAG, error.toString());
-        initializationCompleteCallback.onInitializationFailed(error.toString());
-      }
+    if (appIDs.isEmpty()) {
+      AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS, "Missing or Invalid App ID.",
+          ERROR_DOMAIN);
+      Log.w(TAG, error.toString());
+      initializationCompleteCallback.onInitializationFailed(error.toString());
       return;
     }
 
@@ -317,29 +315,6 @@ public class VungleMediationAdapter extends RtbAdapter implements MediationRewar
     }
 
     rewardedAd.load(null);
-
-//    VungleInitializer.getInstance()
-//        .initialize(
-//            appID,
-//            context,
-//            new VungleInitializationListener() {
-//              @Override
-//              public void onInitializeSuccess() {
-//                rewardedAd = vungleFactory.createRewardedAd(context, placement, adConfig);
-//                rewardedAd.setAdListener(VungleMediationAdapter.this);
-//                if (!TextUtils.isEmpty(userId)) {
-//                  rewardedAd.setUserId(userId);
-//                }
-//
-//                rewardedAd.load(null);
-//              }
-//
-//              @Override
-//              public void onInitializeError(AdError error) {
-//                Log.w(TAG, error.toString());
-//                VungleMediationAdapter.this.mediationAdLoadCallback.onFailure(error);
-//              }
-//            });
   }
 
   @Override

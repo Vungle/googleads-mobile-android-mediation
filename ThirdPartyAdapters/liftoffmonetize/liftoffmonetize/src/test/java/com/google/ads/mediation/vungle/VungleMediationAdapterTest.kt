@@ -22,12 +22,10 @@ import com.google.ads.mediation.vungle.VungleConstants.KEY_APP_ID
 import com.google.ads.mediation.vungle.VungleConstants.KEY_ORIENTATION
 import com.google.ads.mediation.vungle.VungleConstants.KEY_PLACEMENT_ID
 import com.google.ads.mediation.vungle.VungleConstants.KEY_USER_ID
-import com.google.ads.mediation.vungle.VungleInitializer.VungleInitializationListener
 import com.google.ads.mediation.vungle.VungleInitializer.getInstance
 import com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_DOMAIN
 import com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_INITIALIZATION_FAILURE
 import com.google.ads.mediation.vungle.VungleMediationAdapter.ERROR_INVALID_SERVER_PARAMETERS
-import com.google.ads.mediation.vungle.VungleMediationAdapter.VUNGLE_SDK_ERROR_DOMAIN
 import com.google.ads.mediation.vungle.VungleMediationAdapter.getAdapterVersion
 import com.google.ads.mediation.vungle.rtb.VungleRtbBannerAd
 import com.google.android.gms.ads.AdError
@@ -64,11 +62,9 @@ import com.vungle.ads.NativeAd.Companion.TOP_RIGHT
 import com.vungle.ads.RewardedAd
 import com.vungle.ads.VungleAdSize
 import com.vungle.ads.VungleBannerView
-import com.vungle.ads.VungleError
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.doAnswer
 import org.mockito.Mockito.mockStatic
 import org.mockito.Mockito.verify
 import org.mockito.kotlin.any
@@ -93,10 +89,12 @@ class VungleMediationAdapterTest {
   private val mockVungleInitializer = mock<VungleInitializer>()
   private val vungleAdConfig = mock<AdConfig>()
   private val vungleNativeAd = mock<NativeAd> { on { adConfig } doReturn vungleAdConfig }
+  private val vungleRewardedAd = mock<RewardedAd> { on { adConfig } doReturn vungleAdConfig }
   private val vungleFactory =
     mock<VungleFactory> {
       on { createNativeAd(any(), any()) } doReturn vungleNativeAd
       on { createAdConfig() } doReturn vungleAdConfig
+      on { createRewardedAd(any(), any(), any()) } doReturn vungleRewardedAd
     }
   private val mediationNativeAdConfiguration =
     mock<MediationNativeAdConfiguration> {
@@ -264,7 +262,7 @@ class VungleMediationAdapterTest {
         createMediationRewardedAdConfiguration(
           context = context,
           serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
+          bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
         ),
         mock(),
       )
@@ -275,24 +273,18 @@ class VungleMediationAdapterTest {
 
   @Test
   fun loadRewardedAd_loadsLiftoffRewardedAd() {
-    stubVungleInitializerToSucceed()
     val vungleRewardedAd = mock<RewardedAd>()
     whenever(vungleFactory.createRewardedAd(any(), any(), any())) doReturn vungleRewardedAd
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
+    adapter.loadRewardedAd(
+      createMediationRewardedAdConfiguration(
+        context = context,
+        serverParameters =
+        bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
+        mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE, KEY_USER_ID to TEST_USER_ID),
+      ),
+      mock(),
+    )
 
-      adapter.loadRewardedAd(
-        createMediationRewardedAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE, KEY_USER_ID to TEST_USER_ID),
-        ),
-        mock(),
-      )
-    }
-
-    verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), eq(context), any())
     verify(vungleAdConfig).adOrientation = LANDSCAPE
     verify(vungleFactory).createRewardedAd(context, TEST_PLACEMENT_ID, vungleAdConfig)
     verify(vungleRewardedAd).adListener = adapter
@@ -351,39 +343,6 @@ class VungleMediationAdapterTest {
   }
 
   @Test
-  fun loadRewardedAd_onLiftoffSdkInitializationError_callsLoadFailure() {
-    val liftoffSdkInitError =
-      AdError(
-        VungleError.UNKNOWN_ERROR,
-        "Liftoff Monetize SDK initialization failed.",
-        VUNGLE_SDK_ERROR_DOMAIN,
-      )
-    doAnswer { invocation ->
-        val args: Array<Any> = invocation.arguments
-        (args[2] as VungleInitializationListener).onInitializeError(liftoffSdkInitError)
-      }
-      .whenever(mockVungleInitializer)
-      .initialize(any(), any(), any())
-    val rewardedAdLoadCallback =
-      mock<MediationAdLoadCallback<MediationRewardedAd, MediationRewardedAdCallback>>()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadRewardedAd(
-        createMediationRewardedAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE, KEY_USER_ID to TEST_USER_ID),
-        ),
-        rewardedAdLoadCallback,
-      )
-    }
-
-    verify(rewardedAdLoadCallback).onFailure(liftoffSdkInitError)
-  }
-
-  @Test
   fun loadNativeAd_updatesCoppaStatus() {
     mockStatic(VungleInitializer::class.java).use {
       whenever(getInstance()) doReturn mockVungleInitializer
@@ -396,21 +355,15 @@ class VungleMediationAdapterTest {
 
   @Test
   fun loadNativeAd_loadsLiftoffNativeAd() {
-    stubVungleInitializerToSucceed()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
+    adapter.loadNativeAd(
+      createMediationNativeAdConfiguration(
+        context = context,
+        serverParameters =
+        bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
+      ),
+      mock(),
+    )
 
-      adapter.loadNativeAd(
-        createMediationNativeAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-        ),
-        mock(),
-      )
-    }
-
-    verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), eq(context), any())
     verify(vungleFactory).createNativeAd(context, TEST_PLACEMENT_ID)
     verify(vungleNativeAd).adOptionsPosition = TOP_RIGHT
     verify(vungleNativeAd).adListener = any()
@@ -419,56 +372,36 @@ class VungleMediationAdapterTest {
 
   @Test
   fun loadNativeAd_forTopLeftAdChoicesPlacement_setsTopLeftPositionOnLiftoffSdk() {
-    stubVungleInitializerToSucceed()
     whenever(mediationNativeAdConfiguration.nativeAdOptions) doReturn
       NativeAdOptions.Builder().setAdChoicesPlacement(ADCHOICES_TOP_LEFT).build()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadNativeAd(mediationNativeAdConfiguration, mock())
-    }
+    adapter.loadNativeAd(mediationNativeAdConfiguration, mock())
 
     verify(vungleNativeAd).adOptionsPosition = TOP_LEFT
   }
 
   @Test
   fun loadNativeAd_forBottomLeftAdChoicesPlacement_setsBottomLeftPositionOnLiftoffSdk() {
-    stubVungleInitializerToSucceed()
     whenever(mediationNativeAdConfiguration.nativeAdOptions) doReturn
       NativeAdOptions.Builder().setAdChoicesPlacement(ADCHOICES_BOTTOM_LEFT).build()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadNativeAd(mediationNativeAdConfiguration, mock())
-    }
+    adapter.loadNativeAd(mediationNativeAdConfiguration, mock())
 
     verify(vungleNativeAd).adOptionsPosition = BOTTOM_LEFT
   }
 
   @Test
   fun loadNativeAd_forBottomRightAdChoicesPlacement_setsBottomRightPositionOnLiftoffSdk() {
-    stubVungleInitializerToSucceed()
     whenever(mediationNativeAdConfiguration.nativeAdOptions) doReturn
       NativeAdOptions.Builder().setAdChoicesPlacement(ADCHOICES_BOTTOM_RIGHT).build()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadNativeAd(mediationNativeAdConfiguration, mock())
-    }
+    adapter.loadNativeAd(mediationNativeAdConfiguration, mock())
 
     verify(vungleNativeAd).adOptionsPosition = BOTTOM_RIGHT
   }
 
   @Test
   fun loadNativeAd_forTopRightAdChoicesPlacement_setsTopRightPositionOnLiftoffSdk() {
-    stubVungleInitializerToSucceed()
     whenever(mediationNativeAdConfiguration.nativeAdOptions) doReturn
       NativeAdOptions.Builder().setAdChoicesPlacement(ADCHOICES_TOP_RIGHT).build()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadNativeAd(mediationNativeAdConfiguration, mock())
-    }
+    adapter.loadNativeAd(mediationNativeAdConfiguration, mock())
 
     verify(vungleNativeAd).adOptionsPosition = TOP_RIGHT
   }
@@ -522,38 +455,6 @@ class VungleMediationAdapterTest {
   }
 
   @Test
-  fun loadNativeAd_onLiftoffSdkInitializationError_callsLoadFailure() {
-    val liftoffSdkInitError =
-      AdError(
-        VungleError.UNKNOWN_ERROR,
-        "Liftoff Monetize SDK initialization failed.",
-        VUNGLE_SDK_ERROR_DOMAIN,
-      )
-    doAnswer { invocation ->
-        val args: Array<Any> = invocation.arguments
-        (args[2] as VungleInitializationListener).onInitializeError(liftoffSdkInitError)
-      }
-      .whenever(mockVungleInitializer)
-      .initialize(any(), any(), any())
-    val nativeAdLoadCallback =
-      mock<MediationAdLoadCallback<UnifiedNativeAdMapper, MediationNativeAdCallback>>()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadNativeAd(
-        createMediationNativeAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-        ),
-        nativeAdLoadCallback,
-      )
-    }
-
-    verify(nativeAdLoadCallback).onFailure(liftoffSdkInitError)
-  }
-
-  @Test
   fun loadRewardedInterstitialAd_updatesCoppaStatus() {
     mockStatic(VungleInitializer::class.java).use {
       whenever(getInstance()) doReturn mockVungleInitializer
@@ -562,7 +463,7 @@ class VungleMediationAdapterTest {
         createMediationRewardedAdConfiguration(
           context = context,
           serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
+          bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
         ),
         mock(),
       )
@@ -573,24 +474,18 @@ class VungleMediationAdapterTest {
 
   @Test
   fun loadRewardedInterstitialAd_loadsLiftoffRewardedAd() {
-    stubVungleInitializerToSucceed()
     val vungleRewardedAd = mock<RewardedAd>()
     whenever(vungleFactory.createRewardedAd(any(), any(), any())) doReturn vungleRewardedAd
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
+    adapter.loadRewardedInterstitialAd(
+      createMediationRewardedAdConfiguration(
+        context = context,
+        serverParameters =
+        bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
+        mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE, KEY_USER_ID to TEST_USER_ID),
+      ),
+      mock(),
+    )
 
-      adapter.loadRewardedInterstitialAd(
-        createMediationRewardedAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE, KEY_USER_ID to TEST_USER_ID),
-        ),
-        mock(),
-      )
-    }
-
-    verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), eq(context), any())
     verify(vungleAdConfig).adOrientation = LANDSCAPE
     verify(vungleFactory).createRewardedAd(context, TEST_PLACEMENT_ID, vungleAdConfig)
     verify(vungleRewardedAd).adListener = adapter
@@ -649,39 +544,6 @@ class VungleMediationAdapterTest {
   }
 
   @Test
-  fun loadRewardedInterstitialAd_onLiftoffSdkInitializationError_callsLoadFailure() {
-    val liftoffSdkInitError =
-      AdError(
-        VungleError.UNKNOWN_ERROR,
-        "Liftoff Monetize SDK initialization failed.",
-        VUNGLE_SDK_ERROR_DOMAIN,
-      )
-    doAnswer { invocation ->
-        val args: Array<Any> = invocation.arguments
-        (args[2] as VungleInitializationListener).onInitializeError(liftoffSdkInitError)
-      }
-      .whenever(mockVungleInitializer)
-      .initialize(any(), any(), any())
-    val rewardedAdLoadCallback =
-      mock<MediationAdLoadCallback<MediationRewardedAd, MediationRewardedAdCallback>>()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadRewardedInterstitialAd(
-        createMediationRewardedAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE, KEY_USER_ID to TEST_USER_ID),
-        ),
-        rewardedAdLoadCallback,
-      )
-    }
-
-    verify(rewardedAdLoadCallback).onFailure(liftoffSdkInitError)
-  }
-
-  @Test
   fun loadAppOpenAd_updatesCoppaStatus() {
     mockStatic(VungleInitializer::class.java).use {
       whenever(getInstance()) doReturn mockVungleInitializer
@@ -694,24 +556,18 @@ class VungleMediationAdapterTest {
 
   @Test
   fun loadAppOpenAd_loadsLiftoffInterstitialAd() {
-    stubVungleInitializerToSucceed()
     val vungleAppOpenAd = mock<InterstitialAd>()
     whenever(vungleFactory.createInterstitialAd(any(), any(), any())) doReturn vungleAppOpenAd
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
+    adapter.loadAppOpenAd(
+      createMediationAppOpenAdConfiguration(
+        context = context,
+        serverParameters =
+        bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
+        mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE),
+      ),
+      mock(),
+    )
 
-      adapter.loadAppOpenAd(
-        createMediationAppOpenAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE),
-        ),
-        mock(),
-      )
-    }
-
-    verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), eq(context), any())
     verify(vungleAdConfig).adOrientation = LANDSCAPE
     verify(vungleFactory).createInterstitialAd(context, TEST_PLACEMENT_ID, vungleAdConfig)
     verify(vungleAppOpenAd).adListener = any()
@@ -767,39 +623,6 @@ class VungleMediationAdapterTest {
   }
 
   @Test
-  fun loadAppOpenAd_onLiftoffSdkInitializationError_callsLoadFailure() {
-    val liftoffSdkInitError =
-      AdError(
-        VungleError.UNKNOWN_ERROR,
-        "Liftoff Monetize SDK initialization failed.",
-        VUNGLE_SDK_ERROR_DOMAIN,
-      )
-    doAnswer { invocation ->
-        val args: Array<Any> = invocation.arguments
-        (args[2] as VungleInitializationListener).onInitializeError(liftoffSdkInitError)
-      }
-      .whenever(mockVungleInitializer)
-      .initialize(any(), any(), any())
-    val appOpenAdLoadCallback =
-      mock<MediationAdLoadCallback<MediationAppOpenAd, MediationAppOpenAdCallback>>()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadAppOpenAd(
-        createMediationAppOpenAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE),
-        ),
-        appOpenAdLoadCallback,
-      )
-    }
-
-    verify(appOpenAdLoadCallback).onFailure(liftoffSdkInitError)
-  }
-
-  @Test
   fun loadRtbRewardedAd_updatesCoppaStatus() {
     mockStatic(VungleInitializer::class.java).use {
       whenever(getInstance()) doReturn mockVungleInitializer
@@ -812,26 +635,20 @@ class VungleMediationAdapterTest {
 
   @Test
   fun loadRtbRewardedAd_loadsLiftoffRewardedAdWithBidResponse() {
-    stubVungleInitializerToSucceed()
     val vungleRewardedAd = mock<RewardedAd>()
     whenever(vungleFactory.createRewardedAd(any(), any(), any())) doReturn vungleRewardedAd
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
+    adapter.loadRtbRewardedAd(
+      createMediationRewardedAdConfiguration(
+        context = context,
+        serverParameters =
+        bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
+        bidResponse = TEST_BID_RESPONSE,
+        watermark = TEST_WATERMARK,
+        mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE, KEY_USER_ID to TEST_USER_ID),
+      ),
+      mock(),
+    )
 
-      adapter.loadRtbRewardedAd(
-        createMediationRewardedAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          bidResponse = TEST_BID_RESPONSE,
-          watermark = TEST_WATERMARK,
-          mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE, KEY_USER_ID to TEST_USER_ID),
-        ),
-        mock(),
-      )
-    }
-
-    verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), eq(context), any())
     verify(vungleAdConfig).adOrientation = LANDSCAPE
     verify(vungleAdConfig).setWatermark(TEST_WATERMARK)
     verify(vungleFactory).createRewardedAd(context, TEST_PLACEMENT_ID, vungleAdConfig)
@@ -895,41 +712,6 @@ class VungleMediationAdapterTest {
   }
 
   @Test
-  fun loadRtbRewardedAd_onLiftoffSdkInitializationError_callsLoadFailure() {
-    val liftoffSdkInitError =
-      AdError(
-        VungleError.UNKNOWN_ERROR,
-        "Liftoff Monetize SDK initialization failed.",
-        VUNGLE_SDK_ERROR_DOMAIN,
-      )
-    doAnswer { invocation ->
-        val args: Array<Any> = invocation.arguments
-        (args[2] as VungleInitializationListener).onInitializeError(liftoffSdkInitError)
-      }
-      .whenever(mockVungleInitializer)
-      .initialize(any(), any(), any())
-    val rewardedAdLoadCallback =
-      mock<MediationAdLoadCallback<MediationRewardedAd, MediationRewardedAdCallback>>()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadRtbRewardedAd(
-        createMediationRewardedAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          bidResponse = TEST_BID_RESPONSE,
-          watermark = TEST_WATERMARK,
-          mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE, KEY_USER_ID to TEST_USER_ID),
-        ),
-        rewardedAdLoadCallback,
-      )
-    }
-
-    verify(rewardedAdLoadCallback).onFailure(liftoffSdkInitError)
-  }
-
-  @Test
   fun loadRtbBannerAd_updatesCoppaStatus() {
     mockStatic(VungleInitializer::class.java).use {
       whenever(getInstance()) doReturn mockVungleInitializer
@@ -942,25 +724,19 @@ class VungleMediationAdapterTest {
 
   @Test
   fun loadRtbBannerAd_loadsLiftoffBannerAdWithBidResponse() {
-    stubVungleInitializerToSucceed()
     val vungleBannerAd = mock<VungleBannerView> { on { adConfig } doReturn vungleAdConfig }
     whenever(vungleFactory.createBannerAd(any(), any(), any())) doReturn vungleBannerAd
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
+    adapter.loadRtbBannerAd(
+      createMediationBannerAdConfiguration(
+        context = context,
+        serverParameters =
+        bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
+        bidResponse = TEST_BID_RESPONSE,
+        watermark = TEST_WATERMARK,
+      ),
+      mock(),
+    )
 
-      adapter.loadRtbBannerAd(
-        createMediationBannerAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          bidResponse = TEST_BID_RESPONSE,
-          watermark = TEST_WATERMARK,
-        ),
-        mock(),
-      )
-    }
-
-    verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), eq(context), any())
     verify(vungleFactory).createBannerAd(context, TEST_PLACEMENT_ID, VungleAdSize.BANNER)
     verify(vungleBannerAd).load(TEST_BID_RESPONSE)
     val bannerAdCaptor = argumentCaptor<VungleRtbBannerAd>()
@@ -1024,40 +800,6 @@ class VungleMediationAdapterTest {
   }
 
   @Test
-  fun loadRtbBannerAd_onLiftoffSdkInitializationError_callsLoadFailure() {
-    val liftoffSdkInitError =
-      AdError(
-        VungleError.UNKNOWN_ERROR,
-        "Liftoff Monetize SDK initialization failed.",
-        VungleMediationAdapter.VUNGLE_SDK_ERROR_DOMAIN,
-      )
-    doAnswer { invocation ->
-        val args: Array<Any> = invocation.arguments
-        (args[2] as VungleInitializationListener).onInitializeError(liftoffSdkInitError)
-      }
-      .whenever(mockVungleInitializer)
-      .initialize(any(), any(), any())
-    val bannerAdLoadCallback =
-      mock<MediationAdLoadCallback<MediationBannerAd, MediationBannerAdCallback>>()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadRtbBannerAd(
-        createMediationBannerAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          bidResponse = TEST_BID_RESPONSE,
-          watermark = TEST_WATERMARK,
-        ),
-        bannerAdLoadCallback,
-      )
-    }
-
-    verify(bannerAdLoadCallback).onFailure(liftoffSdkInitError)
-  }
-
-  @Test
   fun loadRtbInterstitialAd_updatesCoppaStatus() {
     mockStatic(VungleInitializer::class.java).use {
       whenever(getInstance()) doReturn mockVungleInitializer
@@ -1067,32 +809,25 @@ class VungleMediationAdapterTest {
         mock(),
       )
     }
-
     verify(mockVungleInitializer).updateCoppaStatus(any())
   }
 
   @Test
   fun loadRtbInterstitialAd_loadsLiftoffInterstitialAdWithBidResponse() {
-    stubVungleInitializerToSucceed()
     val vungleInterstitialAd = mock<InterstitialAd>()
     whenever(vungleFactory.createInterstitialAd(any(), any(), any())) doReturn vungleInterstitialAd
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
+    adapter.loadRtbInterstitialAd(
+      createMediationInterstitialAdConfiguration(
+        context = context,
+        serverParameters =
+        bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
+        bidResponse = TEST_BID_RESPONSE,
+        watermark = TEST_WATERMARK,
+        mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE),
+      ),
+      mock(),
+    )
 
-      adapter.loadRtbInterstitialAd(
-        createMediationInterstitialAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          bidResponse = TEST_BID_RESPONSE,
-          watermark = TEST_WATERMARK,
-          mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE),
-        ),
-        mock(),
-      )
-    }
-
-    verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), eq(context), any())
     verify(vungleAdConfig).adOrientation = LANDSCAPE
     verify(vungleAdConfig).setWatermark(TEST_WATERMARK)
     verify(vungleFactory).createInterstitialAd(context, TEST_PLACEMENT_ID, vungleAdConfig)
@@ -1155,41 +890,6 @@ class VungleMediationAdapterTest {
   }
 
   @Test
-  fun loadRtbInterstitialAd_onLiftoffSdkInitializationError_callsLoadFailure() {
-    val liftoffSdkInitError =
-      AdError(
-        VungleError.UNKNOWN_ERROR,
-        "Liftoff Monetize SDK initialization failed.",
-        VUNGLE_SDK_ERROR_DOMAIN,
-      )
-    doAnswer { invocation ->
-        val args: Array<Any> = invocation.arguments
-        (args[2] as VungleInitializationListener).onInitializeError(liftoffSdkInitError)
-      }
-      .whenever(mockVungleInitializer)
-      .initialize(any(), any(), any())
-    val interstitialAdLoadCallback =
-      mock<MediationAdLoadCallback<MediationInterstitialAd, MediationInterstitialAdCallback>>()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadRtbInterstitialAd(
-        createMediationInterstitialAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          bidResponse = TEST_BID_RESPONSE,
-          watermark = TEST_WATERMARK,
-          mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE),
-        ),
-        interstitialAdLoadCallback,
-      )
-    }
-
-    verify(interstitialAdLoadCallback).onFailure(liftoffSdkInitError)
-  }
-
-  @Test
   fun loadRtbNativeAd_updatesCoppaStatus() {
     mockStatic(VungleInitializer::class.java).use {
       whenever(getInstance()) doReturn mockVungleInitializer
@@ -1202,23 +902,17 @@ class VungleMediationAdapterTest {
 
   @Test
   fun loadRtbNativeAd_loadsLiftoffNativeAdWithBidResponse() {
-    stubVungleInitializerToSucceed()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
+    adapter.loadRtbNativeAd(
+      createMediationNativeAdConfiguration(
+        context = context,
+        serverParameters =
+        bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
+        bidResponse = TEST_BID_RESPONSE,
+        watermark = TEST_WATERMARK,
+      ),
+      mock(),
+    )
 
-      adapter.loadRtbNativeAd(
-        createMediationNativeAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          bidResponse = TEST_BID_RESPONSE,
-          watermark = TEST_WATERMARK,
-        ),
-        mock(),
-      )
-    }
-
-    verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), eq(context), any())
     verify(vungleFactory).createNativeAd(context, TEST_PLACEMENT_ID)
     verify(vungleNativeAd).adOptionsPosition = TOP_RIGHT
     verify(vungleNativeAd).adListener = any()
@@ -1228,56 +922,36 @@ class VungleMediationAdapterTest {
 
   @Test
   fun loadRtbNativeAd_forTopLeftAdChoicesPlacement_setsTopLeftPositionOnLiftoffSdk() {
-    stubVungleInitializerToSucceed()
     whenever(mediationNativeAdConfiguration.nativeAdOptions) doReturn
       NativeAdOptions.Builder().setAdChoicesPlacement(ADCHOICES_TOP_LEFT).build()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadRtbNativeAd(mediationNativeAdConfiguration, mock())
-    }
+    adapter.loadRtbNativeAd(mediationNativeAdConfiguration, mock())
 
     verify(vungleNativeAd).adOptionsPosition = TOP_LEFT
   }
 
   @Test
   fun loadRtbNativeAd_forBottomLeftAdChoicesPlacement_setsBottomLeftPositionOnLiftoffSdk() {
-    stubVungleInitializerToSucceed()
     whenever(mediationNativeAdConfiguration.nativeAdOptions) doReturn
       NativeAdOptions.Builder().setAdChoicesPlacement(ADCHOICES_BOTTOM_LEFT).build()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadRtbNativeAd(mediationNativeAdConfiguration, mock())
-    }
+    adapter.loadRtbNativeAd(mediationNativeAdConfiguration, mock())
 
     verify(vungleNativeAd).adOptionsPosition = BOTTOM_LEFT
   }
 
   @Test
   fun loadRtbNativeAd_forBottomRightAdChoicesPlacement_setsBottomRightPositionOnLiftoffSdk() {
-    stubVungleInitializerToSucceed()
     whenever(mediationNativeAdConfiguration.nativeAdOptions) doReturn
       NativeAdOptions.Builder().setAdChoicesPlacement(ADCHOICES_BOTTOM_RIGHT).build()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadRtbNativeAd(mediationNativeAdConfiguration, mock())
-    }
+    adapter.loadRtbNativeAd(mediationNativeAdConfiguration, mock())
 
     verify(vungleNativeAd).adOptionsPosition = BOTTOM_RIGHT
   }
 
   @Test
   fun loadRtbNativeAd_forTopRightAdChoicesPlacement_setsTopRightPositionOnLiftoffSdk() {
-    stubVungleInitializerToSucceed()
     whenever(mediationNativeAdConfiguration.nativeAdOptions) doReturn
       NativeAdOptions.Builder().setAdChoicesPlacement(ADCHOICES_TOP_RIGHT).build()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadRtbNativeAd(mediationNativeAdConfiguration, mock())
-    }
+    adapter.loadRtbNativeAd(mediationNativeAdConfiguration, mock())
 
     verify(vungleNativeAd).adOptionsPosition = TOP_RIGHT
   }
@@ -1335,40 +1009,6 @@ class VungleMediationAdapterTest {
   }
 
   @Test
-  fun loadRtbNativeAd_onLiftoffSdkInitializationError_callsLoadFailure() {
-    val liftoffSdkInitError =
-      AdError(
-        VungleError.UNKNOWN_ERROR,
-        "Liftoff Monetize SDK initialization failed.",
-        VUNGLE_SDK_ERROR_DOMAIN,
-      )
-    doAnswer { invocation ->
-        val args: Array<Any> = invocation.arguments
-        (args[2] as VungleInitializationListener).onInitializeError(liftoffSdkInitError)
-      }
-      .whenever(mockVungleInitializer)
-      .initialize(any(), any(), any())
-    val nativeAdLoadCallback =
-      mock<MediationAdLoadCallback<UnifiedNativeAdMapper, MediationNativeAdCallback>>()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadRtbNativeAd(
-        createMediationNativeAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          bidResponse = TEST_BID_RESPONSE,
-          watermark = TEST_WATERMARK,
-        ),
-        nativeAdLoadCallback,
-      )
-    }
-
-    verify(nativeAdLoadCallback).onFailure(liftoffSdkInitError)
-  }
-
-  @Test
   fun loadRtbRewardedInterstitialAd_updatesCoppaStatus() {
     mockStatic(VungleInitializer::class.java).use {
       whenever(getInstance()) doReturn mockVungleInitializer
@@ -1384,26 +1024,20 @@ class VungleMediationAdapterTest {
 
   @Test
   fun loadRtbRewardedInterstitialAd_loadsLiftoffRewardedAdWithBidResponse() {
-    stubVungleInitializerToSucceed()
     val vungleRewardedAd = mock<RewardedAd>()
     whenever(vungleFactory.createRewardedAd(any(), any(), any())) doReturn vungleRewardedAd
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
+    adapter.loadRtbRewardedInterstitialAd(
+      createMediationRewardedAdConfiguration(
+        context = context,
+        serverParameters =
+        bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
+        bidResponse = TEST_BID_RESPONSE,
+        watermark = TEST_WATERMARK,
+        mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE, KEY_USER_ID to TEST_USER_ID),
+      ),
+      mock(),
+    )
 
-      adapter.loadRtbRewardedInterstitialAd(
-        createMediationRewardedAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          bidResponse = TEST_BID_RESPONSE,
-          watermark = TEST_WATERMARK,
-          mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE, KEY_USER_ID to TEST_USER_ID),
-        ),
-        mock(),
-      )
-    }
-
-    verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), eq(context), any())
     verify(vungleAdConfig).adOrientation = LANDSCAPE
     verify(vungleAdConfig).setWatermark(TEST_WATERMARK)
     verify(vungleFactory).createRewardedAd(context, TEST_PLACEMENT_ID, vungleAdConfig)
@@ -1467,41 +1101,6 @@ class VungleMediationAdapterTest {
   }
 
   @Test
-  fun loadRtbRewardedInterstitialAd_onLiftoffSdkInitializationError_callsLoadFailure() {
-    val liftoffSdkInitError =
-      AdError(
-        VungleError.UNKNOWN_ERROR,
-        "Liftoff Monetize SDK initialization failed.",
-        VUNGLE_SDK_ERROR_DOMAIN,
-      )
-    doAnswer { invocation ->
-        val args: Array<Any> = invocation.arguments
-        (args[2] as VungleInitializationListener).onInitializeError(liftoffSdkInitError)
-      }
-      .whenever(mockVungleInitializer)
-      .initialize(any(), any(), any())
-    val rewardedAdLoadCallback =
-      mock<MediationAdLoadCallback<MediationRewardedAd, MediationRewardedAdCallback>>()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadRtbRewardedInterstitialAd(
-        createMediationRewardedAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          bidResponse = TEST_BID_RESPONSE,
-          watermark = TEST_WATERMARK,
-          mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE, KEY_USER_ID to TEST_USER_ID),
-        ),
-        rewardedAdLoadCallback,
-      )
-    }
-
-    verify(rewardedAdLoadCallback).onFailure(liftoffSdkInitError)
-  }
-
-  @Test
   fun loadRtbAppOpenAd_updatesCoppaStatus() {
     mockStatic(VungleInitializer::class.java).use {
       whenever(getInstance()) doReturn mockVungleInitializer
@@ -1514,26 +1113,20 @@ class VungleMediationAdapterTest {
 
   @Test
   fun loadRtbAppOpenAd_loadsLiftoffInterstitialAdWithBidResponse() {
-    stubVungleInitializerToSucceed()
     val vungleInterstitialAd = mock<InterstitialAd>()
     whenever(vungleFactory.createInterstitialAd(any(), any(), any())) doReturn vungleInterstitialAd
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
+    adapter.loadRtbAppOpenAd(
+      createMediationAppOpenAdConfiguration(
+        context = context,
+        serverParameters =
+        bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
+        bidResponse = TEST_BID_RESPONSE,
+        watermark = TEST_WATERMARK,
+        mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE),
+      ),
+      mock(),
+    )
 
-      adapter.loadRtbAppOpenAd(
-        createMediationAppOpenAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          bidResponse = TEST_BID_RESPONSE,
-          watermark = TEST_WATERMARK,
-          mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE),
-        ),
-        mock(),
-      )
-    }
-
-    verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), eq(context), any())
     verify(vungleAdConfig).adOrientation = LANDSCAPE
     verify(vungleAdConfig).setWatermark(TEST_WATERMARK)
     verify(vungleFactory).createInterstitialAd(context, TEST_PLACEMENT_ID, vungleAdConfig)
@@ -1594,41 +1187,6 @@ class VungleMediationAdapterTest {
   }
 
   @Test
-  fun loadRtbAppOpenAd_onLiftoffSdkInitializationError_callsLoadFailure() {
-    val liftoffSdkInitError =
-      AdError(
-        VungleError.UNKNOWN_ERROR,
-        "Liftoff Monetize SDK initialization failed.",
-        VUNGLE_SDK_ERROR_DOMAIN,
-      )
-    doAnswer { invocation ->
-        val args: Array<Any> = invocation.arguments
-        (args[2] as VungleInitializationListener).onInitializeError(liftoffSdkInitError)
-      }
-      .whenever(mockVungleInitializer)
-      .initialize(any(), any(), any())
-    val appOpenAdLoadCallback =
-      mock<MediationAdLoadCallback<MediationAppOpenAd, MediationAppOpenAdCallback>>()
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(getInstance()) doReturn mockVungleInitializer
-
-      adapter.loadRtbAppOpenAd(
-        createMediationAppOpenAdConfiguration(
-          context = context,
-          serverParameters =
-            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-          bidResponse = TEST_BID_RESPONSE,
-          watermark = TEST_WATERMARK,
-          mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE),
-        ),
-        appOpenAdLoadCallback,
-      )
-    }
-
-    verify(appOpenAdLoadCallback).onFailure(liftoffSdkInitError)
-  }
-
-  @Test
   fun collectSignals_onSuccessCalled() {
     val biddingToken = "token"
     whenever(mockSdkWrapper.getBiddingToken(any())) doReturn biddingToken
@@ -1651,15 +1209,6 @@ class VungleMediationAdapterTest {
     adapter.collectSignals(mockRtbSignalData, mockSignalCallbacks)
 
     verify(mockSignalCallbacks).onFailure(argThat(AdErrorMatcher(error)))
-  }
-
-  private fun stubVungleInitializerToSucceed() {
-    doAnswer { invocation ->
-        val args: Array<Any> = invocation.arguments
-        (args[2] as VungleInitializationListener).onInitializeSuccess()
-      }
-      .whenever(mockVungleInitializer)
-      .initialize(any(), any(), any())
   }
 
   private companion object {
