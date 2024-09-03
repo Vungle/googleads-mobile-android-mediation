@@ -233,11 +233,13 @@ public class VungleMediationAdapter extends RtbAdapter implements MediationRewar
     }
 
     int count = appIDs.size();
-    if (appIDs.isEmpty()) {
-      AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS, "Missing or Invalid App ID.",
-          ERROR_DOMAIN);
-      Log.w(TAG, error.toString());
-      initializationCompleteCallback.onInitializationFailed(error.toString());
+    if (count <= 0) {
+      if (initializationCompleteCallback != null) {
+        AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS, "Missing or Invalid App ID.",
+            ERROR_DOMAIN);
+        Log.w(TAG, error.toString());
+        initializationCompleteCallback.onInitializationFailed(error.toString());
+      }
       return;
     }
 

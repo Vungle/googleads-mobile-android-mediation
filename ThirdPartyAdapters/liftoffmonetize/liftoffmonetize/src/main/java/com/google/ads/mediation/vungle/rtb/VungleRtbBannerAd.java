@@ -50,6 +50,7 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
   private MediationBannerAdCallback mediationBannerAdCallback;
 
   private RelativeLayout bannerLayout;
+  private VungleBannerView bannerAdView;
 
   private final VungleFactory vungleFactory;
 
@@ -122,7 +123,7 @@ public class VungleRtbBannerAd implements MediationBannerAd, BannerAdListener {
             adLayoutHeight);
     bannerLayout.setLayoutParams(adViewLayoutParams);
 
-    VungleBannerView bannerAdView = vungleFactory.createBannerAd(context, placementId, bannerAdSize);
+    bannerAdView = vungleFactory.createBannerAd(context, placementId, bannerAdSize);
     bannerAdView.setAdListener(VungleRtbBannerAd.this);
 
     if (!TextUtils.isEmpty(watermark)) {
