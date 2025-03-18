@@ -209,6 +209,7 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
       @NonNull final MediationBannerListener bannerListener,
       @NonNull Bundle serverParameters, @NonNull AdSize adSize,
       @NonNull MediationAdRequest mediationAdRequest, @Nullable Bundle mediationExtras) {
+    Log.e("AdMobTest", "requestBannerAd gets called at:" + System.currentTimeMillis());
     mediationBannerListener = bannerListener;
     String appID = serverParameters.getString(KEY_APP_ID);
     if (TextUtils.isEmpty(appID)) {
@@ -241,6 +242,7 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
         "requestBannerAd for Placement: " + placement + " ### Adapter instance: " + this
             .hashCode());
 
+    Log.e("AdMobTest", "try to init Vungle SDK at:" + System.currentTimeMillis());
     VungleInitializer.getInstance()
         .initialize(
             appID,
@@ -248,6 +250,7 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
             new VungleInitializer.VungleInitializationListener() {
               @Override
               public void onInitializeSuccess() {
+                Log.e("AdMobTest", "onInitialize vungle SDK Success at:" + System.currentTimeMillis());
                 bannerLayout = new RelativeLayout(context);
                 int adLayoutHeight = adSize.getHeightInPixels(context);
                 // If the height is 0 (e.g. for inline adaptive banner requests), use the closest
@@ -261,7 +264,8 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
                     new RelativeLayout.LayoutParams(
                         adSize.getWidthInPixels(context), adLayoutHeight);
                 bannerLayout.setLayoutParams(adViewLayoutParams);
-
+                long startTime = System.currentTimeMillis();
+                Log.e("AdMobTest", "instance banner and start loadAd at:" + startTime);
                 bannerAdView = new VungleBannerView(context, placement, bannerAdSize);
                 bannerAdView.setAdListener(new VungleBannerListener());
 
@@ -279,6 +283,7 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
 
               @Override
               public void onInitializeError(AdError error) {
+                Log.e("AdMobTest", "onInitialize vungle SDK Error at:" + System.currentTimeMillis());
                 Log.w(TAG, error.toString());
                 if (mediationBannerListener != null) {
                   mediationBannerListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
@@ -305,10 +310,14 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
     @Override
     public void onAdImpression(@NonNull BaseAd baseAd) {
       // Google Mobile Ads SDK doesn't have a matching event.
+      long endTime = System.currentTimeMillis();
+      Log.e("AdMobTest", "on banner ad impression at:" + endTime);
     }
 
     @Override
     public void onAdLoaded(@NonNull BaseAd baseAd) {
+      long endTime = System.currentTimeMillis();
+      Log.e("AdMobTest", "on banner ad loaded at:" + endTime);
       if (mediationBannerListener != null) {
         mediationBannerListener.onAdLoaded(VungleInterstitialAdapter.this);
       }
@@ -328,6 +337,8 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
 
     @Override
     public void onAdFailedToLoad(@NonNull BaseAd baseAd, @NonNull VungleError vungleError) {
+      long endTime = System.currentTimeMillis();
+      Log.e("AdMobTest", "on banner ad loaded failure:" + endTime);
       AdError error = VungleMediationAdapter.getAdError(vungleError);
       Log.w(TAG, error.toString());
       if (mediationBannerListener != null) {

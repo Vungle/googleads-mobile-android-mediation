@@ -215,7 +215,7 @@ public class VungleMediationAdapter extends RtbAdapter implements MediationRewar
   public void initialize(@NonNull Context context,
       @NonNull final InitializationCompleteCallback initializationCompleteCallback,
       @NonNull List<MediationConfiguration> mediationConfigurations) {
-
+    Log.e("AdMobTest", "adapter initialize gets called at: " + System.currentTimeMillis());
     if (VungleSdkWrapper.delegate.isInitialized()) {
       initializationCompleteCallback.onInitializationSucceeded();
       return;
@@ -250,14 +250,20 @@ public class VungleMediationAdapter extends RtbAdapter implements MediationRewar
       Log.w(TAG, logMessage);
     }
 
+    long startTime = System.currentTimeMillis();
+    Log.e("AdMobTest", "Start initialize Vungle SDK: "+startTime);
     VungleInitializer.getInstance().initialize(appID, context, new VungleInitializationListener() {
       @Override
       public void onInitializeSuccess() {
+        long endTime = System.currentTimeMillis();
+        Log.e("AdMobTest", "initialize Vungle SDK success: "+endTime);
         initializationCompleteCallback.onInitializationSucceeded();
       }
 
       @Override
       public void onInitializeError(AdError error) {
+        long endTime = System.currentTimeMillis();
+        Log.e("AdMobTest", "initialize Vungle SDK failure: "+endTime);
         Log.w(TAG, error.toString());
         initializationCompleteCallback.onInitializationFailed(error.toString());
       }
