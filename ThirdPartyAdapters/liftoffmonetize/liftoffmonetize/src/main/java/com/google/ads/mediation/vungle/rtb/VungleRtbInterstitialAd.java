@@ -134,6 +134,7 @@ public class VungleRtbInterstitialAd implements MediationInterstitialAd, Interst
 
   @Override
   public void showAd(@NonNull Context context) {
+    Log.e(TAG, "Liftoff Monetize showAd recorded.");
     if (interstitialAd != null) {
       interstitialAd.play(context);
     } else if (mediationInterstitialAdCallback != null) {
@@ -147,12 +148,14 @@ public class VungleRtbInterstitialAd implements MediationInterstitialAd, Interst
 
   @Override
   public void onAdLoaded(@NonNull BaseAd baseAd) {
+    Log.e(TAG, "Liftoff Monetize onAdLoaded recorded.");
     mediationInterstitialAdCallback =
         mediationAdLoadCallback.onSuccess(VungleRtbInterstitialAd.this);
   }
 
   @Override
   public void onAdStart(@NonNull BaseAd baseAd) {
+    Log.e(TAG, "Liftoff Monetize onAdStart recorded.");
     if (mediationInterstitialAdCallback != null) {
       mediationInterstitialAdCallback.onAdOpened();
     }
@@ -160,6 +163,7 @@ public class VungleRtbInterstitialAd implements MediationInterstitialAd, Interst
 
   @Override
   public void onAdEnd(@NonNull BaseAd baseAd) {
+    Log.e(TAG, "Liftoff Monetize onAdEnd recorded.");
     if (mediationInterstitialAdCallback != null) {
       mediationInterstitialAdCallback.onAdClosed();
     }
@@ -197,6 +201,7 @@ public class VungleRtbInterstitialAd implements MediationInterstitialAd, Interst
 
   @Override
   public void onAdImpression(@NonNull BaseAd baseAd) {
+    Log.e(TAG, "Liftoff Monetize onAdImpression recorded.");
     if (mediationInterstitialAdCallback != null) {
       mediationInterstitialAdCallback.reportAdImpression();
     }
