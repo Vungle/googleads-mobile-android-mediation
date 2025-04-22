@@ -136,6 +136,7 @@ public class VungleRtbInterstitialAd implements MediationInterstitialAd, Interst
   public void showAd(@NonNull Context context) {
     Log.e(TAG, "Liftoff Monetize showAd recorded.");
     if (interstitialAd != null) {
+      Log.e(TAG,"showAd called");
       interstitialAd.play(context);
     } else if (mediationInterstitialAdCallback != null) {
       AdError error = new AdError(ERROR_CANNOT_PLAY_AD, "Failed to show bidding rewarded"
@@ -203,7 +204,7 @@ public class VungleRtbInterstitialAd implements MediationInterstitialAd, Interst
   public void onAdImpression(@NonNull BaseAd baseAd) {
     Log.e(TAG, "Liftoff Monetize onAdImpression recorded.");
     if (mediationInterstitialAdCallback != null) {
-      mediationInterstitialAdCallback.reportAdImpression();
+     mediationInterstitialAdCallback.reportAdImpression();
     }
   }
 
