@@ -1,0 +1,94 @@
+[
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/common_google_signin_btn_text_dark.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/drawable/common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/common_google_signin_btn_text_light_focused.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/drawable/common_google_signin_btn_text_light_focused.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/common_google_signin_btn_icon_light.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/drawable/common_google_signin_btn_icon_light.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/offline_dialog_background.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-ads-24.9.0-15:/drawable/offline_dialog_background.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/common_google_signin_btn_text_light.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/drawable/common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/common_google_signin_btn_icon_dark_focused.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/drawable/common_google_signin_btn_icon_dark_focused.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/notification_bg_low.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-core-1.10.1-8:/drawable/notification_bg_low.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/offline_dialog_default_icon_42dp.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-ads-24.9.0-15:/drawable/offline_dialog_default_icon_42dp.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/admob_close_button_black_circle_white_cross.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-ads-24.9.0-15:/drawable/admob_close_button_black_circle_white_cross.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/common_google_signin_btn_icon_light_normal.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/drawable/common_google_signin_btn_icon_light_normal.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/common_google_signin_btn_icon_dark.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/drawable/common_google_signin_btn_icon_dark.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/common_google_signin_btn_icon_light_focused.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/drawable/common_google_signin_btn_icon_light_focused.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/notification_icon_background.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-core-1.10.1-8:/drawable/notification_icon_background.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/common_google_signin_btn_text_dark_normal.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/drawable/common_google_signin_btn_text_dark_normal.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/admob_close_button_white_cross.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-ads-24.9.0-15:/drawable/admob_close_button_white_cross.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/notification_tile_bg.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-core-1.10.1-8:/drawable/notification_tile_bg.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/common_google_signin_btn_text_disabled.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/drawable/common_google_signin_btn_text_disabled.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/common_google_signin_btn_icon_dark_normal.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/drawable/common_google_signin_btn_icon_dark_normal.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/common_google_signin_btn_text_light_normal.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/drawable/common_google_signin_btn_text_light_normal.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/common_google_signin_btn_text_dark_focused.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/drawable/common_google_signin_btn_text_dark_focused.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/common_google_signin_btn_icon_disabled.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/drawable/common_google_signin_btn_icon_disabled.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/notification_bg.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-core-1.10.1-8:/drawable/notification_bg.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/drawable/admob_close_button_white_circle_black_cross.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-ads-24.9.0-15:/drawable/admob_close_button_white_circle_black_cross.xml"
+    }
+]

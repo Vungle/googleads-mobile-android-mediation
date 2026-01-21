@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/color/common_google_signin_btn_tint.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/color/common_google_signin_btn_tint.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/color/common_google_signin_btn_text_dark.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/color/common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/color/common_google_signin_btn_text_light.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-base-18.0.0-7:/color/common_google_signin_btn_text_light.xml"
+    }
+]

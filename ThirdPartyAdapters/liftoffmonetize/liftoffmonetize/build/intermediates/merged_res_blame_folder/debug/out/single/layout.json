@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/layout/custom_dialog.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-core-1.10.1-8:/layout/custom_dialog.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/layout/browser_actions_context_menu_row.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-browser-1.8.0-14:/layout/browser_actions_context_menu_row.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/layout/browser_actions_context_menu_page.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-browser-1.8.0-14:/layout/browser_actions_context_menu_page.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/layout/admob_empty_layout.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-ads-api-24.9.0-9:/layout/admob_empty_layout.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/layout/notification_template_part_chronometer.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-core-1.10.1-8:/layout/notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/layout/offline_ads_dialog.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-play-services-ads-24.9.0-15:/layout/offline_ads_dialog.xml"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/layout/notification_template_part_time.xml",
+        "source": "com.vungle.mediation.liftoffmonetize-core-1.10.1-8:/layout/notification_template_part_time.xml"
+    }
+]

@@ -1,0 +1,34 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.vungle.mediation.liftoffmonetize-mergeDebugResources-17:/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "/Users/sseeto/.gradle/caches/transforms-3/626dfbbed98ffcd283314263746dcd91/transformed/core-1.10.1/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "com.vungle.mediation.liftoffmonetize-merged_res-19:/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "/Users/sseeto/.gradle/caches/transforms-3/626dfbbed98ffcd283314263746dcd91/transformed/core-1.10.1/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                }
+            ]
+        }
+    ]
+}

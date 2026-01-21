@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/raw/omid_session_client_v1_5_7.js",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-vungle-ads-7.6.2-4:/raw/omid_session_client_v1_5_7.js"
+    },
+    {
+        "merged": "com.vungle.mediation.liftoffmonetize-merged_res-19:/raw/omsdk_v1_5_7.js",
+        "source": "com.vungle.mediation.liftoffmonetize-jetified-vungle-ads-7.6.2-4:/raw/omsdk_v1_5_7.js"
+    }
+]
