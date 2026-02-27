@@ -38,6 +38,7 @@ import com.google.android.gms.ads.mediation.MediationBannerAdConfiguration;
 import com.vungle.ads.BannerAdListener;
 import com.vungle.ads.BaseAd;
 import com.vungle.ads.VungleAdSize;
+import com.vungle.ads.VungleAds;
 import com.vungle.ads.VungleBannerView;
 import com.vungle.ads.VungleError;
 import com.vungle.mediation.VungleInterstitialAdapter;
@@ -123,7 +124,24 @@ public abstract class VungleBannerAd implements MediationBannerAd, BannerAdListe
       MediationBannerAdConfiguration mediationBannerAdConfiguration) {
     bannerAdView = vungleFactory.createBannerAd(context, placementId, bannerAdSize);
     bannerAdView.setAdListener(this);
+    bannerAdView.setAdapterAdFormat("VungleBannerAd");
+    AdSize adSize = mediationBannerAdConfiguration.getAdSize();
+    checkAndLogCustomBannerSizeMismatch(bannerAdView, placementId, adSize);
     loadAd(bannerAdView, mediationBannerAdConfiguration);
+  }
+
+  private void checkAndLogCustomBannerSizeMismatch(
+      VungleBannerView bannerAdView, String placementId, AdSize adSize) {
+    if (!VungleAds.isInline(placementId)
+        && !adSize.equals(AdSize.BANNER)
+        && !adSize.equals(AdSize.MEDIUM_RECTANGLE)
+        && !adSize.equals(AdSize.LEADERBOARD)) {
+      bannerAdView.setAdapterAdFormat("VungleBannerAd-custom");
+      Log.e(TAG, String.format("CustomBannerSizeMismatch:w-%d|h-%d",
+          adSize.getWidth(), adSize.getHeight()));
+      Log.e(TAG, "Please use a Liftoff inline placement ID in order to use custom size banner: "
+          + "placementId=" + placementId + " adSize=" + adSize);
+    }
   }
 
   protected abstract void loadAd(

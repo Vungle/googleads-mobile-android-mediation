@@ -42,6 +42,7 @@ import com.vungle.ads.BaseAd;
 import com.vungle.ads.InterstitialAd;
 import com.vungle.ads.InterstitialAdListener;
 import com.vungle.ads.VungleAdSize;
+import com.vungle.ads.VungleAds;
 import com.vungle.ads.VungleBannerView;
 import com.vungle.ads.VungleError;
 
@@ -105,7 +106,8 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
               public void onInitializeSuccess() {
                 interstitialAd = new InterstitialAd(context, placement, adConfig);
                 interstitialAd.setAdListener(new VungleInterstitialListener());
-                interstitialAd.load(null);
+                interstitialAd.setAdapterAdFormat("VungleInterstitialAdapter-interstitial");
+                interstitialAd.load((String) null);
               }
 
               @Override
@@ -248,8 +250,9 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
               public void onInitializeSuccess() {
                 bannerAdView = new VungleBannerView(context, placement, bannerAdSize);
                 bannerAdView.setAdListener(new VungleBannerListener());
-
-                bannerAdView.load(null);
+                bannerAdView.setAdapterAdFormat("VungleInterstitialAdapter-banner");
+                checkAndLogCustomBannerSizeMismatch(bannerAdView, placement, adSize);
+                bannerAdView.load((String) null);
               }
 
               @Override
@@ -315,6 +318,20 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
       if (mediationBannerListener != null) {
         mediationBannerListener.onAdLeftApplication(VungleInterstitialAdapter.this);
       }
+    }
+  }
+
+  private void checkAndLogCustomBannerSizeMismatch(
+      VungleBannerView bannerAdView, String placementId, AdSize adSize) {
+    if (!VungleAds.isInline(placementId)
+        && !adSize.equals(AdSize.BANNER)
+        && !adSize.equals(AdSize.MEDIUM_RECTANGLE)
+        && !adSize.equals(AdSize.LEADERBOARD)) {
+      bannerAdView.setAdapterAdFormat("VungleInterstitialAdapter-banner-custom");
+      Log.e(TAG, String.format("CustomBannerSizeMismatch:w-%d|h-%d",
+          adSize.getWidth(), adSize.getHeight()));
+      Log.e(TAG, "Please use a Liftoff inline placement ID in order to use custom "
+          + "size banner: placementId=" + placementId + " adSize=" + adSize);
     }
   }
 
