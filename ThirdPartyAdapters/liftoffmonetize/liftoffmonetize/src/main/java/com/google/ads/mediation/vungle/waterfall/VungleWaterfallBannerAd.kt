@@ -32,6 +32,6 @@ class VungleWaterfallBannerAd(
     bannerAdView: VungleBannerView,
     mediationBannerAdConfiguration: MediationBannerAdConfiguration,
   ) {
-    bannerAdView.load(null)
+    bannerAdView.load(null as String?)
   }
 }
