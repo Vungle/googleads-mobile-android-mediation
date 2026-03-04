@@ -41,6 +41,7 @@ import com.vungle.ads.VungleAdSize;
 import com.vungle.ads.VungleAds;
 import com.vungle.ads.VungleBannerView;
 import com.vungle.ads.VungleError;
+import com.vungle.ads.VungleMediationLogger;
 import com.vungle.mediation.VungleInterstitialAdapter;
 
 /**
@@ -137,8 +138,9 @@ public abstract class VungleBannerAd implements MediationBannerAd, BannerAdListe
         && !adSize.equals(AdSize.MEDIUM_RECTANGLE)
         && !adSize.equals(AdSize.LEADERBOARD)) {
       bannerAdView.setAdapterAdFormat("VungleBannerAd-custom");
-      Log.e(TAG, String.format("CustomBannerSizeMismatch:w-%d|h-%d",
-          adSize.getWidth(), adSize.getHeight()));
+      String customSizeMismatchMessage = String.format("CustomBannerSizeMismatch:w-%d|h-%d",
+              adSize.getWidth(), adSize.getHeight());
+      VungleMediationLogger.logError(bannerAdView, customSizeMismatchMessage);
       Log.e(TAG, "Please use a Liftoff inline placement ID in order to use custom size banner: "
           + "placementId=" + placementId + " adSize=" + adSize);
     }

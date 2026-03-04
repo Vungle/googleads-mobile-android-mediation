@@ -45,6 +45,7 @@ import com.vungle.ads.VungleAdSize;
 import com.vungle.ads.VungleAds;
 import com.vungle.ads.VungleBannerView;
 import com.vungle.ads.VungleError;
+import com.vungle.ads.VungleMediationLogger;
 
 /**
  * A {@link MediationInterstitialAdapter} used to load and show Liftoff Monetize interstitial ads
@@ -328,8 +329,9 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
         && !adSize.equals(AdSize.MEDIUM_RECTANGLE)
         && !adSize.equals(AdSize.LEADERBOARD)) {
       bannerAdView.setAdapterAdFormat("VungleInterstitialAdapter-banner-custom");
-      Log.e(TAG, String.format("CustomBannerSizeMismatch:w-%d|h-%d",
-          adSize.getWidth(), adSize.getHeight()));
+      String customSizeMismatchMessage = String.format("CustomBannerSizeMismatch:w-%d|h-%d",
+              adSize.getWidth(), adSize.getHeight());
+      VungleMediationLogger.logError(bannerAdView, customSizeMismatchMessage);
       Log.e(TAG, "Please use a Liftoff inline placement ID in order to use custom "
           + "size banner: placementId=" + placementId + " adSize=" + adSize);
     }
