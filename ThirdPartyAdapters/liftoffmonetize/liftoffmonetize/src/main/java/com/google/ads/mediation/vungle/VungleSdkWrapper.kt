@@ -15,9 +15,13 @@
 package com.google.ads.mediation.vungle
 
 import android.content.Context
+import android.util.Log
+import com.google.android.gms.ads.AdSize
 import com.vungle.ads.BidTokenCallback
 import com.vungle.ads.InitializationListener
 import com.vungle.ads.VungleAds
+import com.vungle.ads.VungleBannerView
+import com.vungle.ads.VungleMediationLogger
 
 /**
  * Wrapper singleton to enable mocking of [Liftoff Monetize] for unit testing.
@@ -45,6 +49,24 @@ object VungleSdkWrapper {
 
       override fun isInitialized(): Boolean = VungleAds.isInitialized()
     }
+
+  @JvmStatic
+  fun logCustomSizeForBannerPlacement(
+    bannerAdView: VungleBannerView,
+    adapterAdFormat: String,
+    placementId: String,
+    adSize: AdSize,
+  ) {
+    if (!VungleAds.isInline(placementId)
+      && adSize != AdSize.BANNER
+      && adSize != AdSize.MEDIUM_RECTANGLE
+      && adSize != AdSize.LEADERBOARD) {
+      bannerAdView.adapterAdFormat = adapterAdFormat
+      val customSizeMismatchMessage = "CustomBannerSizeMismatch:w-${adSize.width}|h-${adSize.height}"
+      VungleMediationLogger.logError(bannerAdView, customSizeMismatchMessage)
+      Log.e(VungleMediationAdapter.TAG, "Please use a Liftoff inline placement ID in order to use custom size banner: placementId=$placementId adSize=$adSize")
+    }
+  }
 }
 
 /** Declares the methods that will invoke the Liftoff Monetize SDK */

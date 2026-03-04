@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.ads.mediation.vungle.VungleInitializer;
 import com.google.ads.mediation.vungle.VungleMediationAdapter;
+import com.google.ads.mediation.vungle.VungleSdkWrapper;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.MobileAds;
@@ -45,7 +46,6 @@ import com.vungle.ads.VungleAdSize;
 import com.vungle.ads.VungleAds;
 import com.vungle.ads.VungleBannerView;
 import com.vungle.ads.VungleError;
-import com.vungle.ads.VungleMediationLogger;
 
 /**
  * A {@link MediationInterstitialAdapter} used to load and show Liftoff Monetize interstitial ads
@@ -252,7 +252,7 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
                 bannerAdView = new VungleBannerView(context, placement, bannerAdSize);
                 bannerAdView.setAdListener(new VungleBannerListener());
                 bannerAdView.setAdapterAdFormat("VungleInterstitialAdapter-banner");
-                logCustomSizeForBannerPlacement(bannerAdView, placement, adSize);
+                VungleSdkWrapper.logCustomSizeForBannerPlacement(bannerAdView, "VungleInterstitialAdapter-banner-custom", placement, adSize);
                 bannerAdView.load((String) null);
               }
 
@@ -319,21 +319,6 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
       if (mediationBannerListener != null) {
         mediationBannerListener.onAdLeftApplication(VungleInterstitialAdapter.this);
       }
-    }
-  }
-
-  private void logCustomSizeForBannerPlacement(
-      VungleBannerView bannerAdView, String placementId, AdSize adSize) {
-    if (!VungleAds.isInline(placementId)
-        && !adSize.equals(AdSize.BANNER)
-        && !adSize.equals(AdSize.MEDIUM_RECTANGLE)
-        && !adSize.equals(AdSize.LEADERBOARD)) {
-      bannerAdView.setAdapterAdFormat("VungleInterstitialAdapter-banner-custom");
-      String customSizeMismatchMessage = String.format("CustomBannerSizeMismatch:w-%d|h-%d",
-              adSize.getWidth(), adSize.getHeight());
-      VungleMediationLogger.logError(bannerAdView, customSizeMismatchMessage);
-      Log.e(TAG, "Please use a Liftoff inline placement ID in order to use custom "
-          + "size banner: placementId=" + placementId + " adSize=" + adSize);
     }
   }
 
