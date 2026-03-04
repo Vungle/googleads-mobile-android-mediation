@@ -58,9 +58,9 @@ object VungleSdkWrapper {
     adSize: AdSize,
   ) {
     if (!VungleAds.isInline(placementId)
-      && adSize != AdSize.BANNER
-      && adSize != AdSize.MEDIUM_RECTANGLE
-      && adSize != AdSize.LEADERBOARD) {
+      && !(adSize.width == AdSize.BANNER.width && adSize.height == AdSize.BANNER.height)
+      && !(adSize.width == AdSize.MEDIUM_RECTANGLE.width && adSize.height == AdSize.MEDIUM_RECTANGLE.height)
+      && !(adSize.width == AdSize.LEADERBOARD.width && adSize.height == AdSize.LEADERBOARD.height)) {
       bannerAdView.adapterAdFormat = adapterAdFormat
       val customSizeMismatchMessage = "CustomBannerSizeMismatch:w-${adSize.width}|h-${adSize.height}"
       VungleMediationLogger.logError(bannerAdView, customSizeMismatchMessage)
