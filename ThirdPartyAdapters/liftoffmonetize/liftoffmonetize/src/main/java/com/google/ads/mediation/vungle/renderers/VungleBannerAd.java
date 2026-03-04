@@ -126,11 +126,11 @@ public abstract class VungleBannerAd implements MediationBannerAd, BannerAdListe
     bannerAdView.setAdListener(this);
     bannerAdView.setAdapterAdFormat("VungleBannerAd");
     AdSize adSize = mediationBannerAdConfiguration.getAdSize();
-    checkAndLogCustomBannerSizeMismatch(bannerAdView, placementId, adSize);
+    logCustomSizeForBannerPlacement(bannerAdView, placementId, adSize);
     loadAd(bannerAdView, mediationBannerAdConfiguration);
   }
 
-  private void checkAndLogCustomBannerSizeMismatch(
+  private void logCustomSizeForBannerPlacement(
       VungleBannerView bannerAdView, String placementId, AdSize adSize) {
     if (!VungleAds.isInline(placementId)
         && !adSize.equals(AdSize.BANNER)

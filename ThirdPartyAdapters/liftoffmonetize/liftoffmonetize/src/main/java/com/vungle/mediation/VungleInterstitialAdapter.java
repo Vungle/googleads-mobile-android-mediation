@@ -251,7 +251,7 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
                 bannerAdView = new VungleBannerView(context, placement, bannerAdSize);
                 bannerAdView.setAdListener(new VungleBannerListener());
                 bannerAdView.setAdapterAdFormat("VungleInterstitialAdapter-banner");
-                checkAndLogCustomBannerSizeMismatch(bannerAdView, placement, adSize);
+                logCustomSizeForBannerPlacement(bannerAdView, placement, adSize);
                 bannerAdView.load((String) null);
               }
 
@@ -321,7 +321,7 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
     }
   }
 
-  private void checkAndLogCustomBannerSizeMismatch(
+  private void logCustomSizeForBannerPlacement(
       VungleBannerView bannerAdView, String placementId, AdSize adSize) {
     if (!VungleAds.isInline(placementId)
         && !adSize.equals(AdSize.BANNER)
