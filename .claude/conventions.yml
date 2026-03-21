@@ -1,0 +1,38 @@
+conventions:
+  - id: adapter-structure
+    description: >
+      Each network adapter lives under ThirdPartyAdapters/{Network}/ as a
+      Gradle Android Library module. The main adapter class implements Google
+      mediation interfaces. Supporting classes include Manager, Initializer,
+      and format-specific callback classes.
+    applies_to: "ThirdPartyAdapters/**/*.java"
+
+  - id: naming-conventions
+    description: >
+      Adapter main class: {Network}MediationAdapter. Initializer:
+      {Network}Initializer. Manager: {Network}Manager. Callback classes
+      named by format (e.g., {Network}RewardedAd, {Network}InterstitialAd).
+      All classes use Java naming conventions.
+    applies_to: "ThirdPartyAdapters/**/*.java"
+
+  - id: ad-format-support
+    description: >
+      Adapters support Rewarded Video, Interstitial, and Banner formats.
+      Each format has its own callback/listener class. Adapters may support
+      both legacy and new mediation framework interfaces.
+    applies_to: "ThirdPartyAdapters/**/*.java"
+
+  - id: version-management
+    description: >
+      Adapter versions encode the underlying SDK version plus an adapter
+      patch digit (e.g., 6.9.1.0). Version is declared in the adapter's
+      build.gradle and published via Maven/Bintray. CHANGELOG.md tracks
+      version history per adapter.
+    applies_to: "**/build.gradle"
+
+  - id: gradle-build
+    description: >
+      Each adapter is a Gradle Android Library module with its own
+      build.gradle. The root project uses AGP 3.5.4. Publishing
+      configuration targets Maven/Bintray repositories.
+    applies_to: "**/build.gradle"
