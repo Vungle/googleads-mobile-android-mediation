@@ -1,0 +1,27 @@
+review_rules:
+  - path: "ThirdPartyAdapters/**/*.java"
+    rules:
+      - Adapter must implement the correct Google mediation interfaces for supported formats
+      - SDK initialization must go through the singleton Initializer class
+      - All ad callbacks must be invoked on the main thread
+      - Null checks required before invoking mediation callbacks
+      - Error handling must map network-specific errors to AdMob error codes
+
+  - path: "**/build.gradle"
+    rules:
+      - compileSdkVersion and targetSdkVersion must match project standards
+      - minSdkVersion must be 16 or as required by the network SDK
+      - Google Mobile Ads SDK dependency version must be compatible
+      - Network SDK dependency version must match adapter version scheme
+      - No snapshot dependencies in release configurations
+
+  - path: "ThirdPartyAdapters/**/Initializer*.java"
+    rules:
+      - Initializer must be a singleton (private constructor, static instance)
+      - Must handle concurrent initialization requests safely
+      - Must cache initialization state to avoid redundant init calls
+
+  - path: "**/CHANGELOG.md"
+    rules:
+      - Every version bump must have a corresponding CHANGELOG entry
+      - Entries should note SDK version updates and behavioral changes
