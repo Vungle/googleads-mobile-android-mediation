@@ -253,8 +253,7 @@ public class VungleMediationAdapter extends RtbAdapter
               "Multiple '%s' entries found: %s. Using '%s' to initialize the Vungle SDK.",
               KEY_APP_ID, appIDs, appID);
       Log.w(TAG, logMessage);
-      String multipleAppIDsDetectedMessage = "MultipleAppIDsDetected:" + appIDs;
-      VungleMediationLogger.logError(null, multipleAppIDsDetectedMessage);
+      VungleMediationLogger.logError(null, logMessage);
     }
 
     VungleInitializer.getInstance()
