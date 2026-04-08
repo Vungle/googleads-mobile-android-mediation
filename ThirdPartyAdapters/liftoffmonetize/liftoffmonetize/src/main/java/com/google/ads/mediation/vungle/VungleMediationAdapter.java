@@ -64,6 +64,7 @@ import com.vungle.ads.BidTokenCallback;
 import com.vungle.ads.RewardedAd;
 import com.vungle.ads.RewardedAdListener;
 import com.vungle.ads.VungleError;
+import com.vungle.ads.VungleMediationLogger;
 import com.vungle.mediation.BuildConfig;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -252,6 +253,8 @@ public class VungleMediationAdapter extends RtbAdapter
               "Multiple '%s' entries found: %s. Using '%s' to initialize the Vungle SDK.",
               KEY_APP_ID, appIDs, appID);
       Log.w(TAG, logMessage);
+      String multipleAppIDsDetectedMessage = "MultipleAppIDsDetected:" + appIDs;
+      VungleMediationLogger.logError(null, multipleAppIDsDetectedMessage);
     }
 
     VungleInitializer.getInstance()
