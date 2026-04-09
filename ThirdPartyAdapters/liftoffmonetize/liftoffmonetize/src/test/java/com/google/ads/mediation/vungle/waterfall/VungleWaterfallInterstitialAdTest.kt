@@ -1,4 +1,18 @@
-package com.google.ads.mediation.vungle.rtb
+// Copyright 2026 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package com.google.ads.mediation.vungle.waterfall
 
 import android.content.Context
 import androidx.core.os.bundleOf
@@ -6,9 +20,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.ads.mediation.adaptertestkit.AdErrorMatcher
 import com.google.ads.mediation.adaptertestkit.AdapterTestKitConstants.TEST_APP_ID
-import com.google.ads.mediation.adaptertestkit.AdapterTestKitConstants.TEST_BID_RESPONSE
 import com.google.ads.mediation.adaptertestkit.AdapterTestKitConstants.TEST_PLACEMENT_ID
-import com.google.ads.mediation.adaptertestkit.AdapterTestKitConstants.TEST_WATERMARK
 import com.google.ads.mediation.adaptertestkit.createMediationInterstitialAdConfiguration
 import com.google.ads.mediation.vungle.VungleConstants.KEY_APP_ID
 import com.google.ads.mediation.vungle.VungleConstants.KEY_ORIENTATION
@@ -27,7 +39,7 @@ import com.vungle.ads.internal.protos.Sdk.SDKError
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mockStatic
+import org.mockito.Mockito
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argThat
 import org.mockito.kotlin.doAnswer
@@ -37,12 +49,12 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoMoreInteractions
 import org.mockito.kotlin.whenever
 
-/** Tests for [VungleRtbInterstitialAd]. */
+/** Tests for [VungleWaterfallInterstitialAd]. */
 @RunWith(AndroidJUnit4::class)
-class VungleRtbInterstitialAdTest {
+class VungleWaterfallInterstitialAdTest {
 
   /** Unit under test. */
-  private lateinit var adapterRtbInterstitialAd: VungleRtbInterstitialAd
+  private lateinit var adapterWaterfallInterstitialAd: VungleWaterfallInterstitialAd
 
   private val context = ApplicationProvider.getApplicationContext<Context>()
   private val interstitialAdCallback = mock<MediationInterstitialAdCallback>()
@@ -50,7 +62,7 @@ class VungleRtbInterstitialAdTest {
     mock<MediationAdLoadCallback<MediationInterstitialAd, MediationInterstitialAdCallback>> {
       on { onSuccess(any()) } doReturn interstitialAdCallback
     }
-  private val mockVungleInitializer = mock<VungleInitializer>()
+  private val vungleInitializer = mock<VungleInitializer>()
   private val vungleInterstitialAd = mock<InterstitialAd>()
   private val vungleFactory =
     mock<VungleFactory> {
@@ -61,28 +73,27 @@ class VungleRtbInterstitialAdTest {
     createMediationInterstitialAdConfiguration(
       context = context,
       serverParameters = bundleOf(KEY_APP_ID to TEST_APP_ID, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
-      bidResponse = TEST_BID_RESPONSE,
-      watermark = TEST_WATERMARK,
       mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE),
     )
 
   @Before
   fun setUp() {
-    adapterRtbInterstitialAd = VungleRtbInterstitialAd(interstitialAdLoadCallback, vungleFactory)
+    adapterWaterfallInterstitialAd =
+      VungleWaterfallInterstitialAd(interstitialAdLoadCallback, vungleFactory)
 
     doAnswer { invocation ->
         val args: Array<Any> = invocation.arguments
         (args[2] as VungleInitializer.VungleInitializationListener).onInitializeSuccess()
       }
-      .whenever(mockVungleInitializer)
+      .whenever(vungleInitializer)
       .initialize(any(), any(), any())
   }
 
   @Test
   fun onAdLoaded_callsLoadSuccess() {
-    adapterRtbInterstitialAd.onAdLoaded(vungleInterstitialAd)
+    adapterWaterfallInterstitialAd.onAdLoaded(vungleInterstitialAd)
 
-    verify(interstitialAdLoadCallback).onSuccess(adapterRtbInterstitialAd)
+    verify(interstitialAdLoadCallback).onSuccess(adapterWaterfallInterstitialAd)
   }
 
   @Test
@@ -93,7 +104,7 @@ class VungleRtbInterstitialAdTest {
         on { errorMessage } doReturn "Liftoff Monetize SDK interstitial ad load failed."
       }
 
-    adapterRtbInterstitialAd.onAdFailedToLoad(vungleInterstitialAd, liftoffError)
+    adapterWaterfallInterstitialAd.onAdFailedToLoad(vungleInterstitialAd, liftoffError)
 
     val expectedError =
       AdError(liftoffError.code, liftoffError.errorMessage, VUNGLE_SDK_ERROR_DOMAIN)
@@ -102,30 +113,28 @@ class VungleRtbInterstitialAdTest {
 
   @Test
   fun showAd_playsLiftoffAd() {
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(VungleInitializer.getInstance()) doReturn mockVungleInitializer
-      adapterRtbInterstitialAd.render(mediationInterstitialAdConfiguration)
+    Mockito.mockStatic(VungleInitializer::class.java).use {
+      whenever(VungleInitializer.getInstance()) doReturn vungleInitializer
+      adapterWaterfallInterstitialAd.render(mediationInterstitialAdConfiguration)
     }
-    whenever(vungleInterstitialAd.canPlayAd()) doReturn true
-
-    adapterRtbInterstitialAd.showAd(context)
+    adapterWaterfallInterstitialAd.showAd(context)
 
     verify(vungleInterstitialAd).play(context)
   }
 
   private fun renderAdAndMockLoadSuccess() {
-    mockStatic(VungleInitializer::class.java).use {
-      whenever(VungleInitializer.getInstance()) doReturn mockVungleInitializer
-      adapterRtbInterstitialAd.render(mediationInterstitialAdConfiguration)
+    Mockito.mockStatic(VungleInitializer::class.java).use {
+      whenever(VungleInitializer.getInstance()) doReturn vungleInitializer
+      adapterWaterfallInterstitialAd.render(mediationInterstitialAdConfiguration)
     }
-    adapterRtbInterstitialAd.onAdLoaded(vungleInterstitialAd)
+    adapterWaterfallInterstitialAd.onAdLoaded(vungleInterstitialAd)
   }
 
   @Test
   fun onAdStart_callsOnAdOpened() {
     renderAdAndMockLoadSuccess()
 
-    adapterRtbInterstitialAd.onAdStart(vungleInterstitialAd)
+    adapterWaterfallInterstitialAd.onAdStart(vungleInterstitialAd)
 
     verify(interstitialAdCallback).onAdOpened()
     verifyNoMoreInteractions(interstitialAdCallback)
@@ -135,7 +144,7 @@ class VungleRtbInterstitialAdTest {
   fun onAdEnd_callsOnAdClosed() {
     renderAdAndMockLoadSuccess()
 
-    adapterRtbInterstitialAd.onAdEnd(vungleInterstitialAd)
+    adapterWaterfallInterstitialAd.onAdEnd(vungleInterstitialAd)
 
     verify(interstitialAdCallback).onAdClosed()
     verifyNoMoreInteractions(interstitialAdCallback)
@@ -145,7 +154,7 @@ class VungleRtbInterstitialAdTest {
   fun onAdClicked_reportsAdClicked() {
     renderAdAndMockLoadSuccess()
 
-    adapterRtbInterstitialAd.onAdClicked(vungleInterstitialAd)
+    adapterWaterfallInterstitialAd.onAdClicked(vungleInterstitialAd)
 
     verify(interstitialAdCallback).reportAdClicked()
     verifyNoMoreInteractions(interstitialAdCallback)
@@ -155,8 +164,7 @@ class VungleRtbInterstitialAdTest {
   fun onAdLeftApplication_callsOnAdLeftApplication() {
     renderAdAndMockLoadSuccess()
 
-    adapterRtbInterstitialAd.onAdLeftApplication(vungleInterstitialAd)
-
+    adapterWaterfallInterstitialAd.onAdLeftApplication(vungleInterstitialAd)
     verify(interstitialAdCallback).onAdLeftApplication()
     verifyNoMoreInteractions(interstitialAdCallback)
   }
@@ -167,10 +175,10 @@ class VungleRtbInterstitialAdTest {
     val liftoffError =
       mock<VungleError> {
         on { code } doReturn SDKError.Reason.AD_NOT_LOADED_VALUE
-        on { errorMessage } doReturn "Liftoff Monetize SDK interstitial ad play failed."
+        on { errorMessage } doReturn "Liftoff Monetize SDK ad play failed."
       }
 
-    adapterRtbInterstitialAd.onAdFailedToPlay(vungleInterstitialAd, liftoffError)
+    adapterWaterfallInterstitialAd.onAdFailedToPlay(vungleInterstitialAd, liftoffError)
 
     val expectedError =
       AdError(liftoffError.code, liftoffError.errorMessage, VUNGLE_SDK_ERROR_DOMAIN)
@@ -182,7 +190,7 @@ class VungleRtbInterstitialAdTest {
   fun onAdImpression_reportsAdImpression() {
     renderAdAndMockLoadSuccess()
 
-    adapterRtbInterstitialAd.onAdImpression(vungleInterstitialAd)
+    adapterWaterfallInterstitialAd.onAdImpression(vungleInterstitialAd)
 
     verify(interstitialAdCallback).reportAdImpression()
     verifyNoMoreInteractions(interstitialAdCallback)

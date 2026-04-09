@@ -40,8 +40,7 @@ public class VungleInitializer implements InitializationListener {
   private VungleInitializer() {
     initListeners = new ArrayList<>();
     VungleAds.setIntegrationName(
-        "admob",
-        com.vungle.mediation.BuildConfig.ADAPTER_VERSION.replace('.', '_'));
+        "admob", com.vungle.mediation.BuildConfig.ADAPTER_VERSION.replace('.', '_'));
   }
 
   public void initialize(

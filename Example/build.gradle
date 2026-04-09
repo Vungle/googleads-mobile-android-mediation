@@ -26,6 +26,9 @@ allprojects {
             maven {
                 url = uri("https://verve.jfrog.io/artifactory/verve-gradle-release")
             }
+            maven {
+                url = uri("https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea")
+            }
         }
     }
 }

@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.ads.mediation.vungle.VungleInitializer;
 import com.google.ads.mediation.vungle.VungleMediationAdapter;
+import com.google.ads.mediation.vungle.VungleSdkWrapper;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.MobileAds;
@@ -42,6 +43,7 @@ import com.vungle.ads.BaseAd;
 import com.vungle.ads.InterstitialAd;
 import com.vungle.ads.InterstitialAdListener;
 import com.vungle.ads.VungleAdSize;
+import com.vungle.ads.VungleAds;
 import com.vungle.ads.VungleBannerView;
 import com.vungle.ads.VungleError;
 
@@ -61,17 +63,22 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
   private VungleBannerView bannerAdView;
 
   @Override
-  public void requestInterstitialAd(@NonNull Context context,
+  public void requestInterstitialAd(
+      @NonNull Context context,
       @NonNull MediationInterstitialListener interstitialListener,
-      @NonNull Bundle serverParameters, @NonNull MediationAdRequest mediationAdRequest,
+      @NonNull Bundle serverParameters,
+      @NonNull MediationAdRequest mediationAdRequest,
       @Nullable Bundle mediationExtras) {
     this.mediationInterstitialListener = interstitialListener;
     String appID = serverParameters.getString(KEY_APP_ID);
     if (TextUtils.isEmpty(appID)) {
-      AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS,
-          "Failed to load waterfall interstitial ad from Liftoff Monetize. "
-              + "Missing or invalid App ID configured for this ad source instance "
-              + "in the AdMob or Ad Manager UI.", ERROR_DOMAIN);
+      AdError error =
+          new AdError(
+              ERROR_INVALID_SERVER_PARAMETERS,
+              "Failed to load waterfall interstitial ad from Liftoff Monetize. "
+                  + "Missing or invalid App ID configured for this ad source instance "
+                  + "in the AdMob or Ad Manager UI.",
+              ERROR_DOMAIN);
       Log.w(TAG, error.toString());
       interstitialListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
       return;
@@ -79,10 +86,13 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
 
     String placement = serverParameters.getString(KEY_PLACEMENT_ID);
     if (TextUtils.isEmpty(placement)) {
-      AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS,
-          "Failed to load waterfall interstitial ad from Liftoff Monetize. "
-              + "Missing or invalid Placement ID configured for this ad source instance "
-              + "in the AdMob or Ad Manager UI.", ERROR_DOMAIN);
+      AdError error =
+          new AdError(
+              ERROR_INVALID_SERVER_PARAMETERS,
+              "Failed to load waterfall interstitial ad from Liftoff Monetize. "
+                  + "Missing or invalid Placement ID configured for this ad source instance "
+                  + "in the AdMob or Ad Manager UI.",
+              ERROR_DOMAIN);
       Log.w(TAG, error.toString());
       interstitialListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
       return;
@@ -93,8 +103,7 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
 
     AdConfig adConfig = new AdConfig();
     if (mediationExtras != null && mediationExtras.containsKey(KEY_ORIENTATION)) {
-      adConfig.setAdOrientation(
-          mediationExtras.getInt(KEY_ORIENTATION, AdConfig.AUTO_ROTATE));
+      adConfig.setAdOrientation(mediationExtras.getInt(KEY_ORIENTATION, AdConfig.AUTO_ROTATE));
     }
 
     VungleInitializer.getInstance()
@@ -106,6 +115,7 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
               public void onInitializeSuccess() {
                 interstitialAd = new InterstitialAd(context, placement, adConfig);
                 interstitialAd.setAdListener(new VungleInterstitialListener());
+                interstitialAd.setAdapterAdFormat("VungleInterstitialAdapter-interstitial");
                 interstitialAd.load();
               }
 
@@ -203,17 +213,23 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
   }
 
   @Override
-  public void requestBannerAd(@NonNull Context context,
+  public void requestBannerAd(
+      @NonNull Context context,
       @NonNull final MediationBannerListener bannerListener,
-      @NonNull Bundle serverParameters, @NonNull AdSize adSize,
-      @NonNull MediationAdRequest mediationAdRequest, @Nullable Bundle mediationExtras) {
+      @NonNull Bundle serverParameters,
+      @NonNull AdSize adSize,
+      @NonNull MediationAdRequest mediationAdRequest,
+      @Nullable Bundle mediationExtras) {
     mediationBannerListener = bannerListener;
     String appID = serverParameters.getString(KEY_APP_ID);
     if (TextUtils.isEmpty(appID)) {
-      AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS,
-          "Failed to load waterfall banner ad from Liftoff Monetize. "
-              + "Missing or invalid App ID configured for this ad source instance "
-              + "in the AdMob or Ad Manager UI.", ERROR_DOMAIN);
+      AdError error =
+          new AdError(
+              ERROR_INVALID_SERVER_PARAMETERS,
+              "Failed to load waterfall banner ad from Liftoff Monetize. "
+                  + "Missing or invalid App ID configured for this ad source instance "
+                  + "in the AdMob or Ad Manager UI.",
+              ERROR_DOMAIN);
       Log.w(TAG, error.toString());
       bannerListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
       return;
@@ -224,10 +240,13 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
 
     String placement = serverParameters.getString(KEY_PLACEMENT_ID);
     if (TextUtils.isEmpty(placement)) {
-      AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS,
-          "Failed to load waterfall banner ad from Liftoff Monetize. "
-              + "Missing or invalid Placement ID configured for this ad source instance "
-              + "in the AdMob or Ad Manager UI.", ERROR_DOMAIN);
+      AdError error =
+          new AdError(
+              ERROR_INVALID_SERVER_PARAMETERS,
+              "Failed to load waterfall banner ad from Liftoff Monetize. "
+                  + "Missing or invalid Placement ID configured for this ad source instance "
+                  + "in the AdMob or Ad Manager UI.",
+              ERROR_DOMAIN);
       Log.w(TAG, error.toString());
       bannerListener.onAdFailedToLoad(VungleInterstitialAdapter.this, error);
       return;
@@ -235,9 +254,12 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
 
     VungleAdSize bannerAdSize = getVungleBannerAdSizeFromGoogleAdSize(adSize, placement);
 
-    Log.d(TAG,
-        "requestBannerAd for Placement: " + placement + " ### Adapter instance: " + this
-            .hashCode());
+    Log.d(
+        TAG,
+        "requestBannerAd for Placement: "
+            + placement
+            + " ### Adapter instance: "
+            + this.hashCode());
 
     VungleInitializer.getInstance()
         .initialize(
@@ -248,6 +270,9 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
               public void onInitializeSuccess() {
                 bannerAdView = new VungleBannerView(context, placement, bannerAdSize);
                 bannerAdView.setAdListener(new VungleBannerListener());
+                bannerAdView.setAdapterAdFormat("VungleInterstitialAdapter-banner");
+                VungleSdkWrapper.logCustomSizeForBannerPlacement(
+                    bannerAdView, "VungleInterstitialAdapter-banner-custom", placement, adSize);
 
                 bannerAdView.load();
               }
@@ -342,5 +367,4 @@ public class VungleInterstitialAdapter extends VungleMediationAdapter
 
     return vngAdSize;
   }
-
 }

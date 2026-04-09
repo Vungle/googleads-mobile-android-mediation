@@ -20,6 +20,7 @@ import android.util.Log;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.VersionInfo;
 import com.google.android.gms.ads.mediation.Adapter;
 import com.google.android.gms.ads.mediation.InitializationCompleteCallback;
@@ -91,6 +92,14 @@ public class IMobileMediationAdapter extends Adapter {
    */
   public static final int ERROR_EMPTY_NATIVE_ADS_LIST = 104;
 
+  /** MobileAds identifies user as age restricted */
+  public static final int ERROR_USER_IS_AGE_RESTRICTED = 105;
+
+  /** Message for when MobileAds identifies user as age restricted. */
+  public static final String ERROR_USER_IS_AGE_RESTRICTED_MSG =
+      "The request had age-restricted treatment, but i-mobile SDK cannot receive age-restricted"
+          + " signals";
+
   private final IMobileSdkWrapper iMobileSdkWrapper;
 
   private final MediationUtilsWrapper mediationUtils;
@@ -140,6 +149,9 @@ public class IMobileMediationAdapter extends Adapter {
   public void initialize(@NonNull Context context,
       @NonNull InitializationCompleteCallback initializationCompleteCallback,
       @NonNull List<MediationConfiguration> list) {
+    if (AdapterHelper.isUserUnderAge()) {
+      initializationCompleteCallback.onInitializationFailed(ERROR_USER_IS_AGE_RESTRICTED_MSG);
+    }
 
     // i-mobile does not have any API for initialization.
     initializationCompleteCallback.onInitializationSucceeded();
@@ -158,6 +170,11 @@ public class IMobileMediationAdapter extends Adapter {
   public void loadBannerAd(
       @NonNull MediationBannerAdConfiguration mediationBannerAdConfiguration,
       @NonNull MediationAdLoadCallback<MediationBannerAd, MediationBannerAdCallback> callback) {
+    if (AdapterHelper.isUserUnderAge()) {
+      AdError adError =
+          new AdError(ERROR_USER_IS_AGE_RESTRICTED, ERROR_USER_IS_AGE_RESTRICTED_MSG, ERROR_DOMAIN);
+      callback.onFailure(adError);
+    }
     IMobileBannerAd bannerAd = new IMobileBannerAd(callback);
     bannerAd.loadAd(mediationBannerAdConfiguration, iMobileSdkWrapper, mediationUtils);
   }
@@ -168,6 +185,11 @@ public class IMobileMediationAdapter extends Adapter {
       @NonNull
           MediationAdLoadCallback<MediationInterstitialAd, MediationInterstitialAdCallback>
               callback) {
+    if (AdapterHelper.isUserUnderAge()) {
+      AdError adError =
+          new AdError(ERROR_USER_IS_AGE_RESTRICTED, ERROR_USER_IS_AGE_RESTRICTED_MSG, ERROR_DOMAIN);
+      callback.onFailure(adError);
+    }
     IMobileInterstitialAd interstitialAd = new IMobileInterstitialAd(callback, iMobileSdkWrapper);
     interstitialAd.loadAd(mediationInterstitialAdConfiguration);
   }
@@ -179,6 +201,11 @@ public class IMobileMediationAdapter extends Adapter {
           MediationAdLoadCallback<NativeAdMapper, MediationNativeAdCallback>
               mediationAdLoadCallback)
       throws RemoteException {
+    if (AdapterHelper.isUserUnderAge()) {
+      AdError adError =
+          new AdError(ERROR_USER_IS_AGE_RESTRICTED, ERROR_USER_IS_AGE_RESTRICTED_MSG, ERROR_DOMAIN);
+      mediationAdLoadCallback.onFailure(adError);
+    }
     IMobileNativeAdLoader nativeAdLoader = new IMobileNativeAdLoader();
     nativeAdLoader.loadAd(
         mediationNativeAdConfiguration, mediationAdLoadCallback, iMobileSdkWrapper);

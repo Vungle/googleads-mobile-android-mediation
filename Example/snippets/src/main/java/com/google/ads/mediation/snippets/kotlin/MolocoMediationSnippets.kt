@@ -1,0 +1,41 @@
+/*
+ * Copyright 2026 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.google.ads.mediation.snippets.kotlin
+
+import com.moloco.sdk.publisher.privacy.MolocoPrivacy
+import com.moloco.sdk.publisher.privacy.MolocoPrivacy.PrivacySettings
+
+/**
+ * Kotlin code snippets for https://developers.google.com/admob/android/mediation/moloco and
+ * https://developers.google.com/ad-manager/mobile-ads-sdk/android/mediation/moloco
+ */
+class MolocoMediationSnippets {
+
+  fun setDoNotSell() {
+    // [START set_do_not_sell]
+    val privacySettings = PrivacySettings(isDoNotSell = true)
+    MolocoPrivacy.setPrivacy(privacySettings)
+    // [END set_do_not_sell]
+  }
+
+  fun setUserConsent() {
+    // [START set_user_consent]
+    val privacySettings = PrivacySettings(isUserConsent = true)
+    MolocoPrivacy.setPrivacy(privacySettings)
+    // [END set_user_consent]
+  }
+}

@@ -18,8 +18,7 @@ import android.content.Context
 import android.util.Log
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
-import com.google.android.gms.ads.RequestConfiguration.TAG_FOR_UNDER_AGE_OF_CONSENT_TRUE
+import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.gms.ads.VersionInfo
 import com.google.android.gms.ads.mediation.InitializationCompleteCallback
 import com.google.android.gms.ads.mediation.MediationAdLoadCallback
@@ -86,9 +85,9 @@ class MolocoMediationAdapter : RtbAdapter() {
   private fun configurePrivacy() {
     val isAgeRestricted =
       MobileAds.getRequestConfiguration().tagForChildDirectedTreatment ==
-        TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE ||
+        RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE ||
         MobileAds.getRequestConfiguration().tagForUnderAgeOfConsent ==
-          TAG_FOR_UNDER_AGE_OF_CONSENT_TRUE
+          RequestConfiguration.TAG_FOR_UNDER_AGE_OF_CONSENT_TRUE
     MolocoAdapterUtils.setMolocoIsAgeRestricted(isAgeRestricted)
   }
 
@@ -97,15 +96,14 @@ class MolocoMediationAdapter : RtbAdapter() {
     initializationCompleteCallback: InitializationCompleteCallback,
     mediationConfigurations: List<MediationConfiguration>,
   ) {
-    val appKeys =
-      mediationConfigurations.mapNotNull {
-        val appKey = it.serverParameters.getString(KEY_APP_KEY)
-        if (appKey.isNullOrEmpty()) {
-          null
-        } else {
-          appKey
-        }
+    val appKeys = mediationConfigurations.mapNotNull {
+      val appKey = it.serverParameters.getString(KEY_APP_KEY)
+      if (appKey.isNullOrEmpty()) {
+        null
+      } else {
+        appKey
       }
+    }
 
     if (appKeys.isEmpty()) {
       initializationCompleteCallback.onInitializationFailed(ERROR_MSG_MISSING_APP_KEY)

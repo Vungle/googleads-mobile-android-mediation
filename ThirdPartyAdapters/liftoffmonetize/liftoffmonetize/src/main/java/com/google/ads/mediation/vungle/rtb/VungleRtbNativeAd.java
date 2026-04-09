@@ -87,10 +87,13 @@ public class VungleRtbNativeAd extends UnifiedNativeAdMapper implements NativeAd
 
     String appID = serverParameters.getString(KEY_APP_ID);
     if (TextUtils.isEmpty(appID)) {
-      AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS,
-          "Failed to load bidding native ad from Liftoff Monetize. "
-              + "Missing or invalid app ID configured for this ad source instance "
-              + "in the AdMob or Ad Manager UI.", ERROR_DOMAIN);
+      AdError error =
+          new AdError(
+              ERROR_INVALID_SERVER_PARAMETERS,
+              "Failed to load bidding native ad from Liftoff Monetize. "
+                  + "Missing or invalid app ID configured for this ad source instance "
+                  + "in the AdMob or Ad Manager UI.",
+              ERROR_DOMAIN);
       Log.d(TAG, error.toString());
       adLoadCallback.onFailure(error);
       return;
@@ -98,10 +101,13 @@ public class VungleRtbNativeAd extends UnifiedNativeAdMapper implements NativeAd
 
     String placementId = serverParameters.getString(KEY_PLACEMENT_ID);
     if (TextUtils.isEmpty(placementId)) {
-      AdError error = new AdError(ERROR_INVALID_SERVER_PARAMETERS,
-          "Failed to load bidding native ad from Liftoff Monetize. "
-              + "Missing or Invalid placement ID configured for this ad source instance "
-              + "in the AdMob or Ad Manager UI.", ERROR_DOMAIN);
+      AdError error =
+          new AdError(
+              ERROR_INVALID_SERVER_PARAMETERS,
+              "Failed to load bidding native ad from Liftoff Monetize. "
+                  + "Missing or Invalid placement ID configured for this ad source instance "
+                  + "in the AdMob or Ad Manager UI.",
+              ERROR_DOMAIN);
       Log.d(TAG, error.toString());
       adLoadCallback.onFailure(error);
       return;
@@ -139,6 +145,7 @@ public class VungleRtbNativeAd extends UnifiedNativeAdMapper implements NativeAd
                 nativeAd = vungleFactory.createNativeAd(context, placementId);
                 nativeAd.setAdOptionsPosition(adOptionsPosition);
                 nativeAd.setAdListener(VungleRtbNativeAd.this);
+                nativeAd.setAdapterAdFormat("VungleRtbNativeAd");
                 if (googleVideoOptions != null) {
                   NativeVideoOptions vngVideoOptions = nativeAd.getVideoOptions();
                   boolean startMuted = googleVideoOptions.getStartMuted();
@@ -211,7 +218,9 @@ public class VungleRtbNativeAd extends UnifiedNativeAdMapper implements NativeAd
   }
 
   @Override
-  public void trackViews(@NonNull View view, @NonNull Map<String, View> clickableAssetViews,
+  public void trackViews(
+      @NonNull View view,
+      @NonNull Map<String, View> clickableAssetViews,
       @NonNull Map<String, View> nonClickableAssetViews) {
     super.trackViews(view, clickableAssetViews, nonClickableAssetViews);
     Log.d(TAG, "trackViews()");
@@ -249,11 +258,13 @@ public class VungleRtbNativeAd extends UnifiedNativeAdMapper implements NativeAd
     if (iconView instanceof ImageView) {
       iconImageView = (ImageView) iconView;
     } else {
-      Log.d(TAG, "The view to display a Vungle native icon image is not a type of ImageView, "
-          + "so it can't be registered for click events.");
+      Log.d(
+          TAG,
+          "The view to display a Vungle native icon image is not a type of ImageView, "
+              + "so it can't be registered for click events.");
     }
-    nativeAd.registerViewForInteraction((FrameLayout) overlayView, mediaView, iconImageView,
-        assetViews);
+    nativeAd.registerViewForInteraction(
+        (FrameLayout) overlayView, mediaView, iconImageView, assetViews);
   }
 
   @Override
@@ -278,32 +289,33 @@ public class VungleRtbNativeAd extends UnifiedNativeAdMapper implements NativeAd
     setAdvertiser(nativeAd.getAdSponsoredText());
     setHasVideoContent(nativeAd.hasVideoContent());
     setMediaView(mediaView);
-    mediaView.setNativeVideoListener(new NativeVideoListener() {
-      @Override
-      public void onVideoPlay() {
-        nativeAdCallback.onVideoPlay();
-      }
+    mediaView.setNativeVideoListener(
+        new NativeVideoListener() {
+          @Override
+          public void onVideoPlay() {
+            nativeAdCallback.onVideoPlay();
+          }
 
-      @Override
-      public void onVideoPause() {
-        nativeAdCallback.onVideoPause();
-      }
+          @Override
+          public void onVideoPause() {
+            nativeAdCallback.onVideoPause();
+          }
 
-      @Override
-      public void onVideoEnd() {
-        nativeAdCallback.onVideoComplete();
-      }
+          @Override
+          public void onVideoEnd() {
+            nativeAdCallback.onVideoComplete();
+          }
 
-      @Override
-      public void onVideoMute() {
-        nativeAdCallback.onVideoMute();
-      }
+          @Override
+          public void onVideoMute() {
+            nativeAdCallback.onVideoMute();
+          }
 
-      @Override
-      public void onVideoUnmute() {
-        nativeAdCallback.onVideoUnmute();
-      }
-    });
+          @Override
+          public void onVideoUnmute() {
+            nativeAdCallback.onVideoUnmute();
+          }
+        });
 
     String iconUrl = nativeAd.getAppIcon();
     if (!TextUtils.isEmpty(iconUrl) && iconUrl.startsWith("file://")) {

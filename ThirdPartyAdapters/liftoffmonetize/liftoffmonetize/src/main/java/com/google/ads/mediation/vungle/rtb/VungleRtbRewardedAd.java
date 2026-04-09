@@ -46,13 +46,11 @@ import com.vungle.ads.VungleError;
 
 public class VungleRtbRewardedAd implements MediationRewardedAd, RewardedAdListener {
 
-
   @NonNull
   private final MediationAdLoadCallback<MediationRewardedAd, MediationRewardedAdCallback>
       mediationAdLoadCallback;
 
-  @Nullable
-  private MediationRewardedAdCallback mediationRewardedAdCallback;
+  @Nullable private MediationRewardedAdCallback mediationRewardedAdCallback;
 
   private RewardedAd rewardedAd;
 
@@ -77,10 +75,12 @@ public class VungleRtbRewardedAd implements MediationRewardedAd, RewardedAdListe
 
     if (TextUtils.isEmpty(appID)) {
       AdError error =
-          new AdError(ERROR_INVALID_SERVER_PARAMETERS,
+          new AdError(
+              ERROR_INVALID_SERVER_PARAMETERS,
               "Failed to load bidding rewarded ad from Liftoff Monetize. "
                   + "Missing or invalid App ID configured for this ad source instance "
-                  + "in the AdMob or Ad Manager UI.", ERROR_DOMAIN);
+                  + "in the AdMob or Ad Manager UI.",
+              ERROR_DOMAIN);
       Log.w(TAG, error.toString());
       mediationAdLoadCallback.onFailure(error);
       return;
@@ -93,7 +93,8 @@ public class VungleRtbRewardedAd implements MediationRewardedAd, RewardedAdListe
               ERROR_INVALID_SERVER_PARAMETERS,
               "Failed to load bidding rewarded ad from Liftoff Monetize. "
                   + "Missing or invalid Placement ID configured for this ad source instance "
-                  + "in the AdMob or Ad Manager UI.", ERROR_DOMAIN);
+                  + "in the AdMob or Ad Manager UI.",
+              ERROR_DOMAIN);
       Log.w(TAG, error.toString());
       mediationAdLoadCallback.onFailure(error);
       return;
@@ -121,6 +122,7 @@ public class VungleRtbRewardedAd implements MediationRewardedAd, RewardedAdListe
               public void onInitializeSuccess() {
                 rewardedAd = vungleFactory.createRewardedAd(context, placement, adConfig);
                 rewardedAd.setAdListener(VungleRtbRewardedAd.this);
+                rewardedAd.setAdapterAdFormat("VungleRtbRewardedAd");
                 if (!TextUtils.isEmpty(userId)) {
                   rewardedAd.setUserId(userId);
                 }
@@ -140,9 +142,11 @@ public class VungleRtbRewardedAd implements MediationRewardedAd, RewardedAdListe
     if (rewardedAd != null) {
       rewardedAd.play(context);
     } else if (mediationRewardedAdCallback != null) {
-      AdError error = new AdError(ERROR_CANNOT_PLAY_AD, "Failed to show bidding rewarded"
-          + "ad from Liftoff Monetize.",
-          ERROR_DOMAIN);
+      AdError error =
+          new AdError(
+              ERROR_CANNOT_PLAY_AD,
+              "Failed to show bidding rewarded" + "ad from Liftoff Monetize.",
+              ERROR_DOMAIN);
       Log.w(TAG, error.toString());
       mediationRewardedAdCallback.onAdFailedToShow(error);
     }
@@ -210,5 +214,4 @@ public class VungleRtbRewardedAd implements MediationRewardedAd, RewardedAdListe
       mediationRewardedAdCallback.reportAdImpression();
     }
   }
-
 }

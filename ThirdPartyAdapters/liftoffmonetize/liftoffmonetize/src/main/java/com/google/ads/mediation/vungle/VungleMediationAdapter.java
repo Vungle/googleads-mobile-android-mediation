@@ -34,6 +34,7 @@ import com.google.ads.mediation.vungle.rtb.VungleRtbNativeAd;
 import com.google.ads.mediation.vungle.rtb.VungleRtbRewardedAd;
 import com.google.ads.mediation.vungle.waterfall.VungleWaterfallAppOpenAd;
 import com.google.ads.mediation.vungle.waterfall.VungleWaterfallBannerAd;
+import com.google.ads.mediation.vungle.waterfall.VungleWaterfallInterstitialAd;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.VersionInfo;
@@ -77,6 +78,7 @@ public class VungleMediationAdapter extends RtbAdapter
   public static final String TAG = VungleMediationAdapter.class.getSimpleName();
 
   private VungleWaterfallAppOpenAd waterfallAppOpenAd;
+  private VungleWaterfallInterstitialAd waterfallInterstitialAd;
 
   private VungleRtbBannerAd rtbBannerAd;
   private VungleRtbInterstitialAd rtbInterstitialAd;
@@ -284,6 +286,18 @@ public class VungleMediationAdapter extends RtbAdapter
   }
 
   @Override
+  public void loadInterstitialAd(
+      @NonNull MediationInterstitialAdConfiguration mediationInterstitialAdConfiguration,
+      @NonNull
+          MediationAdLoadCallback<MediationInterstitialAd, MediationInterstitialAdCallback>
+              callback) {
+    VungleInitializer.getInstance()
+        .updateCoppaAndUnderageConsentStatus(MobileAds.getRequestConfiguration());
+    waterfallInterstitialAd = new VungleWaterfallInterstitialAd(callback, vungleFactory);
+    waterfallInterstitialAd.render(mediationInterstitialAdConfiguration);
+  }
+
+  @Override
   public void loadRewardedAd(
       @NonNull MediationRewardedAdConfiguration mediationRewardedAdConfiguration,
       @NonNull
@@ -345,6 +359,7 @@ public class VungleMediationAdapter extends RtbAdapter
               public void onInitializeSuccess() {
                 rewardedAd = vungleFactory.createRewardedAd(context, placement, adConfig);
                 rewardedAd.setAdListener(VungleMediationAdapter.this);
+                rewardedAd.setAdapterAdFormat("VungleMediationAdapter-rewarded");
                 if (!TextUtils.isEmpty(userId)) {
                   rewardedAd.setUserId(userId);
                 }

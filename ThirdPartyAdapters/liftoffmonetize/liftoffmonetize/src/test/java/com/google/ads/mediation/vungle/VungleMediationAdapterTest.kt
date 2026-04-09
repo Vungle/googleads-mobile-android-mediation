@@ -426,6 +426,130 @@ class VungleMediationAdapterTest {
     verify(bannerAdLoadCallback).onFailure(liftoffSdkInitError)
   }
 
+  // region Waterfall Interstitial tests
+  @Test
+  fun loadWaterfallInterstitialAd_updatesCoppaStatus() {
+    mockStatic(VungleInitializer::class.java).use {
+      whenever(getInstance()) doReturn mockVungleInitializer
+
+      adapter.loadInterstitialAd(
+        createMediationInterstitialAdConfiguration(context = context),
+        mock(),
+      )
+    }
+
+    verify(mockVungleInitializer).updateCoppaAndUnderageConsentStatus(any())
+  }
+
+  @Test
+  fun loadWaterfallInterstitialAd_loadsLiftoffInterstitialAd() {
+    stubVungleInitializerToSucceed()
+    val vungleInterstitialAd = mock<InterstitialAd>()
+    whenever(vungleFactory.createInterstitialAd(any(), any(), any())) doReturn vungleInterstitialAd
+    mockStatic(VungleInitializer::class.java).use {
+      whenever(getInstance()) doReturn mockVungleInitializer
+
+      adapter.loadInterstitialAd(
+        createMediationInterstitialAdConfiguration(
+          context = context,
+          serverParameters =
+            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
+          mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE),
+        ),
+        mock(),
+      )
+    }
+
+    verify(mockVungleInitializer).initialize(eq(TEST_APP_ID_1), eq(context), any())
+    verify(vungleAdConfig).adOrientation = LANDSCAPE
+    verify(vungleFactory).createInterstitialAd(context, TEST_PLACEMENT_ID, vungleAdConfig)
+    verify(vungleInterstitialAd).adListener = any()
+    verify(vungleInterstitialAd).load(null)
+  }
+
+  @Test
+  fun loadWaterfallInterstitialAd_withoutAppId_callsLoadFailure() {
+    val interstitialAdLoadCallback =
+      mock<MediationAdLoadCallback<MediationInterstitialAd, MediationInterstitialAdCallback>>()
+
+    adapter.loadInterstitialAd(
+      createMediationInterstitialAdConfiguration(
+        context = context,
+        serverParameters = bundleOf(KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
+        mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE),
+      ),
+      interstitialAdLoadCallback,
+    )
+
+    val expectedAdError =
+      AdError(
+        ERROR_INVALID_SERVER_PARAMETERS,
+        "Failed to load interstitial ad from Liftoff Monetize. Missing or invalid App ID.",
+        ERROR_DOMAIN,
+      )
+    verify(interstitialAdLoadCallback).onFailure(argThat(AdErrorMatcher(expectedAdError)))
+  }
+
+  @Test
+  fun loadWaterfallInterstitialAd_withoutPlacementId_callsLoadFailure() {
+    val interstitialAdLoadCallback =
+      mock<MediationAdLoadCallback<MediationInterstitialAd, MediationInterstitialAdCallback>>()
+
+    adapter.loadInterstitialAd(
+      createMediationInterstitialAdConfiguration(
+        context = context,
+        serverParameters = bundleOf(KEY_APP_ID to TEST_APP_ID_1),
+        mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE),
+      ),
+      interstitialAdLoadCallback,
+    )
+
+    val expectedAdError =
+      AdError(
+        ERROR_INVALID_SERVER_PARAMETERS,
+        "Failed to load interstitial ad from Liftoff Monetize. " +
+          "Missing or Invalid Placement ID.",
+        ERROR_DOMAIN,
+      )
+    verify(interstitialAdLoadCallback).onFailure(argThat(AdErrorMatcher(expectedAdError)))
+  }
+
+  @Test
+  fun loadWaterfallInterstitialAd_onLiftoffSdkInitializationError_callsLoadFailure() {
+    val liftoffSdkInitError =
+      AdError(
+        SDKError.Reason.UNKNOWN_ERROR_VALUE,
+        "Liftoff Monetize SDK initialization failed.",
+        VUNGLE_SDK_ERROR_DOMAIN,
+      )
+    doAnswer { invocation ->
+        val args: Array<Any> = invocation.arguments
+        (args[2] as VungleInitializationListener).onInitializeError(liftoffSdkInitError)
+      }
+      .whenever(mockVungleInitializer)
+      .initialize(any(), any(), any())
+
+    val interstitialAdLoadCallback =
+      mock<MediationAdLoadCallback<MediationInterstitialAd, MediationInterstitialAdCallback>>()
+    mockStatic(VungleInitializer::class.java).use {
+      whenever(getInstance()) doReturn mockVungleInitializer
+
+      adapter.loadInterstitialAd(
+        createMediationInterstitialAdConfiguration(
+          context = context,
+          serverParameters =
+            bundleOf(KEY_APP_ID to TEST_APP_ID_1, KEY_PLACEMENT_ID to TEST_PLACEMENT_ID),
+          mediationExtras = bundleOf(KEY_ORIENTATION to LANDSCAPE),
+        ),
+        interstitialAdLoadCallback,
+      )
+    }
+
+    verify(interstitialAdLoadCallback).onFailure(liftoffSdkInitError)
+  }
+
+  // endregion
+
   @Test
   fun loadRewardedAd_updatesCoppaStatus() {
     mockStatic(VungleInitializer::class.java).use {
@@ -1406,9 +1530,7 @@ class VungleMediationAdapterTest {
     val expectedAdError =
       AdError(
         ERROR_INVALID_SERVER_PARAMETERS,
-        "Failed to load bidding interstitial ad from Liftoff Monetize. " +
-          "Missing or invalid App ID configured for this ad source instance " +
-          "in the AdMob or Ad Manager UI.",
+        "Failed to load interstitial ad from Liftoff Monetize. " + "Missing or invalid App ID.",
         ERROR_DOMAIN,
       )
     verify(interstitialAdLoadCallback).onFailure(argThat(AdErrorMatcher(expectedAdError)))
@@ -1433,9 +1555,8 @@ class VungleMediationAdapterTest {
     val expectedAdError =
       AdError(
         ERROR_INVALID_SERVER_PARAMETERS,
-        "Failed to load bidding interstitial ad from Liftoff Monetize. " +
-          "Missing or Invalid Placement ID configured for this ad source instance " +
-          "in the AdMob or Ad Manager UI.",
+        "Failed to load interstitial ad from Liftoff Monetize. " +
+          "Missing or Invalid Placement ID.",
         ERROR_DOMAIN,
       )
     verify(interstitialAdLoadCallback).onFailure(argThat(AdErrorMatcher(expectedAdError)))

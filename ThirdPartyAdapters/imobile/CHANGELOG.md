@@ -1,9 +1,16 @@
 ## i-mobile Android Mediation Adapter Changelog
 
-#### Version 2.3.2.2 (In progress)
+#### Next Version
+- Filter age-restricted requests for i-mobile SDK because it cannot receive age-restricted signals.
+
+#### Version 2.3.2.2
 - Added property to build the adapter with GMA Next-Gen SDK dependency.
 - Migrated banner, interstitial and native ad implementations from old API to
   new API.
+
+Built and tested with:
+- Google Mobile Ads SDK version 25.1.0.
+- IMobile SDK version 2.3.2.
 
 #### Version 2.3.2.1
 - Updated the minimum required Android API level to 23.
