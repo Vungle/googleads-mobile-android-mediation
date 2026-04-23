@@ -6,6 +6,7 @@
 
 Built and tested with:
 - Google Mobile Ads SDK version 25.1.0.
+- Google Mobile Ads Next-Gen SDK version 0.25.0-beta01.
 - DT Exchange SDK version 8.4.4.
 
 #### Version 8.4.3.0
