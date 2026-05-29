@@ -116,8 +116,9 @@ class VungleWaterfallAppOpenAdTest {
   }
 
   @Test
-  fun showAd_ifAppOpenAdIsNull_callsOnAdFailedToShow() {
-    adapterWaterfallAppOpenAd.onAdLoaded(vungleAppOpenAd)
+  fun showAd_ifLiftoffCannotPlayAd_callsOnAdFailedToShow() {
+    renderAdAndMockLoadSuccess()
+    whenever(vungleAppOpenAd.canPlayAd()) doReturn false
 
     adapterWaterfallAppOpenAd.showAd(context)
 
