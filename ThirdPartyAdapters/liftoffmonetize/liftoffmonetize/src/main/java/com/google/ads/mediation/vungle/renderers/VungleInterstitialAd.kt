@@ -113,9 +113,14 @@ abstract class VungleInterstitialAd(
 
             maybeAddWatermarkToVungleAdConfig(adConfig, mediationInterstitialAdConfiguration)
             interstitialAd = vungleFactory.createInterstitialAd(context, placement, adConfig)
-            interstitialAd?.adListener = this@VungleInterstitialAd
-            interstitialAd?.adapterAdFormat = "VungleInterstitialAd"
-            interstitialAd?.load(getAdMarkup(mediationInterstitialAdConfiguration))
+            interstitialAd.adListener = this@VungleInterstitialAd
+            interstitialAd.adapterAdFormat = "VungleInterstitialAd"
+            val adMarkup = getAdMarkup(mediationInterstitialAdConfiguration)
+            if (adMarkup != null) {
+              interstitialAd.load(adMarkup)
+            } else {
+              interstitialAd.load()
+            }
           }
 
           override fun onInitializeError(error: AdError) {

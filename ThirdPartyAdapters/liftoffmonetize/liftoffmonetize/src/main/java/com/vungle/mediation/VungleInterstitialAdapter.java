@@ -43,7 +43,6 @@ import com.vungle.ads.BaseAd;
 import com.vungle.ads.InterstitialAd;
 import com.vungle.ads.InterstitialAdListener;
 import com.vungle.ads.VungleAdSize;
-import com.vungle.ads.VungleAds;
 import com.vungle.ads.VungleBannerView;
 import com.vungle.ads.VungleError;
 

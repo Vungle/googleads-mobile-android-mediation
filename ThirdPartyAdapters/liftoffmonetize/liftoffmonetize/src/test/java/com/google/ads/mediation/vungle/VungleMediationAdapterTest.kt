@@ -464,7 +464,7 @@ class VungleMediationAdapterTest {
     verify(vungleAdConfig).adOrientation = LANDSCAPE
     verify(vungleFactory).createInterstitialAd(context, TEST_PLACEMENT_ID, vungleAdConfig)
     verify(vungleInterstitialAd).adListener = any()
-    verify(vungleInterstitialAd).load(null)
+    verify(vungleInterstitialAd).load()
   }
 
   @Test
