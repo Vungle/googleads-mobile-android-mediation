@@ -243,3 +243,4 @@ build.dependsOn clean
 build.mustRunAfter clean
 copyArtifactsForDistribution.dependsOn(build, sourcesJar, generatePomFileForAdapterPublicationsPublication)
 packageDistribution.dependsOn copyArtifactsForDistribution
+// export-flow verification, will be reverted
